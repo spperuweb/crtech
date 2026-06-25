@@ -230,9 +230,20 @@ export default function ServiciosTI() {
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-[var(--color-text-primary)] tracking-tight mb-4">
             Servicios tecnológicos de alto nivel para tu organización.
           </h2>
-          <p className="text-[var(--color-text-secondary)] font-sans text-base">
-            Desde la infraestructura hasta la consultoría estratégica, cubrimos todo el stack tecnológico de tu empresa con soluciones robustas y soporte local.
+          <p className="text-[var(--color-text-secondary)] font-sans text-base mb-6">
+            Desde la infraestructura hasta la consultoría estratégica, cubrimos todo el stack tecnológico de tu empresa con soluciones robustas y soporte local en Lima, Perú.
           </p>
+          <a
+            href="#contacto"
+            onClick={(e) => {
+              e.preventDefault();
+              const el = document.getElementById('contacto');
+              if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+            }}
+            className="cursor-pointer inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--color-accent-blue)] hover:text-[#005ce6] transition-colors group"
+          >
+            Explorar Catálogo de Servicios TI <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+          </a>
         </div>
 
         {/* 2x3 Services Grid */}

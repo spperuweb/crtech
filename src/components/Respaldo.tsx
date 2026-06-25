@@ -31,24 +31,24 @@ export default function Respaldo() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
           {/* Left Column: Chamber of Commerce */}
-          <div className="fade-up bg-white border-l-4 border-l-[var(--color-accent-blue)] border border-slate-200 rounded-2xl p-8 md:p-10 flex flex-col sm:flex-row gap-6 hover:shadow-[0_15px_35px_rgba(0,92,230,0.08)] transition-all duration-300 group items-center sm:items-start">
-            <div className="p-3 bg-white border border-slate-100 rounded-2xl h-32 w-32 md:h-36 md:w-36 flex-shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-sm overflow-hidden bg-gradient-to-br from-white to-slate-50">
+          <div className="fade-up bg-white border-l-4 border-l-[var(--color-accent-blue)] border border-slate-200 rounded-2xl p-8 md:p-10 flex flex-col sm:flex-row gap-6 hover:shadow-[0_15px_35px_rgba(0,92,230,0.08)] transition-all duration-300 group items-center sm:items-start w-full">
+            <div className="p-4 bg-white border border-slate-200 rounded-2xl h-40 w-40 md:h-48 md:w-48 flex-shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-md overflow-hidden bg-gradient-to-br from-white to-slate-50">
               <img
                 src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782397588/CamaradeComercioChancay_logo_t8pz0n.png"
                 alt="Logo Cámara de Comercio"
-                className="h-28 w-28 md:h-32 md:w-32 object-contain"
+                className="h-36 w-36 md:h-44 md:w-44 object-contain"
                 referrerPolicy="no-referrer"
               />
             </div>
-            <div>
+            <div className="flex-1 text-left">
               <span className="text-[10px] font-bold text-[var(--color-accent-blue)] uppercase tracking-wider block mb-1">
                 Garantía & Formalidad · Lima, Perú
               </span>
               <h3 className="font-display font-extrabold text-2xl text-[var(--color-text-primary)] mb-4 tracking-tight">
-                Cámara de Comercio
+                Cámara de Comercio (Afiliación Activa)
               </h3>
               <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                NUESTRO LÍDER Y FUNDADOR <strong className="text-[var(--color-text-primary)] font-bold">CARLOS RIVERA</strong> se encuentra registrado y afiliado de forma activa a la Cámara de Comercio, respaldando la formalidad jurídica y comercial de todas nuestras operaciones en Lima, Perú, con una gestión transparente, ética y segura.
+                Nuestro líder y fundador <strong className="text-[var(--color-text-primary)] font-bold">Carlos Rivera</strong> se encuentra registrado y afiliado de forma activa a la Cámara de Comercio, respaldando la legitimidad, formalidad jurídica y comercial de todas nuestras operaciones en Lima, Perú, con una trayectoria corporativa transparente y confiable.
               </p>
             </div>
           </div>

@@ -189,16 +189,35 @@ export default function Energia() {
             </div>
             
             {/* Elegant transparent EcoFlow partner logo */}
-            <div className="flex items-center gap-4 bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_10px_30px_rgba(0,0,0,0.04)] w-full max-w-sm mt-2 hover:border-[#00c896]/30 transition-all duration-300 group">
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex-shrink-0 border-r border-slate-150 pr-4">
-                Socio <br />Oficial
+            <div className="flex flex-col gap-3 mt-4">
+              <div className="flex items-center gap-4 bg-white border border-slate-200 rounded-2xl p-4 shadow-[0_10px_30px_rgba(0,0,0,0.04)] w-full max-w-md hover:border-[#00c896]/40 hover:shadow-[0_15px_35px_rgba(0,200,150,0.08)] transition-all duration-300 group">
+                <div className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider flex-shrink-0 border-r border-slate-200 pr-4">
+                  Distribuidor<br />Autorizado
+                </div>
+                <div className="flex-1 flex items-center justify-center py-1">
+                  <img
+                    src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422215/ecoflow_logonegro_fondotransparente_kfn0f6.png"
+                    alt="EcoFlow Logo Autorizado"
+                    className="h-7 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
               </div>
-              <img
-                src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422215/ecoflow_logonegro_fondotransparente_kfn0f6.png"
-                alt="EcoFlow Logo Autorizado"
-                className="h-9 w-auto object-contain max-w-[180px] transition-transform duration-300 group-hover:scale-105"
-                referrerPolicy="no-referrer"
-              />
+
+              {/* CTA link to Autonomy Soluciones */}
+              <div className="mt-2 text-left">
+                <a
+                  href="#contacto"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById('contacto');
+                    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+                  }}
+                  className="cursor-pointer inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--color-accent-green)] hover:text-[#00c896] transition-colors group"
+                >
+                  Ver Soluciones de Autonomía Solar <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+              </div>
             </div>
           </div>
           

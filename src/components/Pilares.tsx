@@ -144,42 +144,53 @@ export default function Pilares() {
 
                   {/* Brand Representative Logo inside card */}
                   {logoUrl && (
-                    <div className="mb-6 flex items-center justify-between bg-slate-50/70 p-4 rounded-2xl border border-slate-100/80 relative z-10 w-full h-20">
-                      <div className="flex flex-col text-left">
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
-                          {pilar.id === 'pilar-drones' ? 'Canal Oficial' : pilar.id === 'pilar-energia' ? 'Distribuidor' : 'Soporte Directo'}
-                        </span>
-                        <span className="text-xs font-extrabold text-[var(--color-text-primary)] mt-0.5">
-                          {pilar.id === 'pilar-drones' ? 'SwellPro Perú' : pilar.id === 'pilar-energia' ? 'EcoFlow' : 'CR Tech Services'}
-                        </span>
-                      </div>
-                      
-                      <div className="flex items-center justify-center bg-white shadow-sm rounded-xl p-2 h-14 w-14 flex-shrink-0 border border-slate-100 overflow-hidden">
-                        {pilar.id === 'pilar-drones' ? (
-                          <img
-                            src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779807248/SwellProPeru_logo-01-01_pub6gp.png"
-                            alt="Logo SwellPro"
-                            className="h-10 w-10 rounded-full object-contain"
-                            referrerPolicy="no-referrer"
-                          />
-                        ) : pilar.id === 'pilar-energia' ? (
-                          <div className="w-12 h-12 flex items-center justify-center">
+                    <div className="mb-6 relative z-10 w-full">
+                      {pilar.id === 'pilar-drones' && (
+                        <div className="flex items-center gap-4 bg-slate-50/70 p-3 rounded-2xl border border-slate-100/80">
+                          <div className="h-14 w-14 rounded-full bg-white shadow-sm border border-slate-100 p-1 flex items-center justify-center overflow-hidden flex-shrink-0">
                             <img
-                              src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422215/ecoflow_logonegro_fondotransparente_kfn0f6.png"
-                              alt="Logo EcoFlow"
-                              className="h-6 w-auto object-contain"
+                              src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779807248/SwellProPeru_logo-01-01_pub6gp.png"
+                              alt="Logo SwellPro"
+                              className="h-full w-full object-contain rounded-full"
                               referrerPolicy="no-referrer"
                             />
                           </div>
-                        ) : (
-                          <img
-                            src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782426594/CR_Tech_Sevices_Logo_powukx.png"
-                            alt="Logo CR Tech"
-                            className="h-11 w-11 object-contain rounded-lg"
-                            referrerPolicy="no-referrer"
-                          />
-                        )}
-                      </div>
+                          <div className="flex flex-col text-left">
+                            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Canal Oficial</span>
+                            <span className="text-xs font-extrabold text-[var(--color-text-primary)]">SwellPro Perú</span>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {pilar.id === 'pilar-energia' && (
+                        <div className="flex items-center bg-slate-50/70 p-3 rounded-2xl border border-slate-100/80 w-full">
+                          <div className="h-14 w-full bg-white shadow-sm border border-slate-100 px-4 rounded-xl flex items-center justify-center overflow-hidden">
+                            <img
+                              src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422215/ecoflow_logonegro_fondotransparente_kfn0f6.png"
+                              alt="Logo EcoFlow"
+                              className="h-6 w-auto object-contain max-w-[150px]"
+                              referrerPolicy="no-referrer"
+                            />
+                          </div>
+                        </div>
+                      )}
+
+                      {pilar.id === 'pilar-servicios' && (
+                        <div className="flex items-center gap-4 bg-slate-50/70 p-3 rounded-2xl border border-slate-100/80">
+                          <div className="h-14 w-14 bg-white shadow-sm border border-slate-100 rounded-xl p-1.5 flex items-center justify-center overflow-hidden flex-shrink-0">
+                            <img
+                              src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782426594/CR_Tech_Sevices_Logo_powukx.png"
+                              alt="Logo CR Tech"
+                              className="h-full w-full object-contain rounded-lg"
+                              referrerPolicy="no-referrer"
+                            />
+                          </div>
+                          <div className="flex flex-col text-left">
+                            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Infraestructura</span>
+                            <span className="text-xs font-extrabold text-[var(--color-text-primary)]">CR Tech Services</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 

@@ -48,36 +48,41 @@ export default function Drones() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column: Visual Drone showcase with vertical 4:5 layout */}
-          <div className="lg:col-span-5 fade-up relative bg-white border border-[var(--color-border)] rounded-2xl p-6 shadow-sm overflow-hidden aspect-[4/5] h-[500px] sm:h-[550px] md:h-[600px] lg:h-[580px] flex flex-col justify-between group w-full max-w-md mx-auto">
-            {/* HUD Status Bar (Top) */}
-            <div className="flex items-center justify-between font-mono text-[10px] text-[var(--color-text-muted)] z-10 mb-4">
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-blue)] animate-ping"></span>
-                <span>TECNOLOGÍA MARINA // DRONES SWELLPRO</span>
-              </div>
-              <div>IP67 WATERPROOF</div>
-            </div>
-
+          <div className="lg:col-span-5 fade-up relative bg-white border border-[var(--color-border)] rounded-3xl p-3 shadow-lg overflow-hidden aspect-[4/5] h-[550px] sm:h-[600px] lg:h-[620px] flex flex-col group w-full max-w-md mx-auto hover:shadow-[0_20px_40px_rgba(0,131,253,0.12)] transition-all duration-500">
             {/* Real Product Photo with Premium Tech Frame */}
-            <div className="relative flex-1 w-full h-full overflow-hidden rounded-xl bg-slate-900">
+            <div className="relative w-full h-full overflow-hidden rounded-2xl bg-slate-900">
               <img
                 src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779816468/SwellPro-Fisherman-MAX-Heavy-LiftFishing-Drone-01_400x_obdrsp.webp"
                 alt="SwellPro Fisherman MAX Drone"
-                className="absolute inset-0 w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 pointer-events-none" />
               
-              {/* Semi-transparent tech badge over image */}
-              <div className="absolute bottom-4 left-4 right-4 bg-black/75 backdrop-blur-sm border border-white/10 px-3 py-2 rounded-lg text-[9px] font-mono text-[#00c3fe] font-bold tracking-widest uppercase text-center">
-                Fisherman MAX · Resistente al Agua y Arena
+              {/* HUD Overlay Top */}
+              <div className="absolute top-4 inset-x-4 flex items-center justify-between font-mono text-[9px] text-slate-300 z-10 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span className="font-bold tracking-wider">SWELLPRO CANAL OFICIAL</span>
+                </div>
+                <span className="font-bold">IP67 WATERPROOF</span>
               </div>
-            </div>
 
-            {/* HUD Status Bar (Bottom) */}
-            <div className="flex items-center justify-between font-mono text-[10px] text-[var(--color-text-muted)] z-10 pt-4 border-t border-[var(--color-border)] mt-4">
-              <div>SOPORTE LOCAL EN PERÚ</div>
-              <div className="text-[var(--color-accent-blue)] font-bold">LIMA, PERÚ</div>
+              {/* HUD Overlay Bottom */}
+              <div className="absolute bottom-4 inset-x-4 flex flex-col gap-2 z-10">
+                <div className="bg-black/60 backdrop-blur-md border border-white/10 p-3.5 rounded-xl">
+                  <div className="text-[10px] font-mono text-[#00c3fe] font-bold tracking-widest uppercase mb-1">
+                    FISHERMAN MAX HEAVY LIFT
+                  </div>
+                  <div className="text-xs text-slate-200 leading-snug font-sans">
+                    Resistente al agua de mar, viento extremo y arena. Capacitado para liberación de cargas pesadas y salvamento.
+                  </div>
+                </div>
+                <div className="flex items-center justify-between font-mono text-[8px] text-slate-400 bg-black/40 backdrop-blur-md px-2 py-1.5 rounded-md border border-white/5">
+                  <span>SOPORTE LOCAL EN PERÚ</span>
+                  <span className="text-[var(--color-accent-blue)] font-bold">LIMA, PERÚ</span>
+                </div>
+              </div>
             </div>
           </div>
 
