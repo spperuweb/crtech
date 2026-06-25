@@ -1,0 +1,6 @@
+{
+  "name": "CR Technologies & Services",
+  "description": "Sitio corporativo premium para CR Technologies & Services, representante de SwellPro y EcoFlow en Perú.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
