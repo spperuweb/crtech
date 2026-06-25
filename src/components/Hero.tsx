@@ -153,9 +153,9 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-[100dvh] w-full flex items-center justify-start overflow-hidden pt-28 md:pt-32"
       style={{
-        backgroundImage: "url('/src/assets/images/drone_hero_clean_1782415118211.jpg')",
+        backgroundImage: "url('https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782425784/hf_20260625_220316_cd499d2c-bf24-455a-931d-2cc34badf3fc_wq74et.png')",
         backgroundSize: 'cover',
-        backgroundPosition: 'right 30% center',
+        backgroundPosition: 'center',
       }}
     >
       {/* Background Canvas */}
