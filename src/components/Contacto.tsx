@@ -35,7 +35,7 @@ export default function Contacto() {
     'Sistemas de energía autónoma EcoFlow',
     'Consultoría y servicios TI corporativos',
     'Soporte técnico certificado y directo',
-    'Soluciones para proyectos en Chancay'
+    'Soluciones para proyectos tecnológicos en Perú'
   ];
 
   const handleWhatsAppRedirect = (line: 'drones' | 'energia' | 'ti' | 'general') => {
@@ -102,7 +102,7 @@ export default function Contacto() {
             <div className="space-y-3 mb-10">
               <div className="flex items-center gap-3 p-3.5 bg-white border border-[var(--color-border)] rounded-xl shadow-sm">
                 <MapPin size={16} className="text-[var(--color-accent-blue)] flex-shrink-0" />
-                <span className="text-sm font-semibold text-[var(--color-text-primary)]">Lima & Chancay, Perú</span>
+                <span className="text-sm font-semibold text-[var(--color-text-primary)]">Lima, Perú</span>
               </div>
               <div className="flex items-center gap-3 p-3.5 bg-white border border-[var(--color-border)] rounded-xl shadow-sm">
                 <Mail size={16} className="text-[var(--color-accent-blue)] flex-shrink-0" />
@@ -170,9 +170,9 @@ export default function Contacto() {
                   <input
                     type="text"
                     id="empresa-contacto"
-                    placeholder="Ej. Operaciones Chancay S.A.C."
+                    placeholder="Ej. Operaciones del Pacífico S.A.C."
                     value={empresa}
-                    onChange={(e) => setFormDataCompany(e)}
+                    onChange={(e) => setEmpresa(e.target.value)}
                     className="bg-slate-50 focus:bg-white border border-[var(--color-border)] focus:border-[var(--color-accent-blue)] focus:shadow-[0_4px_12px_rgba(0,92,230,0.05)] rounded-xl py-3 px-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] outline-none transition-all duration-300"
                   />
                 </div>

@@ -181,7 +181,7 @@ export default function Hero() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00c3fe]"></span>
             </span>
             <span className="text-[#e9ebef] font-bold text-[10px] sm:text-xs tracking-wider uppercase font-sans">
-              Afiliado a la Cámara de Comercio, Industrias y Turismos del Megapuerto de Chancay
+              Soporte Técnico Especializado y Garantía Local - Lima, Perú
             </span>
           </div>
 
@@ -222,12 +222,12 @@ export default function Hero() {
               <div className="text-[10px] font-bold text-[#e9ebef]/60 uppercase tracking-wider mt-1">Especializadas</div>
             </div>
             <div>
-              <div className="font-display font-extrabold text-2xl md:text-3xl text-[#00a870]">+10 Años</div>
-              <div className="text-[10px] font-bold text-[#e9ebef]/60 uppercase tracking-wider mt-1">De Trayectoria</div>
+              <div className="font-display font-extrabold text-2xl md:text-3xl text-[#00a870]">Soporte Perú</div>
+              <div className="text-[10px] font-bold text-[#e9ebef]/60 uppercase tracking-wider mt-1">Garantía & Asesoría</div>
             </div>
             <div>
-              <div className="font-display font-extrabold text-2xl md:text-3xl text-white">Nacional</div>
-              <div className="text-[10px] font-bold text-[#e9ebef]/60 uppercase tracking-wider mt-1">Soporte Local</div>
+              <div className="font-display font-extrabold text-2xl md:text-3xl text-white">Lima, Perú</div>
+              <div className="text-[10px] font-bold text-[#e9ebef]/60 uppercase tracking-wider mt-1">Presencia Física</div>
             </div>
           </div>
 

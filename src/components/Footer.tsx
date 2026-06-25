@@ -91,7 +91,7 @@ export default function Footer() {
             <div className="flex flex-col gap-3.5 text-xs font-semibold text-[var(--color-text-secondary)] mb-6">
               <div className="flex items-start gap-2">
                 <MapPin size={14} className="text-[var(--color-accent-blue)] mt-0.5" />
-                <span>Lima & Chancay, Perú</span>
+                <span>Lima, Perú</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail size={14} className="text-[var(--color-accent-blue)]" />

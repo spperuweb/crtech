@@ -45,99 +45,44 @@ export default function Drones() {
         </div>
 
         {/* 2-Column Content Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Visual Blueprint Animation */}
-          <div className="fade-up relative bg-white border border-[var(--color-border)] rounded-2xl p-6 shadow-sm overflow-hidden aspect-video md:aspect-[4/3] flex flex-col justify-between">
+          {/* Left Column: Visual Drone showcase with vertical 4:5 layout */}
+          <div className="lg:col-span-5 fade-up relative bg-white border border-[var(--color-border)] rounded-2xl p-6 shadow-sm overflow-hidden aspect-[4/5] h-[500px] sm:h-[550px] md:h-[600px] lg:h-[580px] flex flex-col justify-between group w-full max-w-md mx-auto">
             {/* HUD Status Bar (Top) */}
-            <div className="flex items-center justify-between font-mono text-[10px] text-[var(--color-text-muted)] z-10">
+            <div className="flex items-center justify-between font-mono text-[10px] text-[var(--color-text-muted)] z-10 mb-4">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-blue)] animate-ping"></span>
-                <span>SYSTEM ACTIVE // TELEMETRY LINK</span>
+                <span>TECNOLOGÍA MARINA // DRONES SWELLPRO</span>
               </div>
-              <div>LAT: -11.9890 | LON: -77.0243</div>
+              <div>IP67 WATERPROOF</div>
             </div>
 
-            {/* Central Animated Blueprint Graphic Container */}
-            <div className="relative flex-1 w-full flex items-center justify-center py-6">
-              {/* Drone SVG Blueprint outline */}
-              <svg 
-                className="w-4/5 h-4/5 text-[var(--color-accent-blue)] opacity-60"
-                viewBox="0 0 200 150" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1"
-              >
-                {/* Tech Radar Rings */}
-                <circle cx="100" cy="75" r="50" stroke="rgba(0,92,230,0.06)" strokeDasharray="3 3" />
-                <circle cx="100" cy="75" r="30" stroke="rgba(0,92,230,0.1)" />
-                <circle cx="100" cy="75" r="15" stroke="rgba(0,92,230,0.15)" strokeDasharray="1 3" />
-
-                {/* Drone Core Crosshairs */}
-                <line x1="100" y1="15" x2="100" y2="135" stroke="rgba(0,92,230,0.06)" strokeDasharray="4 4" />
-                <line x1="20" y1="75" x2="180" y2="75" stroke="rgba(0,92,230,0.06)" strokeDasharray="4 4" />
-
-                {/* Drone Body (SwellPro style Quadcopter) */}
-                {/* Center shell */}
-                <rect x="85" y="60" width="30" height="30" rx="6" strokeWidth="1.5" />
-                <circle cx="100" cy="75" r="6" strokeWidth="1.5" />
-                
-                {/* Left/Right/Top/Bottom arms */}
-                {/* Top-Left arm */}
-                <path d="M85,60 L45,30" strokeWidth="1.5" />
-                <circle cx="45" cy="30" r="8" strokeWidth="1" />
-                <line x1="35" y1="30" x2="55" y2="30" strokeWidth="2" /> {/* Rotor blade */}
-
-                {/* Top-Right arm */}
-                <path d="M115,60 L155,30" strokeWidth="1.5" />
-                <circle cx="155" cy="30" r="8" strokeWidth="1" />
-                <line x1="145" y1="30" x2="165" y2="30" strokeWidth="2" /> {/* Rotor blade */}
-
-                {/* Bottom-Left arm */}
-                <path d="M85,90 L45,120" strokeWidth="1.5" />
-                <circle cx="45" cy="120" r="8" strokeWidth="1" />
-                <line x1="35" y1="120" x2="55" y2="120" strokeWidth="2" /> {/* Rotor blade */}
-
-                {/* Bottom-Right arm */}
-                <path d="M115,90 L155,120" strokeWidth="1.5" />
-                <circle cx="155" cy="120" r="8" strokeWidth="1" />
-                <line x1="145" y1="120" x2="165" y2="120" strokeWidth="2" /> {/* Rotor blade */}
-
-                {/* Landing skids */}
-                <path d="M75,90 L75,105 L125,105 L125,90" strokeWidth="1.2" />
-                <line x1="65" y1="110" x2="135" y2="110" strokeWidth="1.5" strokeLinecap="round" />
-
-                {/* Payload hook/gimbal representation */}
-                <circle cx="100" cy="115" r="4" fill="rgba(0,92,230,0.2)" />
-                <line x1="100" y1="90" x2="100" y2="111" strokeWidth="1.2" />
-              </svg>
-
-              {/* Vertical scanning scan line overlay */}
-              <div 
-                className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--color-accent-blue)] to-transparent opacity-80"
-                style={{
-                  animation: 'scan-motion 4s linear infinite',
-                  boxShadow: '0 0 15px var(--color-accent-blue)'
-                }}
+            {/* Real Product Photo with Premium Tech Frame */}
+            <div className="relative flex-1 w-full h-full overflow-hidden rounded-xl bg-slate-900">
+              <img
+                src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779816468/SwellPro-Fisherman-MAX-Heavy-LiftFishing-Drone-01_400x_obdrsp.webp"
+                alt="SwellPro Fisherman MAX Drone"
+                className="absolute inset-0 w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-105"
+                referrerPolicy="no-referrer"
               />
-              <style>{`
-                @keyframes scan-motion {
-                  0% { top: 5%; }
-                  50% { top: 95%; }
-                  100% { top: 5%; }
-                }
-              `}</style>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
+              
+              {/* Semi-transparent tech badge over image */}
+              <div className="absolute bottom-4 left-4 right-4 bg-black/75 backdrop-blur-sm border border-white/10 px-3 py-2 rounded-lg text-[9px] font-mono text-[#00c3fe] font-bold tracking-widest uppercase text-center">
+                Fisherman MAX · Resistente al Agua y Arena
+              </div>
             </div>
 
             {/* HUD Status Bar (Bottom) */}
-            <div className="flex items-center justify-between font-mono text-[10px] text-[var(--color-text-muted)] z-10 pt-4 border-t border-[var(--color-border)]">
-              <div>HD LINK: STABLE // FPS: 60</div>
-              <div className="text-[var(--color-accent-blue)] font-bold">SYS STATUS: ONLINE (100%)</div>
+            <div className="flex items-center justify-between font-mono text-[10px] text-[var(--color-text-muted)] z-10 pt-4 border-t border-[var(--color-border)] mt-4">
+              <div>SOPORTE LOCAL EN PERÚ</div>
+              <div className="text-[var(--color-accent-blue)] font-bold">LIMA, PERÚ</div>
             </div>
           </div>
 
           {/* Right Column: Services List */}
-          <div className="flex flex-col justify-center">
+          <div className="lg:col-span-7 flex flex-col justify-center">
             <div className="space-y-6">
               {droneServicesData.map((service, idx) => (
                 <div 
@@ -161,16 +106,16 @@ export default function Drones() {
               ))}
             </div>
 
-            {/* CTA External Link Button */}
+            {/* CTA External Link Button (Striking Gradient) */}
             <div className="mt-10 fade-up delay-5">
               <a
                 href="https://swellpro.pe"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="cursor-pointer inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-text-primary)] bg-white border border-[var(--color-border)] hover:bg-[var(--color-bg-deep)] py-3 px-6 rounded-xl transition-all duration-300 shadow-sm group"
+                className="cursor-pointer inline-flex items-center gap-3 text-sm font-extrabold text-white bg-gradient-to-r from-[#0083fd] to-[#00c3fe] hover:shadow-[0_10px_30px_rgba(0,131,253,0.35)] hover:scale-[1.03] active:scale-95 py-4 px-8 rounded-xl transition-all duration-300 shadow-md group"
               >
-                Visitar SwellPro Perú
-                <ExternalLink size={14} className="text-[var(--color-accent-blue)] group-hover:translate-x-0.5 transition-transform" />
+                Explorar Catálogo SwellPro Perú
+                <ExternalLink size={16} className="text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
           </div>

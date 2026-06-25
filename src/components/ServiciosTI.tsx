@@ -151,6 +151,77 @@ export default function ServiciosTI() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
+        {/* Division Landing Banner: Official Separation to Servicios TI */}
+        <div className="mb-20 fade-up bg-slate-950 rounded-3xl overflow-hidden shadow-xl border border-slate-900 text-left relative">
+          {/* Tech background overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,195,254,0.15),transparent_60%)] pointer-events-none" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Column: Vertical Landing Intro */}
+            <div className="lg:col-span-6 p-8 md:p-12 lg:p-16 flex flex-col justify-center text-white relative z-10">
+              <span className="text-[#00c3fe] text-xs font-bold uppercase tracking-[0.25em] mb-3 inline-flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#00c3fe]" />
+                LÍNEA DE NEGOCIO 03
+              </span>
+              <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-tight mb-4">
+                Servicios TI <br className="hidden sm:inline" />
+                <span className="bg-gradient-to-r from-[#00c3fe] to-[#005CE6] bg-clip-text text-transparent">
+                  Enterprise Tech
+                </span>
+              </h2>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                Infraestructura TI, ciberseguridad avanzada, videovigilancia inteligente y automatización para empresas. Garantizamos continuidad operativa con ingenieros certificados y soporte local in situ.
+              </p>
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <span className="text-xs bg-white/5 border border-white/10 px-3 py-1.5 rounded-full font-semibold text-slate-200">
+                  🛡️ Ciberseguridad & Auditoría
+                </span>
+                <span className="text-xs bg-white/5 border border-white/10 px-3 py-1.5 rounded-full font-semibold text-slate-200">
+                  🌐 Redes & Conectividad IP
+                </span>
+              </div>
+              <div className="mt-2 flex flex-wrap gap-4 items-center">
+                <a
+                  href="#contacto"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById('contacto');
+                    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+                  }}
+                  className="cursor-pointer inline-flex items-center gap-2 bg-gradient-to-r from-[#00c3fe] to-[#005CE6] hover:shadow-[0_10px_30px_rgba(0,195,254,0.3)] hover:scale-[1.03] active:scale-95 text-white font-extrabold text-sm py-4 px-8 rounded-xl transition-all duration-300 shadow-md group"
+                >
+                  Ver Catálogo de Servicios TI
+                  <span className="text-white group-hover:translate-x-0.5 transition-transform font-mono">→</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: CR Tech Services Square Logo as Supporting Image */}
+            <div className="lg:col-span-6 h-64 lg:h-[400px] w-full bg-[#0d1527] flex items-center justify-center relative overflow-hidden p-8 border-l border-slate-900">
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#020813] to-[#111e3b] opacity-90 pointer-events-none" />
+              {/* Glowing decorative circles */}
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#00c3fe]/10 rounded-full blur-2xl" />
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#005CE6]/10 rounded-full blur-2xl" />
+              
+              <div className="relative z-10 flex flex-col items-center gap-4 max-w-xs text-center">
+                <div className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 shadow-lg">
+                  <img
+                    src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782426594/CR_Tech_Sevices_Logo_powukx.png"
+                    alt="CR Tech Services Logo"
+                    className="w-32 h-32 object-contain rounded-xl"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-display font-bold text-lg text-white">Soporte Corporativo</h4>
+                  <p className="text-xs text-slate-400 mt-1">Soluciones administradas de TI & consultoría experta</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Section Header */}
         <div className="fade-up flex flex-col items-center text-center max-w-3xl mx-auto mb-16">
           <span className="text-[var(--color-accent-blue)] text-xs font-bold uppercase tracking-[0.15em] mb-3">
@@ -212,7 +283,7 @@ export default function ServiciosTI() {
               Evaluamos tu infraestructura sin costo inicial.
             </h4>
             <p className="text-sm text-[var(--color-text-secondary)] max-w-xl">
-              Agenda una sesión con nuestro equipo técnico en Chancay o de forma remota para diagnosticar el estado de tus sistemas y redes.
+              Agenda una sesión con nuestro equipo técnico en Lima o de forma remota para diagnosticar el estado de tus sistemas y redes.
             </p>
           </div>
           <button

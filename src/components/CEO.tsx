@@ -109,7 +109,7 @@ export default function CEO() {
             <div className="flex flex-wrap items-center gap-3 mb-8">
               <div className="bg-white border border-[var(--color-border)] shadow-sm inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs text-[var(--color-text-secondary)]">
                 <Award size={14} className="text-[var(--color-accent-blue)]" />
-                <span>Cámara de Comercio de Chancay</span>
+                <span>Cámara de Comercio (Afiliado Activo)</span>
               </div>
               <div className="bg-white border border-[var(--color-border)] shadow-sm inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs text-[var(--color-text-secondary)]">
                 <span className="relative flex h-2 w-2">

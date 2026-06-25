@@ -117,6 +117,65 @@ export default function Energia() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
+        {/* Division Landing Banner: Official Separation from Drones */}
+        <div className="mb-20 fade-up bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-slate-800 text-left relative">
+          {/* Subtle background tech line */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Column: Vertical Landing Intro */}
+            <div className="lg:col-span-6 p-8 md:p-12 lg:p-16 flex flex-col justify-center text-white relative z-10">
+              <span className="text-[#00c896] text-xs font-bold uppercase tracking-[0.25em] mb-3 inline-flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#00c896]" />
+                LÍNEA DE NEGOCIO 02
+              </span>
+              <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-tight mb-4">
+                EcoFlow <br className="hidden sm:inline" />
+                <span className="bg-gradient-to-r from-[#00c896] to-[#00c3fe] bg-clip-text text-transparent">
+                  Energía Autónoma
+                </span>
+              </h2>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                Ingresa al ecosistema de suministro inteligente y solar más avanzado de la industria. Diseñado para operaciones continuas en campamentos, ingeniería civil, telecomunicaciones y flotas críticas en todo el Perú.
+              </p>
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <span className="text-xs bg-white/10 border border-white/20 px-3 py-1.5 rounded-full font-semibold text-slate-200">
+                  ⚡ Recarga X-Stream Ultrarrápida
+                </span>
+                <span className="text-xs bg-white/10 border border-white/20 px-3 py-1.5 rounded-full font-semibold text-slate-200">
+                  ☀️ Tecnología Solar IP68
+                </span>
+              </div>
+              <div className="mt-2 flex flex-wrap gap-4 items-center">
+                <a
+                  href="#contacto"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById('contacto');
+                    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+                  }}
+                  className="cursor-pointer inline-flex items-center gap-2 bg-gradient-to-r from-[#00c896] to-[#00c3fe] hover:shadow-[0_10px_30px_rgba(0,200,150,0.3)] hover:scale-[1.03] active:scale-95 text-white font-extrabold text-sm py-4 px-8 rounded-xl transition-all duration-300 shadow-md group"
+                >
+                  Explorar Catálogo de Autonomía
+                  <span className="text-white group-hover:translate-x-0.5 transition-transform font-mono">→</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: Stunning Solar Panel Image */}
+            <div className="lg:col-span-6 h-64 lg:h-[450px] w-full relative overflow-hidden">
+              <img
+                src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422176/Ecoflow_paneles_solares-2_nzvchw.png"
+                alt="EcoFlow Paneles Solares y Equipamiento"
+                className="absolute inset-0 w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/40 to-transparent hidden lg:block" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent lg:hidden" />
+            </div>
+          </div>
+        </div>
+
         {/* BLOCK A: Storytelling Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
           <div className="lg:col-span-5 fade-up flex flex-col gap-6">
@@ -124,17 +183,20 @@ export default function Energia() {
               <span className="text-[var(--color-accent-green)] text-xs font-bold uppercase tracking-[0.15em] mb-3 block">
                 Distribuidor Autorizado
               </span>
-              <h2 className="font-display font-bold text-3xl sm:text-4xl text-[var(--color-text-primary)] tracking-tight leading-tight">
+              <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[var(--color-text-primary)] tracking-tight leading-tight">
                 Autonomía energética donde otros no llegan.
               </h2>
             </div>
             
             {/* Elegant transparent EcoFlow partner logo */}
-            <div className="bg-slate-100/50 backdrop-blur-sm border border-[var(--color-border)] rounded-2xl p-4 w-fit flex items-center justify-center shadow-sm">
+            <div className="flex items-center gap-4 bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_10px_30px_rgba(0,0,0,0.04)] w-full max-w-sm mt-2 hover:border-[#00c896]/30 transition-all duration-300 group">
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex-shrink-0 border-r border-slate-150 pr-4">
+                Socio <br />Oficial
+              </div>
               <img
                 src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422215/ecoflow_logonegro_fondotransparente_kfn0f6.png"
-                alt="EcoFlow Logo"
-                className="h-8 w-auto object-contain brightness-95"
+                alt="EcoFlow Logo Autorizado"
+                className="h-9 w-auto object-contain max-w-[180px] transition-transform duration-300 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
             </div>
