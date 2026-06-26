@@ -183,12 +183,7 @@ export default function ServiciosTI() {
               </div>
               <div className="mt-2 flex flex-wrap gap-4 items-center">
                 <a
-                  href="#contacto"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const el = document.getElementById('contacto');
-                    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
-                  }}
+                  href="servicios-ti.html"
                   className="cursor-pointer inline-flex items-center gap-2 bg-gradient-to-r from-[#00c3fe] to-[#005CE6] hover:shadow-[0_10px_30px_rgba(0,195,254,0.3)] hover:scale-[1.03] active:scale-95 text-white font-extrabold text-sm py-4 px-8 rounded-xl transition-all duration-300 shadow-md group"
                 >
                   Ver Catálogo de Servicios TI

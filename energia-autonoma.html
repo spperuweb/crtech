@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782419700/favicon_xuwimd.png">
+  <title>Energía Autónoma EcoFlow | CR Technologies & Services</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: 'var(--navy)',
+            electric: 'var(--electric)',
+            cyan: 'var(--cyan)',
+            white: 'var(--white)',
+            'surface-1': 'var(--surface-1)',
+            'surface-2': 'var(--surface-2)',
+            slate: {
+              300: 'var(--text-muted)',
+              400: 'var(--text-muted)',
+            }
+          },
+          fontFamily: {
+            display: ['Barlow', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --navy: #00051e;
+      --electric: #0083fd;
+      --cyan: #00c3fe;
+      --white: #fefbfc;
+      --surface-1: #040c2c;
+      --surface-2: #071040;
+      --text-muted: rgba(254,251,252,0.65);
+      --text-faint: rgba(254,251,252,0.35);
+      --border: rgba(0,131,253,0.18);
+      --glow-blue: rgba(0,131,253,0.25);
+      --glow-cyan: rgba(0,195,254,0.20);
+      
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --text-hero: clamp(2.5rem, 1rem + 4vw, 5rem);
+    }
+
+    [data-theme="light"] {
+      --navy: #f0f4ff;
+      --surface-1: #ffffff;
+      --surface-2: #e8eeff;
+      --white: #0a0f2e;
+      --text-muted: rgba(10,15,46,0.65);
+      --text-faint: rgba(10,15,46,0.35);
+      --border: rgba(0,131,253,0.2);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--navy);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1), color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Shimmer button */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      background: var(--electric);
+      color: #fefbfc;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 300ms ease;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: left 500ms ease;
+    }
+    .btn-primary:hover::after {
+      left: 150%;
+    }
+    .btn-primary:hover {
+      background: #0074e4;
+      box-shadow: 0 0 24px rgba(0,131,253,0.5);
+      transform: scale(1.02);
+    }
+
+    /* Ghost button */
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--text-faint);
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 300ms ease;
+    }
+    .btn-ghost:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background-color: rgba(0,195,254,0.05);
+    }
+
+    /* Card producto */
+    .product-card {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: box-shadow 300ms ease, transform 300ms ease, border-color 300ms ease;
+    }
+    .product-card:hover {
+      box-shadow: 0 0 30px var(--glow-cyan), 0 0 60px var(--glow-blue);
+      transform: translateY(-4px);
+      border-color: var(--cyan);
+    }
+
+    /* Mesh gradient hero */
+    .hero-bg {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(0,131,253,0.18) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 80% 20%, rgba(0,195,254,0.12) 0%, transparent 55%), radial-gradient(ellipse 50% 50% at 60% 80%, rgba(0,5,30,0.9) 0%, transparent 70%);
+      animation: meshPulse 8s ease-in-out infinite;
+      z-index: 1;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(0deg, rgba(0,131,253,0.03) 0px, rgba(0,131,253,0.03) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(0,131,253,0.03) 0px, rgba(0,131,253,0.03) 1px, transparent 1px, transparent 40px);
+      pointer-events: none;
+      z-index: 2;
+    }
+    @keyframes meshPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    /* Navbar transitions */
+    nav {
+      transition: background-color 300ms, backdrop-filter 300ms, border-color 300ms;
+    }
+    nav.scrolled {
+      background: rgba(240, 244, 255, 0.9) !important;
+      backdrop-filter: blur(20px);
+      border-color: rgba(0, 131, 253, 0.1) !important;
+    }
+
+    /* Product card image wrapper background override for light mode */
+    .bg-slate-950\/40 {
+      background-color: var(--surface-2) !important;
+    }
+
+    /* Text Clamps */
+    .text-clamp-hero { font-size: var(--text-hero); line-height: 1.1; }
+    .text-clamp-2xl { font-size: var(--text-2xl); }
+    .text-clamp-xl { font-size: var(--text-xl); }
+    .text-clamp-lg { font-size: var(--text-lg); }
+    .text-clamp-base { font-size: var(--text-base); }
+    .text-clamp-sm { font-size: var(--text-sm); }
+    .text-clamp-xs { font-size: var(--text-xs); }
+  </style>
+</head>
+<body class="overflow-x-hidden">
+
+  <!-- HEADER & NAVIGATION -->
+  <header class="fixed top-0 left-0 right-0 z-50">
+    <nav class="w-full border-b border-transparent py-4 px-6 md:px-12 flex items-center justify-between bg-transparent">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-2">
+        <img id="nav-logo" src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782419695/CRTech_LogoHorizontal_BackLight_leqyyi.png" alt="CR Technologies Logo" class="h-9 w-auto" referrerPolicy="no-referrer">
+      </a>
+
+      <!-- Nav Links -->
+      <div class="hidden md:flex items-center gap-8 font-medium">
+        <a href="index.html" class="flex items-center gap-1.5 hover:text-cyan transition-colors text-clamp-sm">
+          <span>←</span> Inicio principal
+        </a>
+        <a href="#catalogo" class="hover:text-cyan transition-colors text-clamp-sm">Catálogo</a>
+        <a href="#paneles" class="hover:text-cyan transition-colors text-clamp-sm">Paneles Solares</a>
+        <a href="#especializados" class="hover:text-cyan transition-colors text-clamp-sm">Dispositivos Especiales</a>
+        <a href="#casos" class="hover:text-cyan transition-colors text-clamp-sm">Casos de Uso</a>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-4">
+        <a href="#contacto" class="btn-primary py-2 px-5 rounded-lg text-clamp-xs font-bold uppercase tracking-wider hidden sm:inline-block">
+          Cotizar Solución
+        </a>
+
+        <!-- Mobile Menu Trigger -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-cyan hover:bg-surface-2 rounded-lg transition-colors cursor-pointer" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Nav menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-navy/95 backdrop-blur-md border-b border-electric/15 w-full py-6 px-8 flex flex-col gap-4 font-medium transition-all duration-300">
+      <a href="index.html" class="flex items-center gap-1.5 text-cyan py-2 border-b border-white/5">
+        <span>←</span> Volver al Inicio
+      </a>
+      <a href="#catalogo" class="py-2 border-b border-white/5 hover:text-cyan transition-colors">Catálogo EcoFlow</a>
+      <a href="#paneles" class="py-2 border-b border-white/5 hover:text-cyan transition-colors">Paneles Solares</a>
+      <a href="#especializados" class="py-2 border-b border-white/5 hover:text-cyan transition-colors">Dispositivos Especiales</a>
+      <a href="#casos" class="py-2 border-b border-white/5 hover:text-cyan transition-colors">Casos de Uso</a>
+      <a href="#contacto" class="btn-primary py-3 rounded-xl text-center uppercase font-bold tracking-wider mt-4">Cotizar Solución</a>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    <!-- 1. HERO SECTION -->
+    <section class="hero-bg min-h-[90vh] flex items-center py-20 px-6 md:px-12 relative z-10">
+      <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20">
+        <!-- Hero Left Info -->
+        <div class="lg:col-span-7 flex flex-col items-start gap-6 text-left reveal">
+          <span class="text-xs font-semibold tracking-[0.15em] text-cyan bg-cyan/10 border border-cyan/20 py-1.5 px-4 rounded-full uppercase">
+            Vertical 02 · Energía Autónoma
+          </span>
+          <h1 class="text-clamp-hero font-display font-extrabold text-[var(--white)] tracking-tight">
+            Energía Portátil y <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan to-electric">Autonomía Total</span> en Campo
+          </h1>
+          <p class="text-clamp-base text-[rgba(254,251,252,0.85)] leading-relaxed max-w-xl font-sans">
+            Power stations, paneles solares y soluciones de recarga inteligente para drones, equipos profesionales y operaciones críticas en zonas sin acceso a la red eléctrica. Distribuidor oficial EcoFlow en Perú.
+          </p>
+          <div class="flex flex-wrap gap-4 mt-2">
+            <a href="#catalogo" class="btn-primary py-4 px-8 rounded-xl font-bold uppercase tracking-wider text-clamp-sm">
+              Ver Productos EcoFlow
+            </a>
+            <a href="#contacto" class="btn-ghost py-4 px-8 rounded-xl font-semibold text-clamp-sm">
+              Hablar con un Especialista
+            </a>
+          </div>
+
+          <!-- Official Partner Badge -->
+          <div class="flex items-center gap-3 mt-6 bg-white/5 backdrop-blur-md border border-white/10 px-4.5 py-3 rounded-2xl">
+            <div class="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
+            <span class="text-xs font-semibold text-emerald-400 tracking-wide uppercase">Distribuidor Autorizado en Perú</span>
+          </div>
+        </div>
+
+        <!-- Hero Right Graphic -->
+        <div class="lg:col-span-5 flex justify-center items-center relative reveal">
+          <div class="absolute w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] rounded-full bg-gradient-to-tr from-cyan/30 to-electric/10 blur-3xl pointer-events-none -z-10"></div>
+          <div class="relative group">
+            <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422177/Ecoflow_delta_PRO_g9xhmt.png" alt="EcoFlow Delta PRO" class="w-full max-w-md object-contain transform transition-transform duration-700 group-hover:scale-[1.03]" loading="lazy" width="450" height="450" referrerPolicy="no-referrer">
+            <!-- Floating specs badge -->
+            <div class="absolute -bottom-6 -right-2 sm:right-6 bg-surface-2/90 backdrop-blur-md border border-cyan/30 px-4 py-3 rounded-xl shadow-lg flex items-center gap-3">
+              <span class="font-display font-extrabold text-cyan text-xl sm:text-2xl">LFP</span>
+              <div class="text-left">
+                <span class="text-[9px] font-mono block text-slate-400">QUÍMICA AVANZADA</span>
+                <span class="text-xs font-bold block text-white">+10 Años de Vida Útil</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PROPUESTAS DE VALOR -->
+    <section class="py-20 px-6 md:px-12 max-w-7xl mx-auto w-full relative z-20">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Propuesta 1 -->
+        <div class="product-card p-8 flex flex-col gap-4 text-left reveal">
+          <div class="text-cyan w-10 h-10">
+            <!-- Flash / Energy SVG -->
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          </div>
+          <h3 class="font-display font-bold text-clamp-lg text-white">Sin límites geográficos</h3>
+          <p class="text-sm text-slate-400 leading-relaxed font-sans">
+            Lleva energía de alta potencia a cualquier ubicación: faenas mineras, campamentos, operaciones marítimas o misiones de rescate en zonas rurales alejadas de Lima.
+          </p>
+        </div>
+
+        <!-- Propuesta 2 -->
+        <div class="product-card p-8 flex flex-col gap-4 text-left reveal">
+          <div class="text-cyan w-10 h-10">
+            <!-- Shield SVG -->
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <h3 class="font-display font-bold text-clamp-lg text-white">Tecnología LFP certificada</h3>
+          <p class="text-sm text-slate-400 leading-relaxed font-sans">
+            Química LiFePO4 de grado aeroespacial que garantiza más de 3,000 ciclos de carga al 80% de capacidad, brindando confiabilidad óptima por más de 10 años continuos.
+          </p>
+        </div>
+
+        <!-- Propuesta 3 -->
+        <div class="product-card p-8 flex flex-col gap-4 text-left reveal">
+          <div class="text-cyan w-10 h-10">
+            <!-- Sun SVG -->
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+          </div>
+          <h3 class="font-display font-bold text-clamp-lg text-white">Carga solar inteligente</h3>
+          <p class="text-sm text-slate-400 leading-relaxed font-sans">
+            Sincronización solar de alta eficiencia con tecnología X-Stream patentada. Recarga tus power stations directo del sol en tiempos récord de hasta una hora.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. SECCIÓN ECOFLOW - SOCIO TECNOLÓGICO -->
+    <section class="py-20 px-6 md:px-12 bg-surface-1/50 border-y border-electric/10">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Left Content -->
+        <div class="lg:col-span-6 flex flex-col items-start text-left gap-6 reveal">
+          <span class="text-xs font-semibold tracking-wider text-cyan uppercase">Ecosistema Global de Autonomía</span>
+          <h2 class="font-display font-bold text-clamp-2xl text-white leading-tight">
+            EcoFlow: El Referente Líder en Estaciones de Energía Portátil
+          </h2>
+          <p class="text-slate-300 leading-relaxed font-sans text-clamp-base">
+            EcoFlow es pionero global en soluciones de energía limpia y sostenible. Con presencia activa en más de 100 países, más de 3 millones de usuarios y un diseño premiado a nivel internacional, es la elección lógica para operaciones exigentes que no pueden arriesgarse a cortes de energía.
+          </p>
+          
+          <!-- Awards list -->
+          <div class="flex flex-wrap gap-4 items-center mt-2">
+            <span class="text-[10px] font-bold text-cyan border border-cyan/20 bg-cyan/5 px-3 py-1.5 rounded-lg uppercase tracking-wider">CES Innovation Award</span>
+            <span class="text-[10px] font-bold text-cyan border border-cyan/20 bg-cyan/5 px-3 py-1.5 rounded-lg uppercase tracking-wider">Red Dot Winner 2022</span>
+            <span class="text-[10px] font-bold text-cyan border border-cyan/20 bg-cyan/5 px-3 py-1.5 rounded-lg uppercase tracking-wider">iF Design Award 2022</span>
+            <span class="text-[10px] font-bold text-cyan border border-cyan/20 bg-cyan/5 px-3 py-1.5 rounded-lg uppercase tracking-wider">TIME Best Invention</span>
+          </div>
+        </div>
+
+        <!-- Right Stats & Logo -->
+        <div class="lg:col-span-6 flex flex-col gap-8 reveal">
+          <!-- Logo container with rounded white background for contrast -->
+          <div class="bg-white p-6 rounded-2xl flex items-center justify-center max-w-sm mx-auto shadow-md border border-slate-200">
+            <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422215/ecoflow_logonegro_fondotransparente_kfn0f6.png" alt="Logo EcoFlow" class="h-8 sm:h-10 w-auto object-contain" referrerPolicy="no-referrer">
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-2 gap-6 max-w-md mx-auto w-full">
+            <div class="p-5 bg-surface-2/60 border border-border rounded-2xl text-left">
+              <span class="block font-display font-extrabold text-clamp-xl text-cyan">100+</span>
+              <span class="text-xs font-semibold text-slate-400 block uppercase mt-1">Países y Regiones</span>
+            </div>
+            <div class="p-5 bg-surface-2/60 border border-border rounded-2xl text-left">
+              <span class="block font-display font-extrabold text-clamp-xl text-cyan">3M+</span>
+              <span class="text-xs font-semibold text-slate-400 block uppercase mt-1">Usuarios Globales</span>
+            </div>
+            <div class="p-5 bg-surface-2/60 border border-border rounded-2xl text-left">
+              <span class="block font-display font-extrabold text-clamp-xl text-cyan">3,000+</span>
+              <span class="text-xs font-semibold text-slate-400 block uppercase mt-1">Ciclos de Vida Útil</span>
+            </div>
+            <div class="p-5 bg-surface-2/60 border border-border rounded-2xl text-left">
+              <span class="block font-display font-extrabold text-clamp-xl text-cyan">1 Hora</span>
+              <span class="text-xs font-semibold text-slate-400 block uppercase mt-1">Recarga Completa</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CATALOGO: SERIE RIVER (CONSUMO LIGERO Y PORTÁTIL) -->
+    <section id="catalogo" class="py-20 px-6 md:px-12 max-w-7xl mx-auto w-full">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <span class="text-xs font-semibold tracking-widest text-cyan uppercase">Portabilidad Extrema · Uso Ligero</span>
+        <h2 class="font-display font-extrabold text-clamp-2xl text-white mt-2 mb-4">Serie EcoFlow RIVER</h2>
+        <p class="text-slate-400 leading-relaxed font-sans text-clamp-base">
+          Estaciones de energía compactas y ultraligeras, optimizadas para recargas ágiles de equipos de campo, telecomunicaciones de emergencia y uso continuo al aire libre.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- River 3 UPS -->
+        <div class="product-card p-6 flex flex-col justify-between reveal">
+          <div>
+            <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+              <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422175/Ecoflow_river_oybgke.png" alt="EcoFlow River 3" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+              <span class="absolute top-3 right-3 bg-cyan/15 text-cyan text-[10px] font-bold px-2 py-1 rounded border border-cyan/20">LFP BATERÍA</span>
+            </div>
+            <h3 class="font-display font-bold text-clamp-lg text-white mb-1">River 3 UPS</h3>
+            <p class="text-xs text-slate-400 font-sans mb-4">La estación de respaldo ultra compacta con conmutación en milisegundos.</p>
+            
+            <div class="flex items-center gap-3 border-t border-border/50 pt-4 mb-4">
+              <div class="text-left">
+                <span class="text-[10px] font-mono text-slate-400 block">CAPACIDAD</span>
+                <span class="text-sm font-extrabold text-cyan font-display">245 Wh / 76.8K mAh</span>
+              </div>
+              <div class="h-6 w-px bg-border/50 mx-2"></div>
+              <div class="text-left">
+                <span class="text-[10px] font-mono text-slate-400 block">SALIDA CONTINUA</span>
+                <span class="text-sm font-extrabold text-white font-display">300W (X-Boost 600W)</span>
+              </div>
+            </div>
+          </div>
+          
+          <ul class="text-xs text-slate-300 space-y-2 mb-6 text-left">
+            <li class="flex items-center gap-2">✔ Química segura LFP LiFePO4 (3000 ciclos)</li>
+            <li class="flex items-center gap-2">✔ Peso ultra liviano de solo 3.55 kg</li>
+            <li class="flex items-center gap-2">✔ Respaldo automático tipo UPS continuo</li>
+          </ul>
+          
+          <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block">Cotizar Solución</a>
+        </div>
+
+        <!-- River 3 Plus -->
+        <div class="product-card p-6 flex flex-col justify-between reveal">
+          <div>
+            <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+              <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422174/Ecoflow_river2_scdu1t.png" alt="EcoFlow River 3 Plus" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+              <span class="absolute top-3 right-3 bg-cyan/15 text-cyan text-[10px] font-bold px-2 py-1 rounded border border-cyan/20">MÁS POTENCIA</span>
+            </div>
+            <h3 class="font-display font-bold text-clamp-lg text-white mb-1">River 3 Plus</h3>
+            <p class="text-xs text-slate-400 font-sans mb-4">Mayor rendimiento para consumos intermedios en movilidad extrema.</p>
+            
+            <div class="flex items-center gap-3 border-t border-border/50 pt-4 mb-4">
+              <div class="text-left">
+                <span class="text-[10px] font-mono text-slate-400 block">CAPACIDAD</span>
+                <span class="text-sm font-extrabold text-cyan font-display">286 Wh</span>
+              </div>
+              <div class="h-6 w-px bg-border/50 mx-2"></div>
+              <div class="text-left">
+                <span class="text-[10px] font-mono text-slate-400 block">SALIDA CONTINUA</span>
+                <span class="text-sm font-extrabold text-white font-display">600W (X-Boost 1200W)</span>
+              </div>
+            </div>
+          </div>
+          
+          <ul class="text-xs text-slate-300 space-y-2 mb-6 text-left">
+            <li class="flex items-center gap-2">✔ Recarga de pared ultrarrápida en 1 hora</li>
+            <li class="flex items-center gap-2">✔ Peso liviano optimizado de 4.7 kg</li>
+            <li class="flex items-center gap-2">✔ Excelente compatibilidad con paneles portátiles</li>
+          </ul>
+          
+          <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block">Cotizar Solución</a>
+        </div>
+
+        <!-- River 2 Pro -->
+        <div class="product-card p-6 flex flex-col justify-between reveal">
+          <div>
+            <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+              <!-- Replaced with dynamic fallback or same range image as provided -->
+              <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422175/Ecoflow_river_oybgke.png" alt="EcoFlow River 2 Pro" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+              <span class="absolute top-3 right-3 bg-cyan/15 text-cyan text-[10px] font-bold px-2 py-1 rounded border border-cyan/20">CAPACIDAD TOP</span>
+            </div>
+            <h3 class="font-display font-bold text-clamp-lg text-white mb-1">River 2 Pro</h3>
+            <p class="text-xs text-slate-400 font-sans mb-4">El rey de la portabilidad, con la mayor autonomía de la línea ligera.</p>
+            
+            <div class="flex items-center gap-3 border-t border-border/50 pt-4 mb-4">
+              <div class="text-left">
+                <span class="text-[10px] font-mono text-slate-400 block">CAPACIDAD</span>
+                <span class="text-sm font-extrabold text-cyan font-display">768 Wh</span>
+              </div>
+              <div class="h-6 w-px bg-border/50 mx-2"></div>
+              <div class="text-left">
+                <span class="text-[10px] font-mono text-slate-400 block">SALIDA CONTINUA</span>
+                <span class="text-sm font-extrabold text-white font-display">800W (X-Boost 1600W)</span>
+              </div>
+            </div>
+          </div>
+          
+          <ul class="text-xs text-slate-300 space-y-2 mb-6 text-left">
+            <li class="flex items-center gap-2">✔ Recarga 0-100% en tan solo 70 minutos</li>
+            <li class="flex items-center gap-2">✔ Onda sinusoidal pura para equipos sensibles</li>
+            <li class="flex items-center gap-2">✔ Admite entrada solar máxima de 220W</li>
+          </ul>
+          
+          <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block">Cotizar Solución</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. CATALOGO: SERIE DELTA (GRADO PROFESIONAL / INDUSTRIAL) -->
+    <section class="py-20 px-6 md:px-12 bg-surface-1/30 border-t border-border">
+      <div class="max-w-7xl mx-auto w-full">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+          <span class="text-xs font-semibold tracking-widest text-cyan uppercase">Grado Profesional · Faenas Críticas</span>
+          <h2 class="font-display font-extrabold text-clamp-2xl text-white mt-2 mb-4">Serie EcoFlow DELTA</h2>
+          <p class="text-slate-400 leading-relaxed font-sans text-clamp-base">
+            Suministro de energía ininterrumpido de alto amperaje. Diseñado para respaldar herramientas pesadas, estaciones de control de drones de largo alcance y faenas mineras continuas en el Perú.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <!-- Delta 3 -->
+          <div class="product-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+                <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422172/Ecoflow_delta_e9avxh.png" alt="EcoFlow Delta 3" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+                <span class="absolute top-3 right-3 bg-cyan/15 text-cyan text-[10px] font-bold px-2 py-1 rounded border border-cyan/20">ESTÁNDAR PRO</span>
+              </div>
+              <h3 class="font-display font-bold text-clamp-lg text-white mb-1">Delta 3</h3>
+              <p class="text-xs text-slate-400 font-sans mb-4">Potencia y capacidad equilibradas para campamentos móviles de ingeniería.</p>
+              
+              <div class="border-t border-border/50 pt-4 mb-4 flex flex-col gap-1.5">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Capacidad:</span>
+                  <span class="font-bold text-cyan">1,024 Wh</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Salida CA:</span>
+                  <span class="font-bold text-white">1,800W (Picos 3.6K)</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Carga CA:</span>
+                  <span class="font-bold text-white">56 min a 1500W</span>
+                </div>
+              </div>
+            </div>
+            <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block mt-4">Cotizar Solución</a>
+          </div>
+
+          <!-- Delta 3 1500 -->
+          <div class="product-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+                <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422172/Ecoflow_delta_e9avxh.png" alt="EcoFlow Delta 3 1500" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+                <span class="absolute top-3 right-3 bg-cyan/15 text-cyan text-[10px] font-bold px-2 py-1 rounded border border-cyan/20">ALTO RENDIMIENTO</span>
+              </div>
+              <h3 class="font-display font-bold text-clamp-lg text-white mb-1">Delta 3 1500</h3>
+              <p class="text-xs text-slate-400 font-sans mb-4">Mayor autonomía para soporte continuo en telecomunicaciones.</p>
+              
+              <div class="border-t border-border/50 pt-4 mb-4 flex flex-col gap-1.5">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Capacidad:</span>
+                  <span class="font-bold text-cyan">1,536 Wh</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Salida CA:</span>
+                  <span class="font-bold text-white">2,400W (Picos 4.8K)</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Conectividad:</span>
+                  <span class="font-bold text-white">Wi-Fi + Bluetooth</span>
+                </div>
+              </div>
+            </div>
+            <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block mt-4">Cotizar Solución</a>
+          </div>
+
+          <!-- Delta Pro 3 -->
+          <div class="product-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+                <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422177/Ecoflow_delta_PRO_g9xhmt.png" alt="EcoFlow Delta Pro 3" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+                <span class="absolute top-3 right-3 bg-cyan/15 text-cyan text-[10px] font-bold px-2 py-1 rounded border border-cyan/20">POTENCIA INDUSTRIAL</span>
+              </div>
+              <h3 class="font-display font-bold text-clamp-lg text-white mb-1">Delta Pro 3</h3>
+              <p class="text-xs text-slate-400 font-sans mb-4">La estación de energía insignia. Autonomía masiva escalable para faenas enteras.</p>
+              
+              <div class="border-t border-border/50 pt-4 mb-4 flex flex-col gap-1.5">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Capacidad:</span>
+                  <span class="font-bold text-cyan">4kWh a 12kWh (Exp)</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Salida CA:</span>
+                  <span class="font-bold text-white">4,000W (Picos 8K)</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Entrada Solar:</span>
+                  <span class="font-bold text-white">Hasta 2,600W Solar</span>
+                </div>
+              </div>
+            </div>
+            <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block mt-4">Cotizar Solución</a>
+          </div>
+
+          <!-- Trail 200 DC -->
+          <div class="product-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+                <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422174/Ecoflow_river2_scdu1t.png" alt="EcoFlow Trail 200 DC" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+                <span class="absolute top-3 right-3 bg-cyan/15 text-cyan text-[10px] font-bold px-2 py-1 rounded border border-cyan/20">OPTIMIZADO DRONES</span>
+              </div>
+              <h3 class="font-display font-bold text-clamp-lg text-white mb-1">Trail 200 DC</h3>
+              <p class="text-xs text-slate-400 font-sans mb-4">Especializado para la recarga directa de baterías de drones en campo.</p>
+              
+              <div class="border-t border-border/50 pt-4 mb-4 flex flex-col gap-1.5">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Química:</span>
+                  <span class="font-bold text-cyan">192 Wh LiFePO4</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Salida DC:</span>
+                  <span class="font-bold text-white">220W Máxima</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">USB-C PD 3.1:</span>
+                  <span class="font-bold text-white">140W Bidireccional</span>
+                </div>
+              </div>
+            </div>
+            <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block mt-4">Cotizar Solución</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PANELES SOLARES -->
+    <section id="paneles" class="py-20 px-6 md:px-12 max-w-7xl mx-auto w-full">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <span class="text-xs font-semibold tracking-widest text-cyan uppercase">Generación Solar · Alta Eficiencia</span>
+        <h2 class="font-display font-extrabold text-clamp-2xl text-white mt-2 mb-4">Paneles Solares Portátiles y Rígidos</h2>
+        <p class="text-slate-400 leading-relaxed font-sans text-clamp-base">
+          Captación de energía premium. Módulos monocristalinos con hasta un 23% de tasa de conversión para recargar tus estaciones en cualquier lugar del Perú.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+        <!-- Panel Image left 50% -->
+        <div class="lg:col-span-6 flex justify-center items-center relative reveal">
+          <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422204/Ecoflow_paneles_solares_e4mpcp.png" alt="EcoFlow Paneles Solares" class="w-full rounded-2xl shadow-lg border border-border max-w-md lg:max-w-full" loading="lazy" width="550" height="350" referrerPolicy="no-referrer">
+        </div>
+
+        <!-- Panel Table Specs right 50% -->
+        <div class="lg:col-span-6 reveal">
+          <div class="overflow-x-auto">
+            <table class="w-full border-collapse border border-cyan/15 rounded-xl overflow-hidden">
+              <thead>
+                <tr class="bg-surface-2 border-b border-cyan/15 text-left text-xs uppercase tracking-wider text-cyan font-mono">
+                  <th class="p-3">Modelo</th>
+                  <th class="p-3">Potencia</th>
+                  <th class="p-3">Eficiencia</th>
+                  <th class="p-3">Peso</th>
+                  <th class="p-3">Tipo</th>
+                </tr>
+              </thead>
+              <tbody class="text-xs font-sans text-slate-300 divide-y divide-cyan/10">
+                <tr class="hover:bg-surface-1/50 transition-colors">
+                  <td class="p-3 font-semibold text-white">Panel 60W</td>
+                  <td class="p-3">60W</td>
+                  <td class="p-3">25% (N TOPCon)</td>
+                  <td class="p-3">2.0 kg</td>
+                  <td class="p-3 text-cyan">Portátil plegable</td>
+                </tr>
+                <tr class="hover:bg-surface-1/50 transition-colors">
+                  <td class="p-3 font-semibold text-white">Panel 110W</td>
+                  <td class="p-3">110W</td>
+                  <td class="p-3">21–22%</td>
+                  <td class="p-3">5.0 kg</td>
+                  <td class="p-3 text-cyan">Portátil desplegable</td>
+                </tr>
+                <tr class="hover:bg-surface-1/50 transition-colors">
+                  <td class="p-3 font-semibold text-white">Panel 160W Bifacial</td>
+                  <td class="p-3">160W</td>
+                  <td class="p-3">21–22%</td>
+                  <td class="p-3">7.0 kg</td>
+                  <td class="p-3 text-cyan">Portátil bifacial</td>
+                </tr>
+                <tr class="hover:bg-surface-1/50 transition-colors">
+                  <td class="p-3 font-semibold text-white">Panel 220W</td>
+                  <td class="p-3">220W</td>
+                  <td class="p-3">22–23%</td>
+                  <td class="p-3">9.5 kg</td>
+                  <td class="p-3 text-cyan">Portátil</td>
+                </tr>
+                <tr class="hover:bg-surface-1/50 transition-colors">
+                  <td class="p-3 font-semibold text-white">Panel 400W Portátil</td>
+                  <td class="p-3">400W</td>
+                  <td class="p-3">22.6%</td>
+                  <td class="p-3">16.0 kg</td>
+                  <td class="p-3 text-cyan">Portátil plegable</td>
+                </tr>
+                <tr class="hover:bg-surface-1/50 transition-colors">
+                  <td class="p-3 font-semibold text-white">Panel 400W Rígido</td>
+                  <td class="p-3">400W</td>
+                  <td class="p-3">23%</td>
+                  <td class="p-3">21.8 kg</td>
+                  <td class="p-3 text-cyan">Fijo/estacionario</td>
+                </tr>
+                <tr class="hover:bg-surface-1/50 transition-colors">
+                  <td class="p-3 font-semibold text-white">Panel Flexible 100W</td>
+                  <td class="p-3">100W</td>
+                  <td class="p-3">Alta eficiencia</td>
+                  <td class="p-3">2.3 kg</td>
+                  <td class="p-3 text-cyan">Flexible IP68</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Combos and Secondary Image Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Specs Info left 50% -->
+        <div class="lg:col-span-6 text-left flex flex-col gap-6 reveal">
+          <h3 class="font-display font-bold text-clamp-lg text-white">Kits & Combinaciones de Autonomía Recomendados</h3>
+          <p class="text-sm text-slate-300 leading-relaxed font-sans">
+            Para obtener el mejor rendimiento y asegurar energía ilimitada en el campo, te recomendamos adquirir nuestras estaciones en conjunto con sus paneles correspondientes:
+          </p>
+          <ul class="text-xs text-slate-300 space-y-3 font-sans">
+            <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan"></span> <strong>Kit Ligero:</strong> RIVER 2 Pro + 1x Panel de 220W solar para despliegues móviles rápidos.</li>
+            <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan"></span> <strong>Kit Profesional:</strong> DELTA 2 Max + 2x Paneles de 220W (Recarga completa en unas pocas horas).</li>
+            <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan"></span> <strong>Kit Industrial:</strong> DELTA Pro + 4x Paneles Portátiles de 400W para campamentos mineros estables.</li>
+            <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan"></span> <strong>Kit Estacionario:</strong> DELTA Pro 3 + hasta 2,600W de entrada solar con paneles rígidos.</li>
+          </ul>
+        </div>
+
+        <!-- Secondary Image right 50% -->
+        <div class="lg:col-span-6 flex justify-center items-center reveal">
+          <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422176/Ecoflow_paneles_solares-2_nzvchw.png" alt="Kit de Carga Solar EcoFlow" class="w-full rounded-2xl shadow-lg border border-border max-w-md lg:max-w-full" loading="lazy" width="550" height="350" referrerPolicy="no-referrer">
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. DISPOSITIVOS ESPECIALIZADOS -->
+    <section id="especializados" class="py-20 px-6 md:px-12 bg-surface-1/20 border-t border-border">
+      <div class="max-w-7xl mx-auto w-full">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+          <span class="text-xs font-semibold tracking-widest text-cyan uppercase">Ecosistema Extendido EcoFlow</span>
+          <h2 class="font-display font-extrabold text-clamp-2xl text-white mt-2 mb-4">Dispositivos Especializados de Climatización y Carga</h2>
+          <p class="text-slate-400 leading-relaxed font-sans text-clamp-base">
+            Saca el máximo provecho a tu energía autónoma. Equipamiento inteligente de climatización portátil, refrigeración alimentaria y kits solares avanzados para tus operaciones de campo.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Wave 2 -->
+          <div class="product-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+                <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422174/Ecoflow_aire_acondicionado_portatil_ltjrpz.png" alt="EcoFlow Wave 2" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+              </div>
+              <h3 class="font-display font-bold text-clamp-lg text-white mb-2">Wave 2 — Climatización Portátil</h3>
+              <p class="text-xs text-slate-400 font-sans leading-relaxed mb-4">
+                Aire acondicionado y calefactor portátil ultrarrápido de 5100 BTU. Hasta 8 horas de funcionamiento continuo con su batería adicional para campamentos exigentes.
+              </p>
+            </div>
+            <ul class="text-xs text-slate-300 space-y-1 mb-6 text-left">
+              <li>✔ Refrigeración y calefacción instantánea</li>
+              <li>✔ Modo nocturno ultrasilencioso (44 dB)</li>
+              <li>✔ Potencia: 820W CA / 700W CC</li>
+            </ul>
+            <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block">Cotizar Solución</a>
+          </div>
+
+          <!-- PowerStream -->
+          <div class="product-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+                <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422178/Ecoflow_POWERSTREAM_Kit_solar_para_balcones__mihh2z.png" alt="EcoFlow PowerStream" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+              </div>
+              <h3 class="font-display font-bold text-clamp-lg text-white mb-2">PowerStream — Kit Microinversor</h3>
+              <p class="text-xs text-slate-400 font-sans leading-relaxed mb-4">
+                El primer kit solar de balcón inteligente con estación de energía portátil. Ideal para inyectar energía a la red de tu oficina de campo o campamento fijo.
+              </p>
+            </div>
+            <ul class="text-xs text-slate-300 space-y-1 mb-6 text-left">
+              <li>✔ Entrada solar combinada de hasta 800W</li>
+              <li>✔ Smart Plug incluido para optimizar consumo</li>
+              <li>✔ Monitoreo en tiempo real vía App oficial</li>
+            </ul>
+            <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block">Cotizar Solución</a>
+          </div>
+
+          <!-- Glacier -->
+          <div class="product-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+                <div class="h-full w-full flex items-center justify-center bg-slate-900/60 rounded-lg text-cyan font-display font-extrabold text-lg">GLACIER PORTABLE REFRIGERATOR</div>
+              </div>
+              <h3 class="font-display font-bold text-clamp-lg text-white mb-2">EcoFlow Glacier — Refrigerador Portátil</h3>
+              <p class="text-xs text-slate-400 font-sans leading-relaxed mb-4">
+                Refrigerador, congelador y máquina de hielo integrada en un solo dispositivo. Mantén vacunas, alimentos o muestras a temperatura idónea en campo.
+              </p>
+            </div>
+            <ul class="text-xs text-slate-300 space-y-1 mb-6 text-left">
+              <li>✔ Fabrica 18 cubitos de hielo en 12 min</li>
+              <li>✔ Hasta 40 horas de autonomía inalámbrica</li>
+              <li>✔ Capacidad masiva de 38 litros dual</li>
+            </ul>
+            <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block">Cotizar Solución</a>
+          </div>
+
+          <!-- Power Bank RAPID -->
+          <div class="product-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+                <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422192/Ecoflow_PowerBankMagnetic_pucvzv.png" alt="EcoFlow Rapid 5000" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+              </div>
+              <h3 class="font-display font-bold text-clamp-lg text-white mb-2">RAPID 5000 Magnetic Power Bank</h3>
+              <p class="text-xs text-slate-400 font-sans leading-relaxed mb-4">
+                Batería magnética Qi2 de carga rápida de bolsillo. Ideal para mantener operativos smartphones, tablets o terminales de radio en operaciones.
+              </p>
+            </div>
+            <ul class="text-xs text-slate-300 space-y-1 mb-6 text-left">
+              <li>✔ Carga Qi2 inalámbrica avanzada de 15W</li>
+              <li>✔ Cable USB-C integrado ultra-resistente</li>
+              <li>✔ Peso pluma de solo 180 gramos</li>
+            </ul>
+            <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block">Cotizar Solución</a>
+          </div>
+
+          <!-- Sombrero Solar -->
+          <div class="product-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <div class="relative bg-slate-950/40 rounded-xl p-4 mb-6 flex justify-center items-center h-48">
+                <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422173/Ecoflow_sombrero_solarpng_hobdm2.png" alt="EcoFlow Sombrero Solar" class="max-h-full max-w-full object-contain" loading="lazy" width="180" height="180" referrerPolicy="no-referrer">
+              </div>
+              <h3 class="font-display font-bold text-clamp-lg text-white mb-2">Sombrero Solar Inteligente</h3>
+              <p class="text-xs text-slate-400 font-sans leading-relaxed mb-4">
+                Protección solar y carga en movimiento. Cuenta con celdas fotovoltaicas en el ala para recargar tus dispositivos USB mientras caminas en campo.
+              </p>
+            </div>
+            <ul class="text-xs text-slate-300 space-y-1 mb-6 text-left">
+              <li>✔ Salidas Duales USB-A y USB-C</li>
+              <li>✔ Protección solar de grado UPF 50+</li>
+              <li>✔ Diseño impermeable con certificación IP65</li>
+            </ul>
+            <a href="#contacto" class="btn-ghost w-full py-2.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider block">Cotizar Solución</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. CASOS DE USO EN CAMPO -->
+    <section id="casos" class="py-20 px-6 md:px-12 max-w-7xl mx-auto w-full">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <span class="text-xs font-semibold tracking-widest text-cyan uppercase">Aplicaciones Operacionales</span>
+        <h2 class="font-display font-extrabold text-clamp-2xl text-white mt-2 mb-4">Soluciones de Autonomía en Acción Real</h2>
+        <p class="text-slate-400 leading-relaxed font-sans text-clamp-base">
+          Nuestras soluciones energéticas EcoFlow están diseñadas y probadas bajo las condiciones más severas del territorio nacional.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Caso 1 -->
+        <div class="product-card p-8 flex flex-col gap-4 text-left reveal">
+          <div class="text-cyan w-10 h-10">
+            <!-- Drone SVG -->
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+          </div>
+          <h3 class="font-display font-bold text-clamp-lg text-white">🚁 Operaciones con Drones</h3>
+          <p class="text-xs text-slate-400 leading-relaxed font-sans">
+            Las estaciones DELTA 2 Max y DELTA Pro alimentan de forma continua los cargadores múltiples de drones en campo. Ideal para operaciones de topografía, vigilancia costera con drones SwellPro, salvamento marítimo e inspección industrial de infraestructura.
+          </p>
+          <span class="text-[10px] font-mono text-cyan uppercase font-bold mt-2">Modelos recomendados: Delta Pro 3 · Delta 3 · Trail 200 DC</span>
+        </div>
+
+        <!-- Caso 2 -->
+        <div class="product-card p-8 flex flex-col gap-4 text-left reveal">
+          <div class="text-cyan w-10 h-10">
+            <!-- Tool SVG -->
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </div>
+          <h3 class="font-display font-bold text-clamp-lg text-white">🔧 Trabajos Profesionales</h3>
+          <p class="text-xs text-slate-400 leading-relaxed font-sans">
+            Alimenta taladros de impacto, sierras circulares, estaciones meteorológicas portátiles y equipos de medición geofísica directamente en la fosa o el tajo de perforación sin depender de pesados, ruidosos e ineficientes generadores de combustible fósil.
+          </p>
+          <span class="text-[10px] font-mono text-cyan uppercase font-bold mt-2">Modelos recomendados: Delta 3 1500 · Delta 3 · Panel 400W</span>
+        </div>
+
+        <!-- Caso 3 -->
+        <div class="product-card p-8 flex flex-col gap-4 text-left reveal">
+          <div class="text-cyan w-10 h-10">
+            <!-- Heart SVG -->
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+          </div>
+          <h3 class="font-display font-bold text-clamp-lg text-white">🚨 Emergencias y Rescate</h3>
+          <p class="text-xs text-slate-400 leading-relaxed font-sans">
+            Soporte vital en situaciones de desastres naturales o cortes del suministro. Proporciona energía limpia, inmediata y libre de humos para alimentar concentradores de oxígeno, routers satelitales, sistemas de iluminación y radios de telecomunicación.
+          </p>
+          <span class="text-[10px] font-mono text-cyan uppercase font-bold mt-2">Modelos recomendados: River 3 UPS · Delta 3 · Panel 110W</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 9. TECNOLOGÍAS CLAVE -->
+    <section class="py-20 px-6 md:px-12 bg-surface-1/40 border-y border-border">
+      <div class="max-w-7xl mx-auto w-full">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+          <span class="text-xs font-semibold tracking-widest text-cyan uppercase">Tecnología Certificada</span>
+          <h2 class="font-display font-extrabold text-clamp-2xl text-white mt-2 mb-4">Ingeniería que Marca la Diferencia</h2>
+          <p class="text-slate-400 leading-relaxed font-sans text-clamp-base">
+            El secreto detrás de la asombrosa eficiencia de las estaciones de energía EcoFlow radica en sus patentes tecnológicas exclusivas.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          
+          <!-- Tecno 1 -->
+          <div class="bg-surface-2 p-8 rounded-2xl border-l-4 border-electric text-left reveal">
+            <h3 class="font-display font-extrabold text-clamp-lg text-white mb-2">X-Stream (Patentada)</h3>
+            <p class="text-xs text-slate-400 leading-relaxed font-sans">
+              La tecnología de recarga más rápida de la industria. Permite recargar tus estaciones de energía del 0 al 100% en apenas 1 hora directamente a la corriente, sin necesidad de pesados e incómodos transformadores externos.
+            </p>
+          </div>
+
+          <!-- Tecno 2 -->
+          <div class="bg-surface-2 p-8 rounded-2xl border-l-4 border-electric text-left reveal">
+            <h3 class="font-display font-extrabold text-clamp-lg text-white mb-2">X-Boost Inteligente</h3>
+            <p class="text-xs text-slate-400 leading-relaxed font-sans">
+              Algoritmo de control de voltaje que permite alimentar dispositivos de alta potencia (como taladros o hervidores) que superan la potencia de salida nominal de la estación, evitando sobrecargas de forma inteligente.
+            </p>
+          </div>
+
+          <!-- Tecno 3 -->
+          <div class="bg-surface-2 p-8 rounded-2xl border-l-4 border-electric text-left reveal">
+            <h3 class="font-display font-extrabold text-clamp-lg text-white mb-2">BMS Inteligente</h3>
+            <p class="text-xs text-slate-400 leading-relaxed font-sans">
+              El Sistema de Gestión de Batería (BMS) mide voltaje, corriente y temperatura en tiempo real. Esto optimiza el flujo de corriente y prolonga drásticamente la vida útil y seguridad del equipo frente a altas temperaturas.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Certifications List Row -->
+        <div class="flex flex-wrap gap-6 items-center justify-center pt-8 border-t border-cyan/10 reveal">
+          <span class="text-xs font-mono text-slate-500 font-bold">CERTIFICACIONES OPERACIONALES:</span>
+          <span class="text-xs font-bold text-slate-400 px-3 py-1 bg-surface-2 rounded-md">CE</span>
+          <span class="text-xs font-bold text-slate-400 px-3 py-1 bg-surface-2 rounded-md">FCC</span>
+          <span class="text-xs font-bold text-slate-400 px-3 py-1 bg-surface-2 rounded-md">UN38.3</span>
+          <span class="text-xs font-bold text-slate-400 px-3 py-1 bg-surface-2 rounded-md">RoHS</span>
+          <span class="text-xs font-bold text-slate-400 px-3 py-1 bg-surface-2 rounded-md">IP68 (Solar)</span>
+          <span class="text-xs font-bold text-slate-400 px-3 py-1 bg-surface-2 rounded-md">UL LISTED</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. CTA FINAL - FORMULARIO -->
+    <section id="contacto" class="py-24 px-6 md:px-12 bg-gradient-to-b from-surface-2 to-navy relative">
+      <div class="max-w-4xl mx-auto w-full relative z-20 text-center reveal">
+        <span class="text-xs font-semibold tracking-widest text-cyan uppercase">Asesoría Corporativa sin Compromiso</span>
+        <h2 class="font-display font-extrabold text-clamp-2xl text-white mt-2 mb-4">¿Listo para Operar con Autonomía Energética Total?</h2>
+        <p class="text-slate-300 leading-relaxed font-sans text-clamp-base max-w-2xl mx-auto mb-10">
+          Nuestro equipo técnico está listo para diseñar y configurar la solución energética ideal según el tipo, duración y equipos de tu operación de campo. Sin combustible, sin ruidos molestos, sin mantenimiento.
+        </p>
+
+        <!-- Inline Contact Form -->
+        <form id="landing-contact-form" class="bg-surface-1 p-8 rounded-2xl border border-cyan/20 max-w-2xl mx-auto text-left flex flex-col gap-5 shadow-2xl">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label for="form-name" class="text-xs font-bold uppercase tracking-wide text-slate-400">Nombre Completo</label>
+              <input type="text" id="form-name" required class="bg-surface-2 border border-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-cyan transition-colors" placeholder="Ej. Carlos Rivera">
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="form-contact" class="text-xs font-bold uppercase tracking-wide text-slate-400">WhatsApp o Correo</label>
+              <input type="text" id="form-contact" required class="bg-surface-2 border border-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-cyan transition-colors" placeholder="Ej. +51 991 664 146 o correo@empresa.com">
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label for="form-operation" class="text-xs font-bold uppercase tracking-wide text-slate-400">Tipo de Operación</label>
+            <select id="form-operation" class="bg-surface-2 border border-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-cyan transition-colors cursor-pointer">
+              <option value="Operación con Drones">Operación con Drones y Carga Aérea</option>
+              <option value="Trabajo de Campo">Trabajo de Campo / Faena de Minería o Civil</option>
+              <option value="Emergencias/Rescate">Emergencias, Rescate y Soporte Vital</option>
+              <option value="Instalación Fija">Instalación Solar Fija / Respaldo de Oficina</option>
+              <option value="Otro">Otro Tipo de Operación</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary w-full py-4.5 rounded-xl uppercase font-extrabold text-sm tracking-widest text-center shadow-lg transition-transform mt-2">
+            Solicitar Asesoría Técnica
+          </button>
+        </form>
+
+        <div id="form-success-message" class="hidden max-w-2xl mx-auto mt-6 p-5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl text-sm font-semibold flex items-center justify-center gap-3">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+          <span>¡Solicitud enviada con éxito! Un especialista técnico se pondrá en contacto por WhatsApp o correo en las próximas horas.</span>
+        </div>
+
+        <!-- Direct WhatsApp -->
+        <p class="text-xs text-slate-400 font-sans mt-8 flex items-center justify-center gap-2">
+          <span>También puedes escribirnos de forma directa al WhatsApp corporativo:</span>
+          <a href="https://wa.me/51991664146" target="_blank" class="text-cyan font-bold hover:underline flex items-center gap-1">
+            <svg class="w-4 h-4 fill-current inline" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 1.981 14.113.957 11.48.957 6.04.957 1.615 5.328 1.611 10.759c-.001 1.674.444 3.308 1.29 4.74l-.152-.258-1.01 3.687 3.784-.981.258.153z"/></svg>
+            +51 991 664 146
+          </a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 11. FOOTER -->
+  <footer class="bg-navy border-t border-cyan/10 pt-16 pb-12 px-6 md:px-12 relative z-10">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 mb-12 text-left">
+      <!-- Footer Left Logo / Tagline -->
+      <div class="md:col-span-4 flex flex-col items-start gap-4">
+        <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782419695/CRTech_LogoHorizontal_BackLight_leqyyi.png" alt="Logo CR Tech" class="h-9 w-auto" referrerPolicy="no-referrer">
+        <p class="text-xs text-slate-400 font-sans leading-relaxed max-w-sm">
+          CR Technologies & Services ofrece ingeniería, soporte oficial de drones industriales SwellPro y autonomía de energía EcoFlow en todo el territorio del Perú.
+        </p>
+        <span class="text-[10px] font-mono text-cyan uppercase font-bold tracking-wider">3 Líneas · Soporte Local · Lima, Perú</span>
+      </div>
+
+      <!-- Footer Middle Column 1: Líneas -->
+      <div class="md:col-span-3 flex flex-col gap-3">
+        <h4 class="font-display font-bold text-sm text-white uppercase tracking-wider">Líneas de Negocio</h4>
+        <a href="index.html" class="text-xs text-slate-400 hover:text-cyan transition-colors">01 · Tecnología Aérea (Drones)</a>
+        <span class="text-xs text-cyan font-semibold flex items-center gap-1.5">02 · Energía Autónoma (EcoFlow) <span class="h-1.5 w-1.5 rounded-full bg-cyan animate-pulse"></span></span>
+        <a href="index.html" class="text-xs text-slate-400 hover:text-cyan transition-colors">03 · Servicios TI Enterprise Tech</a>
+      </div>
+
+      <!-- Footer Middle Column 2: Sections -->
+      <div class="md:col-span-3 flex flex-col gap-3">
+        <h4 class="font-display font-bold text-sm text-white uppercase tracking-wider">Energía Autónoma</h4>
+        <a href="#catalogo" class="text-xs text-slate-400 hover:text-cyan transition-colors">Estaciones River</a>
+        <a href="#catalogo" class="text-xs text-slate-400 hover:text-cyan transition-colors">Estaciones Delta</a>
+        <a href="#paneles" class="text-xs text-slate-400 hover:text-cyan transition-colors">Paneles Solares</a>
+        <a href="#especializados" class="text-xs text-slate-400 hover:text-cyan transition-colors">Dispositivos Especiales</a>
+      </div>
+
+      <!-- Footer Right Column: Legal / Partner -->
+      <div class="md:col-span-2 flex flex-col gap-4">
+        <h4 class="font-display font-bold text-sm text-white uppercase tracking-wider">Asociación</h4>
+        <div class="bg-white px-3 py-2.5 rounded-xl border border-slate-200 flex flex-col items-center gap-1 max-w-[150px]">
+          <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422215/ecoflow_logonegro_fondotransparente_kfn0f6.png" alt="EcoFlow Logo" class="h-4.5 w-auto object-contain" referrerPolicy="no-referrer">
+          <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Canal Oficial</span>
+        </div>
+        <div class="text-[10px] text-slate-500 flex flex-col gap-1">
+          <a href="#" class="hover:underline">Política de Privacidad</a>
+          <a href="#" class="hover:underline">Términos del Servicio</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright -->
+    <div class="max-w-7xl mx-auto pt-8 border-t border-cyan/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-sans">
+      <span>© 2026 CR Technologies & Services. Todos los derechos reservados.</span>
+      <span>Diseñado con tecnología premium y alto impacto corporativo.</span>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE SCRIPTS -->
+  <script>
+    // 1. Scroll reveal con IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 2. Navbar sticky con backdrop blur
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // 3. Theme configured as light-mode only (User Directive)
+
+    // 4. Smooth scroll para anchors internos
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = a.getAttribute('href');
+        if (targetId && targetId !== '#') {
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            window.scrollTo({
+              top: targetEl.offsetTop - 80,
+              behavior: 'smooth'
+            });
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+          }
+        }
+      });
+    });
+
+    // 5. Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // 6. Form Submission Message
+    const form = document.getElementById('landing-contact-form');
+    const successMsg = document.getElementById('form-success-message');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Hide form contents smoothly or show message
+      form.classList.add('opacity-50');
+      form.style.pointerEvents = 'none';
+      successMsg.classList.remove('hidden');
+      form.reset();
+      
+      // Scroll to success message
+      successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  </script>
+
+</body>
+</html>

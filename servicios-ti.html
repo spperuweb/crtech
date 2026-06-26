@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782419700/favicon_xuwimd.png">
+  <title>Servicios TI Enterprise Tech | CR Technologies & Services</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: 'var(--navy)',
+            electric: 'var(--electric)',
+            cyan: 'var(--cyan)',
+            white: 'var(--white)',
+            'surface-1': 'var(--surface-1)',
+            'surface-2': 'var(--surface-2)',
+            'surface-dark': 'var(--surface-dark)',
+            'surface-dark-2': 'var(--surface-dark-2)'
+          },
+          fontFamily: {
+            display: ['Barlow', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      :root {
+        /* Paleta CR Tech — Light Mode Corporativo */
+        --navy:          #00051e;   
+        --electric:      #0083fd;   
+        --cyan:          #00c3fe;   
+        --white:         #fefbfc;   
+
+        /* Superficies light */
+        --surface-1:     #f4f7ff;   
+        --surface-2:     #e8eeff;   
+        --surface-dark:  #00051e;   
+        --surface-dark-2:#040c2c;   
+
+        /* Texto */
+        --text-primary:  #00051e;
+        --text-muted:    rgba(0,5,30,0.60);
+        --text-faint:    rgba(0,5,30,0.35);
+        --text-on-dark:  #fefbfc;
+        --text-muted-dark: rgba(254,251,252,0.70);
+
+        /* Bordes y efectos */
+        --border:        rgba(0,131,253,0.15);
+        --border-light:  rgba(0,5,30,0.08);
+        --glow-blue:     rgba(0,131,253,0.20);
+        --glow-cyan:     rgba(0,195,254,0.15);
+        --shadow-card:   0 2px 16px rgba(0,5,30,0.08), 0 1px 4px rgba(0,5,30,0.05);
+        --shadow-hover:  0 8px 32px rgba(0,131,253,0.18), 0 2px 8px rgba(0,5,30,0.06);
+
+        /* Tipografía fluid */
+        --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+        --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+        --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+        --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+        --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+        --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+        --text-hero: clamp(2.5rem,   1rem    + 4vw,    5rem);
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; scroll-padding-top: 80px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+      body { min-height: 100dvh; font-family: 'Inter', sans-serif; font-size: var(--text-base); color: var(--text-primary); background: var(--white); line-height: 1.6; }
+      img, video { display: block; max-width: 100%; height: auto; }
+      h1, h2, h3, h4 { font-family: 'Barlow', sans-serif; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; text-wrap: balance; color: var(--navy); }
+      p, li { max-width: 72ch; text-wrap: pretty; }
+      button { cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+      a { text-decoration: none; color: inherit; }
+      ul { list-style: none; }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(to right, var(--electric), var(--cyan));
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      transition: transform 300ms, box-shadow 300ms;
+    }
+    .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 30px rgba(0, 195, 254, 0.3);
+    }
+    .btn-primary:active {
+      transform: scale(0.95);
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+      transform: skewX(-20deg);
+      transition: left 500ms;
+    }
+    .btn-primary:hover::after {
+      left: 150%;
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-on-dark);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: background-color 300ms, border-color 300ms, transform 300ms;
+    }
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: scale(1.03);
+    }
+    
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navbar Scrolled */
+    nav.scrolled {
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 var(--border-light), 0 4px 16px rgba(0,5,30,0.06);
+      background: rgba(254,251,252,0.92) !important;
+    }
+
+    /* Cards */
+    .service-card {
+      box-shadow: var(--shadow-card);
+      transition: box-shadow 300ms, transform 300ms;
+    }
+    .service-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden selection:bg-cyan selection:text-white">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white h-[72px] px-6 md:px-12 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <img id="nav-logo" src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782419695/CRTech_LogoHorizontal_BackLight_leqyyi.png" alt="CR Technologies Logo" class="h-[34px] w-auto" referrerPolicy="no-referrer">
+    </a>
+
+    <!-- Desktop Links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html" class="text-[var(--text-xs)] font-semibold uppercase tracking-wider text-[var(--text-muted)] hover:text-cyan transition-colors">← Inicio</a>
+      <a href="#servicios" class="text-[var(--text-xs)] font-semibold uppercase tracking-wider text-[var(--text-muted)] hover:text-cyan transition-colors">Servicios</a>
+      <a href="#soluciones" class="text-[var(--text-xs)] font-semibold uppercase tracking-wider text-[var(--text-muted)] hover:text-cyan transition-colors">Soluciones</a>
+      <a href="#casos" class="text-[var(--text-xs)] font-semibold uppercase tracking-wider text-[var(--text-muted)] hover:text-cyan transition-colors">Casos de Uso</a>
+      <a href="#contacto" class="text-[var(--text-xs)] font-semibold uppercase tracking-wider text-[var(--text-muted)] hover:text-cyan transition-colors">Contacto</a>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-4">
+      <a href="#contacto" class="btn-primary py-2 px-5 rounded-lg text-[var(--text-xs)] font-bold uppercase tracking-wider hidden sm:inline-block">
+        Solicitar Diagnóstico TI
+      </a>
+      
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-[var(--navy)] p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-drawer" class="fixed inset-0 z-[100] bg-[rgba(0,5,30,0.5)] backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute top-0 right-0 bottom-0 w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col p-6" id="mobile-drawer-content">
+      <div class="flex justify-end mb-8">
+        <button id="close-menu-btn" class="text-[var(--navy)] p-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="flex flex-col gap-6">
+        <a href="index.html" class="mobile-link text-sm font-semibold uppercase tracking-wider text-[var(--text-primary)]">← Inicio</a>
+        <a href="#servicios" class="mobile-link text-sm font-semibold uppercase tracking-wider text-[var(--text-primary)]">Servicios</a>
+        <a href="#soluciones" class="mobile-link text-sm font-semibold uppercase tracking-wider text-[var(--text-primary)]">Soluciones</a>
+        <a href="#casos" class="mobile-link text-sm font-semibold uppercase tracking-wider text-[var(--text-primary)]">Casos de Uso</a>
+        <a href="#contacto" class="mobile-link text-sm font-semibold uppercase tracking-wider text-[var(--text-primary)]">Contacto</a>
+        <a href="#contacto" class="btn-primary py-3 px-5 rounded-lg text-center text-xs font-bold uppercase tracking-wider mt-4">Solicitar Diagnóstico TI</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 bg-surface-dark overflow-hidden">
+    <!-- Mesh gradient & grid overlay -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,131,253,0.06),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(0,195,254,0.04),transparent_60%)] pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,131,253,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(0,131,253,0.035)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      
+      <!-- Left Column: Text -->
+      <div class="flex flex-col items-start text-left reveal">
+        <span class="uppercase tracking-[0.12em] text-[var(--text-xs)] text-electric font-semibold mb-4 block">VERTICAL 03 · SERVICIOS TI</span>
+        <h1 class="text-[var(--text-hero)] text-[var(--text-on-dark)] mb-6">
+          Infraestructura Tecnológica de Alto Nivel para tu Organización
+        </h1>
+        <p class="text-[var(--text-muted-dark)] mb-10 font-sans">
+          Soporte técnico especializado, implementación de soluciones TI, redes, videovigilancia y consultoría empresarial. Respaldamos las operaciones críticas de tu negocio.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#contacto" class="btn-primary py-4 px-8 rounded-xl font-bold text-sm uppercase tracking-wider">
+            Solicitar Diagnóstico TI
+          </a>
+          <a href="#servicios" class="btn-ghost py-4 px-8 rounded-xl font-bold text-sm uppercase tracking-wider">
+            Ver Servicios
+          </a>
+        </div>
+      </div>
+      
+      <!-- Right Column: Visual Widget -->
+      <div class="relative reveal delay-150">
+        <div class="bg-surface-dark-2 border border-[var(--border)] rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+          <div class="flex items-center justify-between border-b border-[var(--border)] pb-4 mb-6">
+            <div class="flex items-center gap-3">
+              <div class="w-3 h-3 rounded-full bg-electric animate-pulse"></div>
+              <span class="text-white font-mono text-sm tracking-wider">CR TECH NOC</span>
+            </div>
+            <span class="text-[var(--text-muted-dark)] font-mono text-xs">STATUS: <span class="text-cyan">OPTIMAL</span></span>
+          </div>
+          
+          <div class="space-y-6">
+            <div>
+              <div class="flex justify-between text-xs mb-2">
+                <span class="text-[var(--text-muted-dark)] font-mono">Uptime Promedio</span>
+                <span class="text-white font-mono">99.98%</span>
+              </div>
+              <div class="w-full bg-[rgba(255,255,255,0.05)] rounded-full h-1.5">
+                <div class="bg-gradient-to-r from-electric to-cyan h-1.5 rounded-full w-[99.98%]"></div>
+              </div>
+            </div>
+            
+            <div>
+              <div class="flex justify-between text-xs mb-2">
+                <span class="text-[var(--text-muted-dark)] font-mono">Respuesta Soporte SLA</span>
+                <span class="text-white font-mono">&lt; 15 min</span>
+              </div>
+              <div class="w-full bg-[rgba(255,255,255,0.05)] rounded-full h-1.5">
+                <div class="bg-gradient-to-r from-electric to-cyan h-1.5 rounded-full w-[85%]"></div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 pt-4 border-t border-[var(--border)]">
+              <div>
+                <span class="block text-[var(--text-muted-dark)] font-mono text-xs mb-1">Endpoints Seguros</span>
+                <span class="block text-white font-display font-bold text-xl">10k+</span>
+              </div>
+              <div>
+                <span class="block text-[var(--text-muted-dark)] font-mono text-xs mb-1">Monitoreo 24/7</span>
+                <span class="block text-electric font-display font-bold text-xl">Activo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Decoration elements -->
+        <div class="absolute -z-10 top-10 -right-10 w-40 h-40 bg-electric blur-[100px] opacity-20 rounded-full pointer-events-none"></div>
+        <div class="absolute -z-10 -bottom-10 -left-10 w-40 h-40 bg-cyan blur-[100px] opacity-20 rounded-full pointer-events-none"></div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Metrics Section -->
+  <section class="py-16 bg-white border-b border-[var(--border-light)]">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal">
+      <div>
+        <span class="block text-4xl font-display font-bold text-navy mb-2"><span class="counter" data-target="15">0</span>+</span>
+        <span class="block text-xs uppercase tracking-wider font-semibold text-[var(--text-muted)]">Años Experiencia</span>
+      </div>
+      <div>
+        <span class="block text-4xl font-display font-bold text-navy mb-2"><span class="counter" data-target="500">0</span>+</span>
+        <span class="block text-xs uppercase tracking-wider font-semibold text-[var(--text-muted)]">Proyectos Exitosos</span>
+      </div>
+      <div>
+        <span class="block text-4xl font-display font-bold text-navy mb-2"><span class="counter" data-target="24">0</span>/7</span>
+        <span class="block text-xs uppercase tracking-wider font-semibold text-[var(--text-muted)]">Soporte Dedicado</span>
+      </div>
+      <div>
+        <span class="block text-4xl font-display font-bold text-navy mb-2"><span class="counter" data-target="100">0</span>%</span>
+        <span class="block text-xs uppercase tracking-wider font-semibold text-[var(--text-muted)]">Satisfacción Cliente</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios Section -->
+  <section id="servicios" class="py-24 bg-surface-1">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <span class="uppercase tracking-[0.12em] text-[var(--text-xs)] text-electric font-semibold mb-4 block">CATÁLOGO DE SERVICIOS</span>
+        <h2 class="text-[var(--text-3xl)] md:text-5xl text-navy mb-6">Soluciones Tecnológicas Integrales</h2>
+        <p class="text-[var(--text-muted)] font-sans">
+          Cubrimos todas las necesidades operativas de su empresa con un enfoque en escalabilidad, seguridad y eficiencia continua.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Service 1 -->
+        <div class="service-card bg-white p-8 rounded-2xl reveal">
+          <div class="w-12 h-12 rounded-xl bg-[rgba(0,131,253,0.1)] flex items-center justify-center text-electric mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-navy mb-3">Consultoría TI & Auditoría</h3>
+          <p class="text-[var(--text-muted)] text-sm mb-6">
+            Evaluación completa de su infraestructura actual. Diseñamos planes estratégicos para la modernización tecnológica y optimización de recursos.
+          </p>
+          <ul class="space-y-2 text-sm text-[var(--text-primary)]">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Auditoría de sistemas</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Planificación estratégica</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Optimización de costos TI</li>
+          </ul>
+        </div>
+        
+        <!-- Service 2 -->
+        <div class="service-card bg-white p-8 rounded-2xl reveal delay-100">
+          <div class="w-12 h-12 rounded-xl bg-[rgba(0,131,253,0.1)] flex items-center justify-center text-electric mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-navy mb-3">Redes y Conectividad</h3>
+          <p class="text-[var(--text-muted)] text-sm mb-6">
+            Diseño, despliegue y mantenimiento de redes corporativas LAN/WAN, WiFi de alta densidad y enlaces dedicados para operación continua.
+          </p>
+          <ul class="space-y-2 text-sm text-[var(--text-primary)]">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cableado estructurado</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Redes inalámbricas Enterprise</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Enlaces de fibra y radio</li>
+          </ul>
+        </div>
+        
+        <!-- Service 3 -->
+        <div class="service-card bg-white p-8 rounded-2xl reveal delay-200">
+          <div class="w-12 h-12 rounded-xl bg-[rgba(0,131,253,0.1)] flex items-center justify-center text-electric mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-navy mb-3">Ciberseguridad</h3>
+          <p class="text-[var(--text-muted)] text-sm mb-6">
+            Protección integral de sus activos digitales. Implementamos firewalls, sistemas de prevención de intrusos y políticas de seguridad corporativa.
+          </p>
+          <ul class="space-y-2 text-sm text-[var(--text-primary)]">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Firewalls Next-Gen</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Protección Endpoint</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Backups y Recuperación</li>
+          </ul>
+        </div>
+        
+        <!-- Service 4 -->
+        <div class="service-card bg-white p-8 rounded-2xl reveal">
+          <div class="w-12 h-12 rounded-xl bg-[rgba(0,131,253,0.1)] flex items-center justify-center text-electric mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-navy mb-3">Videovigilancia Inteligente</h3>
+          <p class="text-[var(--text-muted)] text-sm mb-6">
+            Sistemas CCTV de alta definición con analítica de video, reconocimiento facial y monitoreo centralizado para sedes múltiples.
+          </p>
+          <ul class="space-y-2 text-sm text-[var(--text-primary)]">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cámaras IP PTZ / Térmicas</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> NVR y Almacenamiento</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Centros de Control</li>
+          </ul>
+        </div>
+        
+        <!-- Service 5 -->
+        <div class="service-card bg-white p-8 rounded-2xl reveal delay-100">
+          <div class="w-12 h-12 rounded-xl bg-[rgba(0,131,253,0.1)] flex items-center justify-center text-electric mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-navy mb-3">Infraestructura y Servidores</h3>
+          <p class="text-[var(--text-muted)] text-sm mb-6">
+            Provisión, configuración y mantenimiento de servidores físicos y virtuales. Entornos on-premise, cloud híbrida y centros de datos.
+          </p>
+          <ul class="space-y-2 text-sm text-[var(--text-primary)]">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Virtualización (VMware, Hyper-V)</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Servidores corporativos</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Storage (SAN / NAS)</li>
+          </ul>
+        </div>
+        
+        <!-- Service 6 -->
+        <div class="service-card bg-white p-8 rounded-2xl reveal delay-200">
+          <div class="w-12 h-12 rounded-xl bg-[rgba(0,131,253,0.1)] flex items-center justify-center text-electric mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-navy mb-3">Soporte Técnico Help Desk</h3>
+          <p class="text-[var(--text-muted)] text-sm mb-6">
+            Soporte continuo niveles 1, 2 y 3. Atención remota y presencial (in-situ) para resolución rápida de incidencias con SLAs estrictos.
+          </p>
+          <ul class="space-y-2 text-sm text-[var(--text-primary)]">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Mesa de ayuda (Tickets)</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Mantenimiento preventivo</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Outsourcing TI</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Soluciones Específicas / Casos -->
+  <section id="soluciones" class="py-24 bg-white border-y border-[var(--border-light)]">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      
+      <div class="reveal">
+        <span class="uppercase tracking-[0.12em] text-[var(--text-xs)] text-electric font-semibold mb-4 block">SOLUCIONES VERTICALES</span>
+        <h2 class="text-[var(--text-3xl)] md:text-5xl text-navy mb-6">Integración para Sectores Exigentes</h2>
+        <p class="text-[var(--text-muted)] font-sans mb-6">
+          Adaptamos nuestra tecnología a la realidad operativa de su industria. Entendemos que cada sector tiene requerimientos únicos de disponibilidad, resistencia y normativas.
+        </p>
+        
+        <div class="space-y-6 mt-8">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-lg bg-[rgba(0,195,254,0.1)] flex items-center justify-center text-cyan shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            </div>
+            <div>
+              <h4 class="font-bold text-navy mb-1">Corporativo & Retail</h4>
+              <p class="text-sm text-[var(--text-muted)]">Redes seguras, control de acceso y sistemas POS para operaciones comerciales sin interrupciones.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-lg bg-[rgba(0,195,254,0.1)] flex items-center justify-center text-cyan shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg>
+            </div>
+            <div>
+              <h4 class="font-bold text-navy mb-1">Minería e Industria</h4>
+              <p class="text-sm text-[var(--text-muted)]">Enlaces de largo alcance, CCTV industrial y soporte en campamentos (combinable con nuestras soluciones EcoFlow y SwellPro).</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-lg bg-[rgba(0,195,254,0.1)] flex items-center justify-center text-cyan shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            </div>
+            <div>
+              <h4 class="font-bold text-navy mb-1">Educación y Salud</h4>
+              <p class="text-sm text-[var(--text-muted)]">Redes de alta densidad, protección de datos sensibles (ciberseguridad) e infraestructura virtual.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="relative rounded-2xl overflow-hidden shadow-2xl reveal delay-150">
+        <!-- Using a placeholder tech image from cr tech assets ideally, but standard tech placeholder for structure -->
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Server Room" class="w-full h-[500px] object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-[var(--navy)] via-transparent to-transparent opacity-80"></div>
+        <div class="absolute bottom-0 left-0 p-8 text-white">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="w-2 h-2 rounded-full bg-electric animate-pulse"></span>
+            <span class="text-xs font-mono tracking-widest uppercase text-[rgba(255,255,255,0.7)]">Operación Continua</span>
+          </div>
+          <p class="font-bold text-xl">Data Centers y Salas de Servidores</p>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- CTA Final Oscuro -->
+  <section id="contacto" class="py-24 bg-surface-dark relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_center,rgba(0,195,254,0.15),transparent_50%)] pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto px-6 md:px-12 text-center relative z-10 reveal">
+      <h2 class="text-4xl md:text-5xl font-display font-extrabold text-[var(--text-on-dark)] mb-6">
+        Potencia tu Infraestructura Tecnológica
+      </h2>
+      <p class="text-[var(--text-muted-dark)] text-lg mb-10 font-sans max-w-2xl mx-auto">
+        Déjanos tus datos y un especialista TI se pondrá en contacto para una evaluación inicial sin compromiso.
+      </p>
+      
+      <form class="max-w-md mx-auto space-y-4 text-left">
+        <div>
+          <label class="block text-[var(--text-muted-dark)] text-xs font-bold uppercase mb-1" for="name">Nombre / Empresa</label>
+          <input type="text" id="name" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan transition-colors" placeholder="Su nombre">
+        </div>
+        <div>
+          <label class="block text-[var(--text-muted-dark)] text-xs font-bold uppercase mb-1" for="contact">Correo / WhatsApp</label>
+          <input type="text" id="contact" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan transition-colors" placeholder="Email o Teléfono">
+        </div>
+        <div>
+          <label class="block text-[var(--text-muted-dark)] text-xs font-bold uppercase mb-1" for="service">Servicio de Interés</label>
+          <select id="service" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan transition-colors appearance-none">
+            <option value="consultoria" class="bg-navy text-white">Consultoría TI</option>
+            <option value="redes" class="bg-navy text-white">Redes y Conectividad</option>
+            <option value="ciberseguridad" class="bg-navy text-white">Ciberseguridad</option>
+            <option value="cctv" class="bg-navy text-white">Videovigilancia CCTV</option>
+            <option value="servidores" class="bg-navy text-white">Servidores e Infraestructura</option>
+            <option value="soporte" class="bg-navy text-white">Soporte Help Desk</option>
+          </select>
+        </div>
+        <button type="button" class="w-full btn-primary py-4 rounded-xl font-bold uppercase tracking-wider mt-4">
+          Solicitar Evaluación
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-[var(--border-light)] py-12">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-12 text-left">
+      <!-- Footer Left Logo / Tagline -->
+      <div class="md:col-span-4 flex flex-col items-start gap-4">
+        <img src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782419695/CRTech_LogoHorizontal_BackLight_leqyyi.png" alt="Logo CR Tech" class="h-9 w-auto" referrerPolicy="no-referrer">
+        <p class="text-xs text-[var(--text-muted)] font-sans leading-relaxed max-w-sm">
+          CR Technologies & Services ofrece ingeniería, soporte oficial de drones industriales SwellPro, autonomía EcoFlow e Infraestructura TI en todo el territorio del Perú.
+        </p>
+      </div>
+      
+      <!-- Footer Enlaces -->
+      <div class="md:col-span-2">
+        <span class="text-xs font-bold text-[var(--text-primary)] block uppercase tracking-wider mb-4">Verticales</span>
+        <div class="flex flex-col gap-3">
+          <a href="index.html" class="text-xs text-[var(--text-muted)] hover:text-cyan transition-colors">01 · Tecnología Aérea</a>
+          <a href="energia-autonoma.html" class="text-xs text-[var(--text-muted)] hover:text-cyan transition-colors">02 · Energía Autónoma</a>
+          <a href="#" class="text-xs text-electric font-semibold">03 · Servicios TI Enterprise</a>
+        </div>
+      </div>
+      
+      <!-- Footer Contacto -->
+      <div class="md:col-span-6 md:text-right flex flex-col md:items-end justify-start">
+        <span class="text-[8px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-2">Canal Oficial</span>
+        <div class="text-[10px] text-[var(--text-muted)] flex flex-col md:items-end gap-1 font-mono">
+          <span>+51 987 654 321</span>
+          <span>soporte@crtechnologies.pe</span>
+          <span>Lima, Perú</span>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 md:px-12 mt-12 pt-8 border-t border-[var(--border-light)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)] font-sans">
+      <span>&copy; 2024 CR Technologies & Services. Todos los derechos reservados.</span>
+      <span>Empresa Peruana de Ingeniería y Tecnología.</span>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Intersection Observer para fade-up (.reveal)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 2. Navbar Scroll Effect
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // 3. Smooth scroll para anchors internos
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function (e) {
+        if(this.getAttribute('href') === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 72,
+            behavior: 'smooth'
+          });
+        }
+        // Cerrar menú mobile si está abierto
+        document.getElementById('mobile-drawer').classList.remove('opacity-100', 'pointer-events-auto');
+        document.getElementById('mobile-drawer').classList.add('opacity-0', 'pointer-events-none');
+        document.getElementById('mobile-drawer-content').classList.remove('translate-x-0');
+        document.getElementById('mobile-drawer-content').classList.add('translate-x-full');
+      });
+    });
+
+    // 4. Mobile Menu Drawer
+    const btnMenu = document.getElementById('mobile-menu-btn');
+    const btnClose = document.getElementById('close-menu-btn');
+    const drawer = document.getElementById('mobile-drawer');
+    const drawerContent = document.getElementById('mobile-drawer-content');
+
+    const openMenu = () => {
+      drawer.classList.remove('opacity-0', 'pointer-events-none');
+      drawer.classList.add('opacity-100', 'pointer-events-auto');
+      drawerContent.classList.remove('translate-x-full');
+      drawerContent.classList.add('translate-x-0');
+    };
+
+    const closeMenu = () => {
+      drawer.classList.remove('opacity-100', 'pointer-events-auto');
+      drawer.classList.add('opacity-0', 'pointer-events-none');
+      drawerContent.classList.remove('translate-x-0');
+      drawerContent.classList.add('translate-x-full');
+    };
+
+    btnMenu.addEventListener('click', openMenu);
+    btnClose.addEventListener('click', closeMenu);
+    drawer.addEventListener('click', (e) => {
+      if (e.target === drawer) closeMenu();
+    });
+
+    // 5. Animación de Contadores Numéricos
+    const counterObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target;
+          const endVal = parseInt(target.getAttribute('data-target'), 10);
+          const duration = 2000;
+          let startTimestamp = null;
+          
+          const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            target.innerText = Math.floor(progress * endVal);
+            if (progress < 1) {
+              window.requestAnimationFrame(step);
+            } else {
+              target.innerText = endVal;
+            }
+          };
+          window.requestAnimationFrame(step);
+          obs.unobserve(target); // Solo animar una vez
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.counter').forEach(c => counterObserver.observe(c));
+  </script>
+</body>
+</html>

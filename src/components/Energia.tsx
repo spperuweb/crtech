@@ -148,15 +148,10 @@ export default function Energia() {
               </div>
               <div className="mt-2 flex flex-wrap gap-4 items-center">
                 <a
-                  href="#contacto"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const el = document.getElementById('contacto');
-                    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
-                  }}
+                  href="energia-autonoma.html"
                   className="cursor-pointer inline-flex items-center gap-2 bg-gradient-to-r from-[#00c896] to-[#00c3fe] hover:shadow-[0_10px_30px_rgba(0,200,150,0.3)] hover:scale-[1.03] active:scale-95 text-white font-extrabold text-sm py-4 px-8 rounded-xl transition-all duration-300 shadow-md group"
                 >
-                  Explorar Catálogo de Autonomía
+                  Explorar energía portátil
                   <span className="text-white group-hover:translate-x-0.5 transition-transform font-mono">→</span>
                 </a>
               </div>
