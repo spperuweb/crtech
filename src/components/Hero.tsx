@@ -16,29 +16,13 @@ interface BranchData {
 
 export default function Hero() {
   const [selectedBranch, setSelectedBranch] = useState<BranchKey>('drones');
-  const [hoveredBranch, setHoveredBranch] = useState<BranchKey | null>(null);
 
-  // Refs for elements and scoping
+  // Refs
   const heroRef = useRef<HTMLDivElement>(null);
   
-  const pathDronesRef = useRef<SVGPathElement>(null);
-  const pathEnergiaRef = useRef<SVGPathElement>(null);
-  const pathItRef = useRef<SVGPathElement>(null);
-
-  const dotDronesRef = useRef<SVGCircleElement>(null);
-  const dotEnergiaRef = useRef<SVGCircleElement>(null);
-  const dotItRef = useRef<SVGCircleElement>(null);
-
-  const centralDotRef = useRef<SVGCircleElement>(null);
-  const centralHaloRef = useRef<SVGCircleElement>(null);
-
-  const btnDronesRef = useRef<HTMLButtonElement>(null);
-  const btnEnergiaRef = useRef<HTMLButtonElement>(null);
-  const btnItRef = useRef<HTMLButtonElement>(null);
-
-  const dronesMediaRef = useRef<HTMLDivElement>(null);
-  const energiaMediaRef = useRef<HTMLDivElement>(null);
-  const itMediaRef = useRef<HTMLDivElement>(null);
+  const cardEnergiaRef = useRef<HTMLButtonElement>(null);
+  const cardDronesRef = useRef<HTMLButtonElement>(null);
+  const cardItRef = useRef<HTMLButtonElement>(null);
 
   const dronesCaptionRef = useRef<HTMLDivElement>(null);
   const energiaCaptionRef = useRef<HTMLDivElement>(null);
@@ -80,10 +64,10 @@ export default function Hero() {
 
   const branchKeys: BranchKey[] = ['drones', 'energia', 'it'];
 
-  const getMediaRef = (key: BranchKey) => {
-    if (key === 'drones') return dronesMediaRef;
-    if (key === 'energia') return energiaMediaRef;
-    return itMediaRef;
+  const getCardRef = (key: BranchKey) => {
+    if (key === 'energia') return cardEnergiaRef;
+    if (key === 'drones') return cardDronesRef;
+    return cardItRef;
   };
 
   const getCaptionRef = (key: BranchKey) => {
@@ -125,330 +109,176 @@ export default function Hero() {
     const nextBranch = branchKeys[nextIndex];
     setSelectedBranch(nextBranch);
     
-    // Defer focus so rendering/DOM is updated
     setTimeout(() => {
-      const btn = document.querySelector(`.btn-${nextBranch}`) as HTMLButtonElement;
-      if (btn) {
-        btn.focus();
+      const cardEl = getCardRef(nextBranch).current;
+      if (cardEl) {
+        cardEl.focus();
       }
     }, 0);
   };
 
-  // GSAP 1: Initial Animation Sequence and Media Queries
+  // GSAP 1: Initial Animation Sequence
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // CASE A: REDUCED MOTION ENABLED
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        // Instant visual presence, zero displacements or motion
         gsap.set([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], { opacity: 1, y: 0 });
-        gsap.set([centralDotRef.current, centralHaloRef.current], { opacity: 1, scale: 1 });
+        gsap.set(".hero-fan-container", { opacity: 1, y: 0 });
         
-        const paths = [pathDronesRef.current, pathEnergiaRef.current, pathItRef.current];
-        const colors = ['#48BFEA', '#F4A825', '#7067E8'];
-        
-        paths.forEach((p, i) => {
-          if (p) {
-            const key = branchKeys[i];
-            const isSelected = key === selectedBranch;
-            gsap.set(p, {
-              strokeDasharray: 'none',
-              strokeDashoffset: 0,
-              stroke: isSelected ? colors[i] : '#CBD5E1',
-              strokeWidth: isSelected ? 3.5 : 1.5,
-              opacity: isSelected ? 1 : 0.3
-            });
-          }
-        });
+        branchKeys.forEach((key) => {
+          const cardEl = getCardRef(key).current;
+          if (!cardEl) return;
+          const isSelected = key === selectedBranch;
+          const baseRotate = key === 'energia' ? -6 : key === 'drones' ? 0 : 6;
+          const activeRotate = key === 'energia' ? -3 : key === 'drones' ? 0 : 3;
 
-        const dots = [dotDronesRef.current, dotEnergiaRef.current, dotItRef.current];
-        dots.forEach((dot, i) => {
-          if (dot) {
-            const key = branchKeys[i];
-            const isSelected = key === selectedBranch;
-            gsap.set(dot, {
-              fill: isSelected ? colors[i] : '#94A3B8',
-              r: isSelected ? 7 : 5
-            });
-          }
-        });
-
-        // Set buttons visible
-        gsap.set([btnDronesRef.current, btnEnergiaRef.current, btnItRef.current], { opacity: 1, y: 0 });
-
-        // Show selected branch content
-        branchKeys.forEach(key => {
-          const isCurrent = key === selectedBranch;
-          const mediaEl = getMediaRef(key).current;
-          const captionEl = getCaptionRef(key).current;
-          
-          if (mediaEl) {
-            gsap.set(mediaEl, { display: isCurrent ? 'block' : 'none', opacity: isCurrent ? 1 : 0, y: 0 });
-            const img = mediaEl.querySelector('.editorial-display-img');
-            if (img) gsap.set(img, { scale: 1 });
-          }
-          if (captionEl) {
-            gsap.set(captionEl, { display: isCurrent ? 'flex' : 'none', opacity: isCurrent ? 1 : 0, y: 0 });
-          }
+          gsap.set(cardEl, {
+            rotate: isSelected ? activeRotate : baseRotate,
+            y: isSelected ? -12 : 18,
+            scale: isSelected ? 1.03 : 0.94,
+            opacity: isSelected ? 1 : 0.78,
+            zIndex: isSelected ? 30 : (key === 'drones' ? 15 : 10)
+          });
         });
       });
 
-      // CASE B: NO PREFERENCE - PREMIUM CINEMATIC SEQUENCES
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const tl = gsap.timeline({
-          defaults: { ease: 'power2.out' }
+          defaults: { ease: 'power3.out' }
         });
         initialTimelineRef.current = tl;
 
-        // Initial invisible states with targeted offsets
         gsap.set([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], { opacity: 0, y: 16 });
-        gsap.set([centralDotRef.current, centralHaloRef.current], { opacity: 0, scale: 0.9 });
-        
-        // Setup initial paths offsets
-        const paths = [pathDronesRef.current, pathEnergiaRef.current, pathItRef.current].filter((p): p is SVGPathElement => p !== null);
-        paths.forEach((path) => {
-          const length = path.getTotalLength();
-          gsap.set(path, {
-            strokeDasharray: length,
-            strokeDashoffset: length,
-            opacity: 1
-          });
-        });
+        gsap.set(".hero-fan-container", { opacity: 0, y: 14 });
 
-        // Setup dots and buttons invisible
-        gsap.set([dotDronesRef.current, dotEnergiaRef.current, dotItRef.current], { opacity: 0 });
-        gsap.set([btnDronesRef.current, btnEnergiaRef.current, btnItRef.current], { opacity: 0, y: 6 });
+        // Initial GSAP card offsets prior to animation
+        if (cardEnergiaRef.current) gsap.set(cardEnergiaRef.current, { x: 48, rotate: -6, opacity: 0 });
+        if (cardDronesRef.current) gsap.set(cardDronesRef.current, { y: 18, rotate: 0, opacity: 0 });
+        if (cardItRef.current) gsap.set(cardItRef.current, { x: -48, rotate: 6, opacity: 0 });
 
-        // Force other branches to be completely hidden on mount
-        gsap.set([energiaMediaRef.current, itMediaRef.current, energiaCaptionRef.current, itCaptionRef.current], { display: 'none', opacity: 0 });
-        gsap.set([dronesMediaRef.current, dronesCaptionRef.current], { display: 'block', opacity: 0, y: 10 });
-        gsap.set(".drones-media img", { scale: 1.02 });
-
-        // Sequence Builder
         tl.to([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.5,
           stagger: 0.08,
           ease: 'power3.out'
         })
-        .to([centralDotRef.current, centralHaloRef.current], {
+        .to(".hero-fan-container", {
           opacity: 1,
-          scale: 1,
-          duration: 0.35,
+          y: 0,
+          duration: 0.55,
           ease: 'power2.out'
         }, "-=0.3")
-        .to(paths, {
-          strokeDashoffset: 0,
-          duration: 0.85,
-          stagger: 0.1,
-          ease: 'power2.inOut',
-          onComplete: () => {
-            paths.forEach((path) => {
-              if (path) {
-                const length = path.getTotalLength();
-                gsap.set(path, {
-                  strokeDasharray: length,
-                  strokeDashoffset: 0
-                });
-              }
-            });
-          }
-        }, "-=0.2")
-        .to([dotDronesRef.current, dotEnergiaRef.current, dotItRef.current], {
-          opacity: 1,
-          duration: 0.2
-        }, "<+=0.4")
-        .to([btnDronesRef.current, btnEnergiaRef.current, btnItRef.current], {
-          opacity: 1,
-          y: 0,
-          duration: 0.35,
+        .to([cardEnergiaRef.current, cardDronesRef.current, cardItRef.current], {
+          x: 0,
+          y: (i) => {
+            const key = branchKeys[i];
+            return key === selectedBranch ? -12 : 18;
+          },
+          rotate: (i) => {
+            const key = branchKeys[i];
+            if (key === selectedBranch) {
+              return key === 'energia' ? -3 : key === 'drones' ? 0 : 3;
+            }
+            return key === 'energia' ? -6 : key === 'drones' ? 0 : 6;
+          },
+          scale: (i) => (branchKeys[i] === selectedBranch ? 1.03 : 0.94),
+          opacity: (i) => (branchKeys[i] === selectedBranch ? 1 : 0.78),
+          zIndex: (i) => (branchKeys[i] === selectedBranch ? 30 : branchKeys[i] === 'drones' ? 15 : 10),
+          duration: 0.65,
           stagger: 0.08,
-          ease: 'power2.out'
-        }, "-=0.6")
-        .to(dronesMediaRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
           ease: 'power3.out'
-        }, "-=0.35")
-        .to(".drones-media img", {
-          scale: 1,
-          duration: 0.6,
-          ease: 'power3.out'
-        }, "<")
-        .to(dronesCaptionRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power3.out'
-        }, "-=0.45");
+        }, "-=0.4");
       });
     }, heroRef);
 
-    return () => {
-      ctx.revert();
-      if (initialTimelineRef.current) {
-        initialTimelineRef.current.kill();
-      }
-    };
+    return () => ctx.revert();
   }, []);
 
-  // GSAP 2: Branch switching and active states transition
+  // GSAP 2: Branch switching transitions
   useLayoutEffect(() => {
     if (isFirstBranchEffectRef.current) {
       isFirstBranchEffectRef.current = false;
       return;
     }
 
-    const prevBranch = prevBranchRef.current;
     prevBranchRef.current = selectedBranch;
-
-    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const pathRefs = [pathDronesRef.current, pathEnergiaRef.current, pathItRef.current];
-    const dotRefs = [dotDronesRef.current, dotEnergiaRef.current, dotItRef.current];
-    const colors = ['#48BFEA', '#F4A825', '#7067E8'];
 
     if (initialTimelineRef.current?.isActive()) {
       initialTimelineRef.current.progress(1);
     }
-
     initialTimelineRef.current = null;
 
-    // 1. Line SVG transitions (active path contrast, others muted)
-    branchKeys.forEach((key, i) => {
+    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Card transform & opacity updates
+    branchKeys.forEach((key) => {
+      const cardEl = getCardRef(key).current;
+      if (!cardEl) return;
+
       const isSelected = key === selectedBranch;
-      const pathEl = pathRefs[i];
-      const dotEl = dotRefs[i];
+      const baseRotate = key === 'energia' ? -6 : key === 'drones' ? 0 : 6;
+      const activeRotate = key === 'energia' ? -3 : key === 'drones' ? 0 : 3;
 
-      if (pathEl) {
-        gsap.killTweensOf(pathEl);
-        if (isReduced) {
-          gsap.set(pathEl, {
-            stroke: isSelected ? colors[i] : '#CBD5E1',
-            strokeWidth: isSelected ? 3.5 : 1.5,
-            opacity: isSelected ? 1 : 0.3
-          });
-        } else {
-          gsap.to(pathEl, {
-            stroke: isSelected ? colors[i] : '#CBD5E1',
-            strokeWidth: isSelected ? 3.5 : 1.5,
-            opacity: isSelected ? 1 : 0.3,
-            duration: 0.25,
-            ease: 'power2.out'
-          });
-        }
-      }
+      const targetRotate = isSelected ? activeRotate : baseRotate;
+      const targetY = isSelected ? -12 : 18;
+      const targetScale = isSelected ? 1.03 : 0.94;
+      const targetOpacity = isSelected ? 1 : 0.78;
+      const targetZIndex = isSelected ? 30 : (key === 'drones' ? 15 : 10);
 
-      if (dotEl) {
-        gsap.killTweensOf(dotEl);
-        if (isReduced) {
-          gsap.set(dotEl, {
-            fill: isSelected ? colors[i] : '#94A3B8',
-            r: isSelected ? 7 : 5
-          });
-        } else {
-          if (isSelected && prevBranch !== selectedBranch) {
-            // Pulse node final scale 1 -> 1.08 over 160ms and back to 1
-            gsap.timeline()
-              .to(dotEl, { r: 7 * 1.08, fill: colors[i], duration: 0.16, ease: 'power2.out' })
-              .to(dotEl, { r: 7, duration: 0.16, ease: 'power2.inOut' });
-          } else {
-            gsap.to(dotEl, {
-              fill: isSelected ? colors[i] : '#94A3B8',
-              r: isSelected ? 7 : 5,
-              duration: 0.25,
-              ease: 'power2.out'
-            });
-          }
-        }
+      if (isReduced) {
+        gsap.set(cardEl, {
+          rotate: targetRotate,
+          y: targetY,
+          scale: targetScale,
+          opacity: targetOpacity,
+          zIndex: targetZIndex
+        });
+      } else {
+        gsap.to(cardEl, {
+          rotate: targetRotate,
+          y: targetY,
+          scale: targetScale,
+          opacity: targetOpacity,
+          zIndex: targetZIndex,
+          duration: 0.32,
+          ease: 'power2.inOut'
+        });
       }
     });
 
-    // 2. Interactive Media / Caption display switching
-    branchKeys.forEach(key => {
-      const isCurrent = key === selectedBranch;
-      const mediaEl = getMediaRef(key).current;
+    // Caption crossfade
+    branchKeys.forEach((key) => {
       const captionEl = getCaptionRef(key).current;
+      if (!captionEl) return;
+      const isCurrent = key === selectedBranch;
 
-      if (mediaEl) {
-        gsap.killTweensOf(mediaEl);
-        const img = mediaEl.querySelector('.editorial-display-img');
-        if (img) gsap.killTweensOf(img);
-
-        if (isReduced) {
-          gsap.set(mediaEl, {
-            display: isCurrent ? 'block' : 'none',
-            opacity: isCurrent ? 1 : 0,
-            y: 0
+      if (isReduced) {
+        gsap.set(captionEl, {
+          display: isCurrent ? 'flex' : 'none',
+          opacity: isCurrent ? 1 : 0,
+          y: 0
+        });
+      } else {
+        if (isCurrent) {
+          gsap.set(captionEl, { display: 'flex', opacity: 0, y: 8 });
+          gsap.to(captionEl, {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out'
           });
-          if (img) gsap.set(img, { scale: 1 });
         } else {
-          if (isCurrent) {
-            // Entrance
-            gsap.set(mediaEl, { display: 'block', opacity: 0, y: 11 });
-            if (img) gsap.set(img, { scale: 1.015 });
-
-            gsap.to(mediaEl, {
-              opacity: 1,
-              y: 0,
-              duration: 0.4,
-              ease: 'power3.out'
-            });
-            if (img) {
-              gsap.to(img, {
-                scale: 1,
-                duration: 0.4,
-                ease: 'power3.out'
-              });
+          gsap.to(captionEl, {
+            opacity: 0,
+            y: -6,
+            duration: 0.15,
+            ease: 'power2.in',
+            onComplete: () => {
+              gsap.set(captionEl, { display: 'none' });
             }
-          } else {
-            // Exit
-            gsap.to(mediaEl, {
-              opacity: 0,
-              y: -7,
-              duration: 0.14,
-              ease: 'power2.in',
-              onComplete: () => {
-                gsap.set(mediaEl, { display: 'none' });
-              }
-            });
-          }
-        }
-      }
-
-      if (captionEl) {
-        gsap.killTweensOf(captionEl);
-        if (isReduced) {
-          gsap.set(captionEl, {
-            display: isCurrent ? 'flex' : 'none',
-            opacity: isCurrent ? 1 : 0,
-            y: 0
           });
-        } else {
-          if (isCurrent) {
-            // Entrance
-            gsap.set(captionEl, { display: 'flex', opacity: 0, y: 11 });
-            gsap.to(captionEl, {
-              opacity: 1,
-              y: 0,
-              duration: 0.4,
-              ease: 'power3.out'
-            });
-          } else {
-            // Exit
-            gsap.to(captionEl, {
-              opacity: 0,
-              y: -7,
-              duration: 0.14,
-              ease: 'power2.in',
-              onComplete: () => {
-                gsap.set(captionEl, { display: 'none' });
-              }
-            });
-          }
         }
       }
     });
@@ -488,231 +318,120 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Side: Interactive Editorial Visual with Premium Open Layout */}
+        {/* Right Side: 3-Card Image Fan Composition */}
         <div className="hero-editorial-right" id="hero-interactive-zone">
           
-          {/* Branch routes / path diagram */}
-          <div className="branches-interactive-network">
-            <svg 
-              className="branches-editorial-svg" 
-              viewBox="0 0 500 130" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
+          <div 
+            className="hero-fan-container" 
+            role="tablist" 
+            aria-label="Verticales de CR Technologies"
+            onKeyDown={handleKeyDown}
+          >
+            {/* Card 1: Energía (Campo) */}
+            <button
+              ref={cardEnergiaRef}
+              onClick={() => handleBranchSelect('energia')}
+              className={`fan-card fan-card-energia ${selectedBranch === 'energia' ? 'active' : ''}`}
+              role="tab"
+              aria-selected={selectedBranch === 'energia'}
+              aria-controls="hero-interactive-zone"
+              tabIndex={selectedBranch === 'energia' ? 0 : -1}
+              type="button"
             >
-              {/* Central Core representing CR Tech at (250, 115) */}
-              <circle ref={centralDotRef} cx="250" cy="115" r="5" fill="#168BFF" />
-              <circle ref={centralHaloRef} cx="250" cy="115" r="12" stroke="#168BFF" strokeWidth="1" strokeOpacity="0.5" fill="none" />
-              
-              {/* Connective Paths */}
-              {/* Path 1: To Drones (Aire) on the Left (70, 30) */}
-              <path 
-                ref={pathDronesRef}
-                className="branch-path"
-                d="M 250 115 C 170 115, 95 85, 70 30" 
-                stroke={selectedBranch === 'drones' ? '#48BFEA' : '#CBD5E1'} 
-                strokeWidth={selectedBranch === 'drones' ? '3.5' : '1.5'} 
-                style={{ transition: 'stroke-width 0.3s ease, stroke 0.3s ease' }}
-              />
-              <circle 
-                ref={dotDronesRef}
-                cx="70" 
-                cy="30" 
-                r={selectedBranch === 'drones' ? '7' : (hoveredBranch === 'drones' ? '6' : '5')} 
-                fill={selectedBranch === 'drones' ? '#48BFEA' : (hoveredBranch === 'drones' ? '#48BFEA' : '#94A3B8')} 
-                style={{ transition: 'all 0.15s ease' }} 
-              />
-              
-              {/* Path 2: To Energía (Campo) in the Center (250, 20) */}
-              <path 
-                ref={pathEnergiaRef}
-                className="branch-path"
-                d="M 250 115 L 250 20" 
-                stroke={selectedBranch === 'energia' ? '#F4A825' : '#CBD5E1'} 
-                strokeWidth={selectedBranch === 'energia' ? '3.5' : '1.5'} 
-                style={{ transition: 'stroke-width 0.3s ease, stroke 0.3s ease' }}
-              />
-              <circle 
-                ref={dotEnergiaRef}
-                cx="250" 
-                cy="20" 
-                r={selectedBranch === 'energia' ? '7' : (hoveredBranch === 'energia' ? '6' : '5')} 
-                fill={selectedBranch === 'energia' ? '#F4A825' : (hoveredBranch === 'energia' ? '#F4A825' : '#94A3B8')} 
-                style={{ transition: 'all 0.15s ease' }} 
-              />
-              
-              {/* Path 3: To Servicios TI (Empresa) on the Right (430, 30) */}
-              <path 
-                ref={pathItRef}
-                className="branch-path"
-                d="M 250 115 C 330 115, 405 85, 430 30" 
-                stroke={selectedBranch === 'it' ? '#7067E8' : '#CBD5E1'} 
-                strokeWidth={selectedBranch === 'it' ? '3.5' : '1.5'} 
-                style={{ transition: 'stroke-width 0.3s ease, stroke 0.3s ease' }}
-              />
-              <circle 
-                ref={dotItRef}
-                cx="430" 
-                cy="30" 
-                r={selectedBranch === 'it' ? '7' : (hoveredBranch === 'it' ? '6' : '5')} 
-                fill={selectedBranch === 'it' ? '#7067E8' : (hoveredBranch === 'it' ? '#7067E8' : '#94A3B8')} 
-                style={{ transition: 'all 0.15s ease' }} 
-              />
-            </svg>
-
-            {/* Fully keyboard-accessible branch selector buttons positioned at the endpoints of the SVG */}
-            <div 
-              className="branch-label-buttons" 
-              role="tablist" 
-              aria-label="Seleccionar rama de negocio"
-              onKeyDown={handleKeyDown}
-            >
-              {/* Button Wrapper 1: Drones */}
-              <div 
-                className="branch-btn-wrapper" 
-                style={{ left: '14%', top: '23%', transform: 'translate(-50%, -50%)', zIndex: 10 }}
-              >
-                <button
-                  ref={btnDronesRef}
-                  onClick={() => handleBranchSelect('drones')}
-                  onMouseEnter={() => setHoveredBranch('drones')}
-                  onMouseLeave={() => setHoveredBranch(null)}
-                  className={`branch-editorial-btn btn-drones ${selectedBranch === 'drones' ? 'active' : ''}`}
-                  role="tab"
-                  aria-selected={selectedBranch === 'drones'}
-                  aria-controls="hero-interactive-zone"
-                  tabIndex={selectedBranch === 'drones' ? 0 : -1}
-                  type="button"
-                >
-                  <span className="branch-btn-dot" style={{ backgroundColor: '#48BFEA' }}></span>
-                  <div className="branch-btn-text">
-                    <span className="branch-btn-tag">Aire</span>
-                    <span className="branch-btn-name">Drones</span>
-                  </div>
-                </button>
-              </div>
-
-              {/* Button Wrapper 2: Energía */}
-              <div 
-                className="branch-btn-wrapper" 
-                style={{ left: '50%', top: '15%', transform: 'translate(-50%, -50%)', zIndex: 10 }}
-              >
-                <button
-                  ref={btnEnergiaRef}
-                  onClick={() => handleBranchSelect('energia')}
-                  onMouseEnter={() => setHoveredBranch('energia')}
-                  onMouseLeave={() => setHoveredBranch(null)}
-                  className={`branch-editorial-btn btn-energia ${selectedBranch === 'energia' ? 'active' : ''}`}
-                  role="tab"
-                  aria-selected={selectedBranch === 'energia'}
-                  aria-controls="hero-interactive-zone"
-                  tabIndex={selectedBranch === 'energia' ? 0 : -1}
-                  type="button"
-                >
-                  <span className="branch-btn-dot" style={{ backgroundColor: '#F4A825' }}></span>
-                  <div className="branch-btn-text">
-                    <span className="branch-btn-tag">Campo</span>
-                    <span className="branch-btn-name">Energía</span>
-                  </div>
-                </button>
-              </div>
-
-              {/* Button Wrapper 3: Servicios TI */}
-              <div 
-                className="branch-btn-wrapper" 
-                style={{ left: '86%', top: '23%', transform: 'translate(-50%, -50%)', zIndex: 10 }}
-              >
-                <button
-                  ref={btnItRef}
-                  onClick={() => handleBranchSelect('it')}
-                  onMouseEnter={() => setHoveredBranch('it')}
-                  onMouseLeave={() => setHoveredBranch(null)}
-                  className={`branch-editorial-btn btn-it ${selectedBranch === 'it' ? 'active' : ''}`}
-                  role="tab"
-                  aria-selected={selectedBranch === 'it'}
-                  aria-controls="hero-interactive-zone"
-                  tabIndex={selectedBranch === 'it' ? 0 : -1}
-                  type="button"
-                >
-                  <span className="branch-btn-dot" style={{ backgroundColor: '#7067E8' }}></span>
-                  <div className="branch-btn-text">
-                    <span className="branch-btn-tag">Empresa</span>
-                    <span className="branch-btn-name">Servicios TI</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Dynamic Image / Content Viewer with elegant mask (no card) */}
-          <div className="hero-editorial-image-frame overflow-hidden relative">
-            
-            {/* Drones Content Wrapper */}
-            <div 
-              ref={dronesMediaRef}
-              className="editorial-media-wrapper drones-media absolute inset-0 w-full h-full"
-              style={{ display: 'block', opacity: 1 }}
-            >
-              <img 
-                src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1400,c_fill,g_auto/v1779929016/swellpro-peru-dron-01_uvvj5z.jpg" 
-                alt="Dron profesional SwellPro en acción cinematográfica" 
-                className="editorial-display-img object-cover w-full h-full"
-                fetchPriority="high"
-              />
-            </div>
-
-            {/* Energía Content Wrapper */}
-            <div 
-              ref={energiaMediaRef}
-              className="editorial-media-wrapper energia-media absolute inset-0 w-full h-full"
-              style={{ display: 'none', opacity: 0 }}
-            >
-              <div className="editorial-product-display w-full h-full flex items-center justify-center">
+              <div className="fan-card-image-wrapper">
                 <img 
-                  src={assets.ecoFlow.deltaPro} 
-                  alt="Estación de energía EcoFlow Delta Pro" 
-                  className="editorial-display-img object-contain max-h-full"
-                  fetchPriority="high"
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422177/Ecoflow_delta_PRO_g9xhmt.png" 
+                  alt="Energía Portátil EcoFlow Delta Pro" 
+                  className="fan-card-img fan-card-img-contain"
                 />
+                <div className="fan-card-overlay">
+                  <div className="fan-card-badge">
+                    <span className="fan-card-dot" style={{ backgroundColor: '#F4A825' }}></span>
+                    <span className="fan-card-tag">CAMPO</span>
+                  </div>
+                  <div className="fan-card-title">Energía</div>
+                </div>
               </div>
-            </div>
+            </button>
 
-            {/* Servicios TI Content Wrapper */}
-            <div 
-              ref={itMediaRef}
-              className="editorial-media-wrapper it-media absolute inset-0 w-full h-full"
-              style={{ display: 'none', opacity: 0 }}
+            {/* Card 2: Drones (Aire) */}
+            <button
+              ref={cardDronesRef}
+              onClick={() => handleBranchSelect('drones')}
+              className={`fan-card fan-card-drones ${selectedBranch === 'drones' ? 'active' : ''}`}
+              role="tab"
+              aria-selected={selectedBranch === 'drones'}
+              aria-controls="hero-interactive-zone"
+              tabIndex={selectedBranch === 'drones' ? 0 : -1}
+              type="button"
             >
-              <div className="editorial-it-display w-full h-full flex items-center justify-center">
-                <svg viewBox="0 0 400 160" fill="none" className="it-minimal-svg w-full" aria-hidden="true">
-                  <path d="M40 80 Q 200 10, 360 80" stroke="#7067E8" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
-                  <path d="M40 80 H 360" stroke="#7067E8" strokeWidth="1" opacity="0.5" />
-                  <circle cx="40" cy="80" r="5" fill="#7067E8" />
-                  <circle cx="200" cy="80" r="7" fill="#168BFF" />
-                  <circle cx="360" cy="80" r="5" fill="#7067E8" />
-                  
-                  <text x="40" y="115" fill="#07152C" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
-                  <text x="200" y="115" fill="#07152C" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
-                  <text x="360" y="115" fill="#07152C" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
-                </svg>
+              <div className="fan-card-image-wrapper">
+                <img 
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779933447/fd3-image-17_e1q8iz.jpg" 
+                  alt="Dron profesional SwellPro" 
+                  className="fan-card-img"
+                />
+                <div className="fan-card-overlay">
+                  <div className="fan-card-badge">
+                    <span className="fan-card-dot" style={{ backgroundColor: '#48BFEA' }}></span>
+                    <span className="fan-card-tag">AIRE</span>
+                  </div>
+                  <div className="fan-card-title">Drones</div>
+                </div>
               </div>
-            </div>
+            </button>
 
+            {/* Card 3: Servicios TI (Empresa) */}
+            <button
+              ref={cardItRef}
+              onClick={() => handleBranchSelect('it')}
+              className={`fan-card fan-card-it ${selectedBranch === 'it' ? 'active' : ''}`}
+              role="tab"
+              aria-selected={selectedBranch === 'it'}
+              aria-controls="hero-interactive-zone"
+              tabIndex={selectedBranch === 'it' ? 0 : -1}
+              type="button"
+            >
+              <div className="fan-card-image-wrapper">
+                <div className="editorial-it-display w-full h-full flex items-center justify-center bg-slate-900 p-2">
+                  <svg viewBox="0 0 400 160" fill="none" className="it-minimal-svg w-full" aria-hidden="true">
+                    <path d="M40 80 Q 200 10, 360 80" stroke="#7067E8" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.4" />
+                    <path d="M40 80 H 360" stroke="#7067E8" strokeWidth="1.5" opacity="0.6" />
+                    <circle cx="40" cy="80" r="6" fill="#7067E8" />
+                    <circle cx="200" cy="80" r="8" fill="#48BFEA" />
+                    <circle cx="360" cy="80" r="6" fill="#7067E8" />
+                    
+                    <text x="40" y="115" fill="#E2E8F0" fontSize="11" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
+                    <text x="200" y="115" fill="#FFFFFF" fontSize="12" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
+                    <text x="360" y="115" fill="#E2E8F0" fontSize="11" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
+                  </svg>
+                </div>
+                <div className="fan-card-overlay">
+                  <div className="fan-card-badge">
+                    <span className="fan-card-dot" style={{ backgroundColor: '#7067E8' }}></span>
+                    <span className="fan-card-tag">EMPRESA</span>
+                  </div>
+                  <div className="fan-card-title">Servicios TI</div>
+                </div>
+              </div>
+            </button>
           </div>
 
-          {/* Underlay Info Caption - Editorial Layout */}
-          <div className="hero-editorial-caption relative overflow-hidden" style={{ minHeight: '80px' }}>
+          {/* Underlay Info Caption */}
+          <div className="hero-editorial-caption overflow-hidden">
             {branchKeys.map(key => (
               <div 
                 key={key}
                 ref={getCaptionRef(key)}
-                className={`caption-block-${key} absolute inset-0 w-full flex flex-col justify-center`}
-                style={{ display: key === 'drones' ? 'flex' : 'none', opacity: key === 'drones' ? 1 : 0 }}
+                className={`caption-block-${key} hero-caption absolute inset-0 w-full`}
+                style={{ display: key === selectedBranch ? 'flex' : 'none', opacity: key === selectedBranch ? 1 : 0 }}
               >
-                <span className="caption-tag font-bold" style={{ color: branches[key].color }}>
-                  {branches[key].tag} — {branches[key].name}
+                <span className="hero-caption-label" style={{ color: branches[key].color }}>
+                  {branches[key].tag.toUpperCase()} — {branches[key].name.toUpperCase()}
                 </span>
-                <p className="caption-text mt-1">{branches[key].phrase}</p>
+                <span className="hero-caption-description">
+                  {branches[key].phrase}
+                </span>
               </div>
             ))}
           </div>

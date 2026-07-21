@@ -360,7 +360,7 @@ a {
   flex: 1 1 auto;
 }
 
-/* Hero Right: Premium Open Editorial Layout */
+/* Hero Right: Premium Image Fan Layout */
 .hero-editorial-right {
   position: relative;
   display: flex;
@@ -369,80 +369,156 @@ a {
   background-color: transparent;
 }
 
-.branches-interactive-network {
+.hero-fan-container {
   position: relative;
   width: 100%;
+  max-width: 620px;
+  height: 440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.branches-editorial-svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.branch-label-buttons {
+.fan-card {
   position: absolute;
-  inset: 0;
+  top: 4%;
+  height: 88%;
+  border-radius: 18px;
+  overflow: hidden;
+  background-color: #0F172A;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+  outline: none;
+  padding: 0;
+  text-align: left;
+  user-select: none;
+  will-change: transform, opacity;
+  box-shadow: 0 10px 30px -10px rgba(7, 21, 44, 0.18);
+}
+
+.fan-card:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
+}
+
+/* Card desktop positions */
+.fan-card-energia {
+  left: 2%;
+  width: 38%;
+}
+
+.fan-card-drones {
+  left: 29%;
+  width: 42%;
+}
+
+.fan-card-it {
+  left: 60%;
+  width: 38%;
+}
+
+/* Active card styling */
+.fan-card.active {
+  box-shadow: 0 20px 40px -12px rgba(7, 21, 44, 0.3), 0 0 0 2px var(--card-accent-color);
+}
+
+.fan-card-energia.active {
+  --card-accent-color: #F4A825;
+}
+
+.fan-card-drones.active {
+  --card-accent-color: #48BFEA;
+}
+
+.fan-card-it.active {
+  --card-accent-color: #7067E8;
+}
+
+.fan-card-image-wrapper {
+  position: relative;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  background-color: #0F172A;
+}
+
+.fan-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 300ms ease;
+}
+
+.fan-card:hover .fan-card-img {
+  transform: scale(1.04);
+}
+
+.fan-card-img-contain {
+  object-fit: contain;
+  padding: 24px;
+  background: radial-gradient(circle at center, #1E293B 0%, #0F172A 100%);
+}
+
+.fan-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(7, 21, 44, 0.92) 0%, rgba(7, 21, 44, 0.3) 55%, rgba(0, 0, 0, 0) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+  color: #FFFFFF;
   pointer-events: none;
 }
 
-.branch-btn-wrapper {
-  position: absolute;
-  pointer-events: auto;
-}
-
-.branch-path {
-  stroke-dasharray: none;
-  stroke-dashoffset: 0;
-}
-
-.branch-editorial-btn {
-  position: relative;
-  pointer-events: auto;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+.fan-card-badge {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 18px; /* Larger hit target for easier touch/click interaction */
-  border-radius: var(--radius-md);
-  transition: background-color 150ms ease, color 150ms ease, transform 120ms ease;
-  outline: none;
+  gap: 6px;
 }
 
-.branch-editorial-btn:active {
-  transform: scale(0.98);
-}
-
-/* Hover effects for endpoints (Mouse only) */
-@media (hover: hover) and (pointer: fine) {
-  .branch-editorial-btn:hover {
-    background-color: rgba(22, 139, 255, 0.03); /* Subtle, ultra-light elegant halo */
-  }
-
-  .branch-editorial-btn:hover .branch-btn-dot {
-    transform: scale(1.4);
-  }
-}
-
-.branch-editorial-btn:focus-visible {
-  background-color: rgba(22, 139, 255, 0.05);
-  box-shadow: 0 0 0 2px var(--color-brand);
-}
-
-.branch-btn-dot {
-  width: 9px; /* Slightly larger node dot for immediate visibility */
-  height: 9px;
+.fan-card-dot {
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  transition: transform var(--transition-fast) ease;
+  flex-shrink: 0;
+}
+
+.fan-card-tag {
+  font-family: var(--font-headings);
+  font-weight: 800;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.fan-card-title {
+  font-family: var(--font-headings);
+  font-weight: 700;
+  font-size: 15px;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin-top: 2px;
 }
 
 .branch-editorial-btn.active .branch-btn-dot {
-  transform: scale(1.6);
-  box-shadow: 0 0 0 4px rgba(22, 139, 255, 0.2);
+  transform: scale(1.5);
+}
+
+.branch-editorial-btn.btn-drones.active .branch-btn-dot {
+  box-shadow: 0 0 0 4px rgba(72, 191, 234, 0.25);
+}
+
+.branch-editorial-btn.btn-energia.active .branch-btn-dot {
+  box-shadow: 0 0 0 4px rgba(244, 168, 37, 0.25);
+}
+
+.branch-editorial-btn.btn-it.active .branch-btn-dot {
+  box-shadow: 0 0 0 4px rgba(112, 103, 232, 0.25);
 }
 
 .branch-btn-text {
@@ -455,7 +531,7 @@ a {
 .branch-btn-tag {
   font-family: var(--font-headings);
   font-weight: 800;
-  font-size: 10px; /* Increased from 8px for immediate legibility */
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: var(--color-text-muted);
@@ -466,26 +542,23 @@ a {
 .branch-btn-name {
   font-family: var(--font-headings);
   font-weight: 700;
-  font-size: 15px; /* Increased from 13px for much better presence */
+  font-size: 15px;
   color: var(--color-dark);
   line-height: 1.1;
   transition: color var(--transition-fast);
 }
 
-.branch-editorial-btn.active .branch-btn-name {
-  font-weight: 800;
-  color: var(--color-brand);
-}
-
-/* Active specific color triggers */
 .branch-editorial-btn.btn-drones.active .branch-btn-name {
   color: #0099C7;
+  font-weight: 800;
 }
 .branch-editorial-btn.btn-energia.active .branch-btn-name {
   color: #D97706;
+  font-weight: 800;
 }
 .branch-editorial-btn.btn-it.active .branch-btn-name {
   color: #5D54D6;
+  font-weight: 800;
 }
 
 /* Image frame with elegant mask (no card) */
@@ -541,28 +614,86 @@ a {
 }
 
 .hero-editorial-caption {
+  position: relative;
+  padding: 8px 12px;
+  min-height: 70px;
+}
+
+.hero-caption {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
-  text-align: left;
-  padding: 4px 8px;
+  gap: 4px;
 }
 
-.caption-tag {
+@media (min-width: 768px) {
+  .hero-caption {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+.hero-caption-label {
   font-family: var(--font-headings);
   font-weight: 700;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  line-height: 1.2;
+  letter-spacing: 1.2px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.caption-text {
-  font-size: 13px;
+.hero-caption-description {
+  font-size: 14px;
   color: var(--color-text-muted);
   line-height: 1.4;
-  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .hero-fan-container {
+    height: 380px;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-fan-container {
+    height: auto;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 6px 0;
+  }
+
+  .fan-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    height: 150px !important;
+    transform: none !important;
+    border-radius: 12px;
+  }
+
+  .fan-card-overlay {
+    padding: 10px 8px;
+  }
+
+  .fan-card-title {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .fan-card-tag {
+    font-size: 8px;
+  }
+
+  .fan-card-img-contain {
+    padding: 12px;
+  }
 }
 
 /* Animations */
