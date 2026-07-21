@@ -166,10 +166,26 @@ export default function Hero() {
         gsap.set([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], { opacity: 0, y: 16 });
         gsap.set(".hero-fan-container", { opacity: 0, y: 14 });
 
-        // Initial GSAP card offsets prior to animation
-        if (cardEnergiaRef.current) gsap.set(cardEnergiaRef.current, { xPercent: -108, yPercent: -50, x: -48, rotate: -7, opacity: 0 });
-        if (cardDronesRef.current) gsap.set(cardDronesRef.current, { xPercent: -50, yPercent: -50, y: 18, rotate: 0, opacity: 0 });
-        if (cardItRef.current) gsap.set(cardItRef.current, { xPercent: 8, yPercent: -50, x: 48, rotate: 7, opacity: 0 });
+        // Initial GSAP card setup prior to timeline animation
+        branchKeys.forEach((key) => {
+          const cardEl = getCardRef(key).current;
+          if (!cardEl) return;
+          const isSelected = key === selectedBranch;
+          const t = getCardTransforms(key, isSelected);
+          const initialXOffset = key === 'energia' ? -48 : key === 'it' ? 48 : 0;
+          const initialYOffset = key === 'drones' ? 18 : 0;
+
+          gsap.set(cardEl, {
+            xPercent: t.xPercent,
+            yPercent: t.yPercent,
+            rotate: t.rotate,
+            x: initialXOffset,
+            y: t.y + initialYOffset,
+            scale: t.scale,
+            opacity: 0,
+            zIndex: t.zIndex
+          });
+        });
 
         tl.to([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], {
           opacity: 1,
@@ -341,6 +357,10 @@ export default function Hero() {
               aria-controls="hero-interactive-zone"
               tabIndex={selectedBranch === 'energia' ? 0 : -1}
               type="button"
+              style={{
+                zIndex: getCardTransforms('energia', selectedBranch === 'energia').zIndex,
+                opacity: getCardTransforms('energia', selectedBranch === 'energia').opacity
+              }}
             >
               <div className="fan-card-image-wrapper">
                 <img 
@@ -368,6 +388,10 @@ export default function Hero() {
               aria-controls="hero-interactive-zone"
               tabIndex={selectedBranch === 'drones' ? 0 : -1}
               type="button"
+              style={{
+                zIndex: getCardTransforms('drones', selectedBranch === 'drones').zIndex,
+                opacity: getCardTransforms('drones', selectedBranch === 'drones').opacity
+              }}
             >
               <div className="fan-card-image-wrapper">
                 <img 
@@ -395,6 +419,10 @@ export default function Hero() {
               aria-controls="hero-interactive-zone"
               tabIndex={selectedBranch === 'it' ? 0 : -1}
               type="button"
+              style={{
+                zIndex: getCardTransforms('it', selectedBranch === 'it').zIndex,
+                opacity: getCardTransforms('it', selectedBranch === 'it').opacity
+              }}
             >
               <div className="fan-card-image-wrapper">
                 <div className="editorial-it-display w-full h-full flex items-center justify-center bg-slate-950 p-3">
@@ -437,11 +465,11 @@ export default function Hero() {
                 className={`caption-block-${key} hero-caption absolute inset-0 w-full`}
                 style={{ display: key === selectedBranch ? 'grid' : 'none', opacity: key === selectedBranch ? 1 : 0 }}
               >
-                <span className="hero-caption-label" style={{ color: selectedData.color }}>
-                  {selectedData.tag.toUpperCase()} — {selectedData.name.toUpperCase()}
+                <span className="hero-caption-label" style={{ color: branches[key].color }}>
+                  {branches[key].tag.toUpperCase()} — {branches[key].name.toUpperCase()}
                 </span>
                 <span className="hero-caption-description">
-                  {selectedData.phrase}
+                  {branches[key].phrase}
                 </span>
               </div>
             ))}
