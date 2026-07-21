@@ -200,7 +200,7 @@ export default function Hero() {
           duration: 0.55,
           ease: 'power2.out'
         }, "-=0.3")
-        .to([cardEnergiaRef.current, cardDronesRef.current, cardItRef.current], {
+        .to(branchKeys.map(key => getCardRef(key).current), {
           x: 0,
           xPercent: (i) => getCardTransforms(branchKeys[i], branchKeys[i] === selectedBranch).xPercent,
           yPercent: -50,
