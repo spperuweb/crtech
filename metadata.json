@@ -1,0 +1,6 @@
+{
+  "name": "CR Technologies & Services",
+  "description": "Fase técnica inicial para la nueva plataforma web de CR Technologies & Services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

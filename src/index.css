@@ -1,0 +1,302 @@
+/* Reset general y tipografía */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #FFFFFF;
+  color: #07152C;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor principal de alto impacto */
+.app-container {
+  width: 100%;
+  max-width: 1024px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  border-left: 1px solid #DCE6EF;
+  border-right: 1px solid #DCE6EF;
+}
+
+/* Barra de navegación superior */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  border-b: 1px;
+  border-bottom: 1px solid #DCE6EF;
+  background-color: #FFFFFF;
+}
+
+.logo-img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Indicador de construcción con animación pulse */
+.construction-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #168BFF;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-animation 2s infinite ease-in-out;
+}
+
+@keyframes pulse-animation {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #5F6D80;
+  letter-spacing: 1px;
+}
+
+/* Área de contenido principal (Main Section) */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 48px 64px 48px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Badge FASE 0 */
+.phase-badge {
+  background-color: #f0f4f8;
+  color: #168BFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  border: 1px solid #DCE6EF;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* Título */
+.title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #07152C;
+  letter-spacing: -1.5px;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+/* Descripción */
+.description {
+  font-size: 18px;
+  color: #5F6D80;
+  max-width: 580px;
+  line-height: 1.6;
+  margin-bottom: 36px;
+}
+
+/* Envoltura de CTA */
+.cta-wrapper {
+  margin-bottom: 12px;
+}
+
+/* Botón visual */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #168BFF;
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 15px -3px rgba(22, 139, 255, 0.15), 0 4px 6px -2px rgba(22, 139, 255, 0.05);
+}
+
+.cta-button:hover {
+  background-color: #0076EB;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px -3px rgba(22, 139, 255, 0.25), 0 6px 8px -2px rgba(22, 139, 255, 0.1);
+}
+
+.cta-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Bloque de ramas de negocio en footer */
+.branches-container {
+  width: 100%;
+  border-top: 1px solid #DCE6EF;
+}
+
+.branches-title {
+  display: none; /* Ocultamos el título simple para seguir el look ultra-limpio del mockup */
+}
+
+.branches-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+}
+
+.branch-card {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #DCE6EF;
+}
+
+.branch-card:last-child {
+  border-bottom: none;
+}
+
+/* Iconos de las ramas con fondo circular */
+.branch-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #168BFF;
+  background-color: #f8fafc;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-bottom: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.branch-card:hover .branch-icon {
+  background-color: rgba(22, 139, 255, 0.08);
+}
+
+.branch-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.branch-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.branch-name {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #07152C;
+}
+
+.branch-desc {
+  font-size: 12px;
+  color: #5F6D80;
+  max-width: 240px;
+  line-height: 1.5;
+}
+
+/* Technical sub-footer */
+.tech-sub-footer {
+  width: 100%;
+  background-color: #f8fafc;
+  border-top: 1px solid #DCE6EF;
+  padding: 12px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #94a3b8;
+  letter-spacing: 1px;
+}
+
+/* Media queries para responsive desde 390px en adelante */
+@media (min-width: 390px) {
+  .title {
+    font-size: 38px;
+  }
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 52px;
+  }
+  
+  .branches-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .branch-card {
+    border-bottom: none;
+    border-right: 1px solid #DCE6EF;
+    padding: 40px 24px;
+  }
+  
+  .branch-card:last-child {
+    border-right: none;
+  }
+  
+  .tech-sub-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .nav-bar {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .main-content {
+    padding: 32px 20px 48px 20px;
+  }
+}
