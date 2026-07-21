@@ -396,26 +396,26 @@ a {
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
+  gap: 10px;
+  padding: 12px 18px; /* Larger hit target for easier touch/click interaction */
+  border-radius: var(--radius-md);
   transition: all var(--transition-fast);
   outline: none;
 }
 
 /* Hover effects for endpoints */
 .branch-editorial-btn:hover {
-  background-color: rgba(241, 245, 249, 0.6);
+  background-color: rgba(22, 139, 255, 0.03); /* Subtle, ultra-light elegant halo */
 }
 
 .branch-editorial-btn:focus-visible {
-  background-color: rgba(241, 245, 249, 0.8);
+  background-color: rgba(22, 139, 255, 0.05);
   box-shadow: 0 0 0 2px var(--color-brand);
 }
 
 .branch-btn-dot {
-  width: 7px;
-  height: 7px;
+  width: 9px; /* Slightly larger node dot for immediate visibility */
+  height: 9px;
   border-radius: 50%;
   transition: transform var(--transition-fast) ease;
 }
@@ -426,7 +426,7 @@ a {
 
 .branch-editorial-btn.active .branch-btn-dot {
   transform: scale(1.6);
-  box-shadow: 0 0 0 3px rgba(22, 139, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(22, 139, 255, 0.2);
 }
 
 .branch-btn-text {
@@ -438,19 +438,19 @@ a {
 
 .branch-btn-tag {
   font-family: var(--font-headings);
-  font-weight: 700;
-  font-size: 8px;
+  font-weight: 800;
+  font-size: 10px; /* Increased from 8px for immediate legibility */
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   color: var(--color-text-muted);
   line-height: 1;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 .branch-btn-name {
   font-family: var(--font-headings);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 15px; /* Increased from 13px for much better presence */
   color: var(--color-dark);
   line-height: 1.1;
   transition: color var(--transition-fast);
@@ -610,8 +610,8 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 110px;
-  height: 36px;
+  width: 140px;
+  height: 44px;
   background-color: transparent;
   padding: 0;
 }
@@ -622,11 +622,11 @@ a {
 
 .ecoflow-text-brand {
   font-family: var(--font-headings);
-  font-weight: 800;
-  font-size: 20px;
-  letter-spacing: -0.5px;
-  color: var(--color-dark);
-  opacity: 0.6;
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -1px;
+  color: #000000;
+  opacity: 1;
   transition: all var(--transition-fast);
 }
 
@@ -634,18 +634,16 @@ a {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  filter: grayscale(100%);
-  opacity: 0.6;
+  filter: none;
+  opacity: 1;
   transition: all var(--transition-fast);
 }
 
 .trust-logo-item:hover .trust-logo-img {
-  filter: grayscale(0%);
-  opacity: 1;
+  transform: scale(1.03);
 }
 
 .trust-logo-item:hover .ecoflow-text-brand {
-  opacity: 1;
   color: var(--color-brand);
 }
 
@@ -655,14 +653,15 @@ a {
 }
 
 .trust-badge-label {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   color: var(--color-dark);
 }
 
 .trust-badge-status {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--color-text-muted);
+  font-weight: 500;
 }
 
 .trust-divider {
@@ -684,7 +683,7 @@ a {
 .section-header {
   max-width: var(--max-width-content);
   margin: 0 auto;
-  padding: 64px 24px 32px 24px;
+  padding: 48px 24px 0px 24px;
   text-align: left;
 }
 
@@ -707,7 +706,7 @@ a {
   background-color: #FFFFFF;
   border: none;
   border-radius: 0;
-  padding: 64px 24px;
+  padding: 48px 24px;
   width: 100%;
 }
 
@@ -759,7 +758,7 @@ a {
 }
 
 .block-description {
-  font-size: 15px;
+  font-size: 16px; /* Increased from 15px to meet 16px minimum */
   color: var(--color-text-muted);
   margin-bottom: 24px;
   line-height: 1.6;
@@ -777,17 +776,17 @@ a {
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  font-size: 14px;
+  font-size: 16px; /* Increased from 14px to meet 16px minimum */
 }
 
 .feature-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 22px; /* Adjusted to scale with 16px font-size */
+  height: 22px;
   border-radius: 50%;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   flex-shrink: 0;
 }
@@ -844,37 +843,99 @@ a {
   text-align: left;
 }
 
-/* Double image grid layout for EcoFlow power & solar */
-.double-media-layout {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 16px;
+/* Custom multi-scale product composition for EcoFlow power & solar */
+.ecoflow-composition-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 420px;
+  width: 100%;
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  overflow: visible; /* Let elements overlap and scale nicely */
 }
 
-.outdoor-simulated-bg {
-  background: radial-gradient(circle, #FFFFFF 30%, var(--color-bg-alt) 100%);
-  padding: 32px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.ecoflow-glow-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, #FFFFFF 30%, rgba(248, 250, 252, 0.9) 100%);
   border-radius: var(--radius-md);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  z-index: 1;
+}
+
+.ecoflow-support-product {
+  position: absolute;
+  top: 15%;
+  left: 5%;
+  width: 65%;
+  z-index: 2;
+  transform: rotate(-3deg);
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.05));
+  transition: transform var(--transition-slow) ease;
+}
+
+.ecoflow-main-product {
+  position: relative;
+  width: 70%;
+  z-index: 3;
+  margin-top: auto;
+  align-self: flex-end;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
+  transition: transform var(--transition-slow) ease;
+}
+
+.ecoflow-composition-wrapper:hover .ecoflow-support-product {
+  transform: rotate(-1deg) scale(1.02) translate(5px, -5px);
+}
+
+.ecoflow-composition-wrapper:hover .ecoflow-main-product {
+  transform: scale(1.03) translate(-5px, -5px);
+}
+
+.ecoflow-img-solar {
   width: 100%;
-  height: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.ecoflow-img-delta {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.ecoflow-caption {
+  position: relative;
+  z-index: 4;
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
 }
 
 /* IT connectivity diagram styles */
 .it-connectivity-diagram {
-  background-color: #FFFFFF;
+  background: radial-gradient(circle at 50% 50%, #FFFFFF 50%, rgba(248, 250, 252, 0.8) 100%);
   border-radius: var(--radius-md);
-  padding: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 32px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: var(--shadow-sm);
+  min-height: 280px;
 }
 
 .connectivity-svg {
   width: 100%;
-  max-height: 240px;
+  max-height: 280px; /* Increased from 240px */
 }
 
 /* --------------------------------------------------
@@ -1012,39 +1073,46 @@ a {
 .ceo-image-wrapper {
   position: relative;
   border-radius: var(--radius-md);
-  overflow: hidden;
+  overflow: visible; /* Prevent accidental clipping of arms/head */
   border: none;
   box-shadow: none;
+  background: radial-gradient(circle at 50% 50%, rgba(22, 139, 255, 0.09) 0%, rgba(22, 139, 255, 0.01) 75%, transparent 100%);
+  padding: 24px; /* Image sits beautifully layered over this subtle radial glowing field */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ceo-photo {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
+  object-fit: contain; /* Prevent cropping body or extremities */
   max-height: 480px;
   border-radius: var(--radius-md);
+  box-shadow: 0 20px 40px rgba(7, 21, 44, 0.05); /* Gentle natural shadow */
 }
 
 .ceo-caption-overlay {
   position: relative;
   background: transparent;
-  padding: 12px 0 0 0;
+  padding: 16px 24px 0 24px;
   color: var(--color-dark);
 }
 
 .ceo-name {
   display: block;
   font-family: var(--font-headings);
-  font-size: 15px;
+  font-size: 16px; /* Increased from 15px */
   font-weight: 800;
   color: var(--color-dark);
 }
 
 .ceo-role {
   display: block;
-  font-size: 11px;
+  font-size: 13px; /* Increased from 11px to enforce >= 13px rule */
   color: var(--color-text-muted);
+  font-weight: 500;
 }
 
 .ceo-content-side {
@@ -1184,7 +1252,7 @@ a {
 }
 
 .final-cta-text {
-  font-size: 15px;
+  font-size: 16px; /* Increased from 15px to meet 16px minimum */
   color: #94a3b8;
   margin-bottom: 32px;
   line-height: 1.6;
@@ -1241,22 +1309,22 @@ a {
 }
 
 .footer-logo-img {
-  max-height: 38px;
+  max-height: 48px; /* Increased from 38px for maximum brand presence */
   width: auto;
   object-fit: contain;
   align-self: flex-start;
 }
 
 .footer-brand-desc {
-  font-size: 13px;
+  font-size: 14px; /* Increased from 13px */
   line-height: 1.6;
 }
 
 .footer-legal-details {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 11px;
+  gap: 6px;
+  font-size: 13px; /* Increased from 11px to avoid any text under 13px */
 }
 
 .footer-legal-details strong {
@@ -1271,7 +1339,7 @@ a {
 
 .footer-title {
   color: #FFFFFF;
-  font-size: 13px;
+  font-size: 14px; /* Increased from 13px */
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1285,7 +1353,7 @@ a {
 }
 
 .footer-links-list a {
-  font-size: 13px;
+  font-size: 14px; /* Increased from 13px */
   color: #94a3b8;
 }
 
@@ -1316,7 +1384,7 @@ a {
 
 .footer-schedule {
   display: block;
-  font-size: 11px;
+  font-size: 13px; /* Increased from 11px to ensure legibility */
   line-height: 1.4;
 }
 
@@ -1334,7 +1402,7 @@ a {
   gap: 12px;
   align-items: center;
   text-align: center;
-  font-size: 11px;
+  font-size: 13px; /* Increased from 11px to ensure legibility */
 }
 
 .copyright-text {
@@ -1416,21 +1484,26 @@ a {
     padding: 0;
   }
 
+  .section-header {
+    padding: 64px 48px 12px 48px;
+  }
+
   .section-title {
     font-size: 38px;
-    max-width: 740px;
+    max-width: 800px;
   }
 
   .solution-block-item {
-    padding: 96px 48px;
+    padding: 72px 48px; /* Reduced vertical space by 25% */
   }
 
   .solution-block-grid {
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 48px;
+    grid-template-columns: 1fr 1fr; /* Equal 1fr split makes media 15-25% larger and more balanced */
+    gap: 64px; /* Slightly wider gap for premium editorial spacing */
   }
 
   .solution-block-grid.reverse {
+    grid-template-columns: 1fr 1fr;
     direction: rtl;
   }
 

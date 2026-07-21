@@ -140,39 +140,32 @@ export default function SolutionsOverview() {
             </div>
 
             <div className="solution-block-media">
-              <div className="double-media-layout">
-                <div className="media-card-frame primary-frame">
-                  <div className="outdoor-simulated-bg">
-                    <img 
-                      src={assets.ecoFlow.deltaPro} 
-                      alt="EcoFlow Delta Pro estación de energía portátil" 
-                      className="block-media-img object-contain"
-                      loading="lazy"
-                      decoding="async"
-                      width="400"
-                      height="280"
-                    />
-                  </div>
-                  <div className="media-caption">
-                    <span>EcoFlow Delta Pro en campamento de campo</span>
-                  </div>
+              <div className="ecoflow-composition-wrapper">
+                <div className="ecoflow-glow-bg" aria-hidden="true"></div>
+                <div className="ecoflow-support-product">
+                  <img 
+                    src={assets.ecoFlow.solarPanel} 
+                    alt="EcoFlow paneles solares plegables" 
+                    className="ecoflow-img-solar"
+                    loading="lazy"
+                    decoding="async"
+                    width="450"
+                    height="300"
+                  />
                 </div>
-                
-                <div className="media-card-frame secondary-frame">
-                  <div className="outdoor-simulated-bg">
-                    <img 
-                      src={assets.ecoFlow.solarPanel} 
-                      alt="EcoFlow paneles solares plegables" 
-                      className="block-media-img object-contain"
-                      loading="lazy"
-                      decoding="async"
-                      width="280"
-                      height="180"
-                    />
-                  </div>
-                  <div className="media-caption">
-                    <span>Panel Solar plegable en operación</span>
-                  </div>
+                <div className="ecoflow-main-product">
+                  <img 
+                    src={assets.ecoFlow.deltaPro} 
+                    alt="EcoFlow Delta Pro estación de energía portátil" 
+                    className="ecoflow-img-delta"
+                    loading="lazy"
+                    decoding="async"
+                    width="500"
+                    height="400"
+                  />
+                </div>
+                <div className="ecoflow-caption">
+                  Estación EcoFlow Delta Pro integrada con paneles solares de alta eficiencia
                 </div>
               </div>
             </div>
@@ -236,53 +229,61 @@ export default function SolutionsOverview() {
             <div className="solution-block-media">
               <div className="media-card-frame abstract-media-card">
                 <div className="it-connectivity-diagram">
-                  <svg viewBox="0 0 500 240" fill="none" className="connectivity-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                  <svg viewBox="0 0 500 280" fill="none" className="connectivity-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#168BFF" stopOpacity="0.8" />
-                        <stop offset="50%" stopColor="#7067E8" stopOpacity="0.8" />
-                        <stop offset="100%" stopColor="#10B981" stopOpacity="0.8" />
+                        <stop offset="0%" stopColor="#168BFF" stopOpacity="0.95" />
+                        <stop offset="50%" stopColor="#7067E8" stopOpacity="0.95" />
+                        <stop offset="100%" stopColor="#10B981" stopOpacity="0.95" />
                       </linearGradient>
                     </defs>
 
-                    {/* Connecting path */}
+                    {/* Secondary/Subtle backup & continuity lines (Continuidad y Respaldo) */}
                     <path 
-                      d="M 50 120 C 150 120, 150 60, 250 60 C 350 60, 350 180, 450 180" 
-                      stroke="url(#lineGrad)" 
-                      strokeWidth="2" 
-                      strokeDasharray="4 4"
+                      d="M 50 130 C 120 70, 180 50, 250 60" 
+                      stroke="#7067E8" 
+                      strokeWidth="1.5" 
+                      strokeDasharray="3 4"
                       opacity="0.3"
                     />
                     <path 
-                      d="M 50 120 C 150 120, 150 60, 250 60 C 350 60, 350 180, 450 180" 
+                      d="M 250 60 C 310 130, 390 230, 450 200" 
+                      stroke="#10B981" 
+                      strokeWidth="1.5" 
+                      strokeDasharray="3 4"
+                      opacity="0.3"
+                    />
+
+                    {/* Connecting main path */}
+                    <path 
+                      d="M 50 130 C 150 130, 150 60, 250 60 C 350 60, 350 200, 450 200" 
                       stroke="url(#lineGrad)" 
-                      strokeWidth="2" 
+                      strokeWidth="3.5" 
                       strokeLinecap="round"
-                      opacity="0.7"
                     />
 
                     {/* Nodes */}
                     {/* Node 1: Infraestructura */}
-                    <circle cx="50" cy="120" r="5" fill="#168BFF" />
-                    <circle cx="50" cy="120" r="12" stroke="#168BFF" strokeWidth="1" strokeOpacity="0.3" fill="none" />
-                    <text x="50" y="155" fill="#07152C" fontSize="12" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
-                    <text x="50" y="172" fill="#5F6D80" fontSize="10" textAnchor="middle" fontFamily="var(--font-headings)">Redes y Conectividad</text>
+                    <circle cx="50" cy="130" r="7" fill="#168BFF" />
+                    <circle cx="50" cy="130" r="18" stroke="#168BFF" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
+                    <text x="50" y="172" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
+                    <text x="50" y="192" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Redes y Conectividad</text>
 
                     {/* Node 2: Soporte */}
-                    <circle cx="250" cy="60" r="5" fill="#7067E8" />
-                    <circle cx="250" cy="60" r="12" stroke="#7067E8" strokeWidth="1" strokeOpacity="0.3" fill="none" />
-                    <text x="250" y="95" fill="#07152C" fontSize="12" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
-                    <text x="250" y="112" fill="#5F6D80" fontSize="10" textAnchor="middle" fontFamily="var(--font-headings)">Continuidad</text>
+                    <circle cx="250" cy="60" r="7" fill="#7067E8" />
+                    <circle cx="250" cy="60" r="18" stroke="#7067E8" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
+                    <text x="250" y="102" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
+                    <text x="250" y="122" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Continuidad</text>
 
                     {/* Node 3: Seguridad */}
-                    <circle cx="450" cy="180" r="5" fill="#10B981" />
-                    <circle cx="450" cy="180" r="12" stroke="#10B981" strokeWidth="1" strokeOpacity="0.3" fill="none" />
-                    <text x="450" y="215" fill="#07152C" fontSize="12" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
-                    <text x="450" y="232" fill="#5F6D80" fontSize="10" textAnchor="middle" fontFamily="var(--font-headings)">Videovigilancia</text>
+                    <circle cx="450" cy="200" r="7" fill="#10B981" />
+                    <circle cx="450" cy="200" r="18" stroke="#10B981" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
+                    <text x="450" y="242" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
+                    <text x="450" y="262" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Videovigilancia</text>
                   </svg>
                 </div>
                 <div className="media-caption">
-                  <span>Plataforma operativa sutil de red integrada</span>
+                  <span>Plataforma operativa de red integrada de alta disponibilidad</span>
                 </div>
               </div>
             </div>

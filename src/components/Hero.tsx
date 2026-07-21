@@ -97,36 +97,36 @@ export default function Hero() {
               aria-hidden="true"
             >
               {/* Central Core representing CR Tech at (250, 115) */}
-              <circle cx="250" cy="115" r="4" fill="#168BFF" />
-              <circle cx="250" cy="115" r="10" stroke="#168BFF" strokeWidth="0.75" strokeOpacity="0.4" fill="none" />
+              <circle cx="250" cy="115" r="5" fill="#168BFF" />
+              <circle cx="250" cy="115" r="12" stroke="#168BFF" strokeWidth="1" strokeOpacity="0.5" fill="none" />
               
-              {/* Connective Paths */}
+               {/* Connective Paths */}
               {/* Path 1: To Drones (Aire) on the Left (70, 30) */}
               <path 
                 d="M 250 115 C 170 115, 95 85, 70 30" 
-                stroke={selectedBranch === 'drones' ? '#48BFEA' : '#E2E8F0'} 
-                strokeWidth={selectedBranch === 'drones' ? '2.5' : '1'} 
+                stroke={selectedBranch === 'drones' ? '#48BFEA' : '#CBD5E1'} 
+                strokeWidth={selectedBranch === 'drones' ? '3.5' : '1.5'} 
                 style={{ transition: 'all 0.3s ease' }}
               />
-              <circle cx="70" cy="30" r="4" fill={selectedBranch === 'drones' ? '#48BFEA' : '#CBD5E1'} style={{ transition: 'all 0.3s ease' }} />
+              <circle cx="70" cy="30" r={selectedBranch === 'drones' ? '7' : '5'} fill={selectedBranch === 'drones' ? '#48BFEA' : '#94A3B8'} style={{ transition: 'all 0.3s ease' }} />
               
               {/* Path 2: To Energía (Campo) in the Center (250, 20) */}
               <path 
                 d="M 250 115 L 250 20" 
-                stroke={selectedBranch === 'energia' ? '#F4A825' : '#E2E8F0'} 
-                strokeWidth={selectedBranch === 'energia' ? '2.5' : '1'} 
+                stroke={selectedBranch === 'energia' ? '#F4A825' : '#CBD5E1'} 
+                strokeWidth={selectedBranch === 'energia' ? '3.5' : '1.5'} 
                 style={{ transition: 'all 0.3s ease' }}
               />
-              <circle cx="250" cy="20" r="4" fill={selectedBranch === 'energia' ? '#F4A825' : '#CBD5E1'} style={{ transition: 'all 0.3s ease' }} />
+              <circle cx="250" cy="20" r={selectedBranch === 'energia' ? '7' : '5'} fill={selectedBranch === 'energia' ? '#F4A825' : '#94A3B8'} style={{ transition: 'all 0.3s ease' }} />
               
               {/* Path 3: To Servicios TI (Empresa) on the Right (430, 30) */}
               <path 
                 d="M 250 115 C 330 115, 405 85, 430 30" 
-                stroke={selectedBranch === 'it' ? '#7067E8' : '#E2E8F0'} 
-                strokeWidth={selectedBranch === 'it' ? '2.5' : '1'} 
+                stroke={selectedBranch === 'it' ? '#7067E8' : '#CBD5E1'} 
+                strokeWidth={selectedBranch === 'it' ? '3.5' : '1.5'} 
                 style={{ transition: 'all 0.3s ease' }}
               />
-              <circle cx="430" cy="30" r="4" fill={selectedBranch === 'it' ? '#7067E8' : '#CBD5E1'} style={{ transition: 'all 0.3s ease' }} />
+              <circle cx="430" cy="30" r={selectedBranch === 'it' ? '7' : '5'} fill={selectedBranch === 'it' ? '#7067E8' : '#94A3B8'} style={{ transition: 'all 0.3s ease' }} />
             </svg>
 
             {/* Fully keyboard-accessible branch selector buttons positioned at the endpoints of the SVG */}
@@ -185,8 +185,8 @@ export default function Hero() {
           <div className="hero-editorial-image-frame">
             {selectedBranch === 'drones' && (
               <img 
-                src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1600,c_limit/v1779933439/fd3-image-06_qz20uf.jpg" 
-                alt="Dron profesional SwellPro sobrevolando el mar" 
+                src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1400,c_fill,g_auto/v1779929016/swellpro-peru-dron-01_uvvj5z.jpg" 
+                alt="Dron profesional SwellPro en acción cinematográfica" 
                 className="editorial-display-img object-cover animate-fade-in"
                 fetchPriority="high"
               />

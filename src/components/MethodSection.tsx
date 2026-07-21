@@ -31,7 +31,7 @@ export default function MethodSection() {
         <div className="section-header-centered">
           <span className="section-subtitle">Nuestro Proceso</span>
           <h2 className="method-section-title">
-            Tecnología bien elegida. <span className="highlight-text">Correctamente implementada.</span>
+            Tecnología bien elegida.<br className="hidden md:inline" /> <span className="highlight-text">Correctamente implementada.</span>
           </h2>
         </div>
 
