@@ -188,7 +188,7 @@ export default function SolutionsOverview() {
                 <li>
                   <span className="feature-icon violet">✓</span>
                   <div>
-                    <strong>Redes e Infraestructura:</strong> Cableado estructurado estructurado, enlaces inalámbricos estables y fibra óptica.
+                    <strong>Redes e Infraestructura:</strong> Cableado estructurado, enlaces inalámbricos estables y fibra óptica.
                   </div>
                 </li>
                 <li>

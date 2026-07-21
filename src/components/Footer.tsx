@@ -37,7 +37,6 @@ export default function Footer() {
             <li><a href="#drones">Drones Profesionales</a></li>
             <li><a href="#energia">Energía Portátil</a></li>
             <li><a href="#servicios-ti">Infraestructura TI</a></li>
-            <li><a href="#soluciones">Catálogo de Aplicación</a></li>
           </ul>
         </div>
 

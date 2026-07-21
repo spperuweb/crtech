@@ -216,15 +216,16 @@ a {
 .mobile-menu-toggle {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  width: 24px;
-  height: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
   z-index: 102;
-  min-height: 44px; /* Touch target safe area */
 }
 
 .hamburger-bar {
@@ -389,7 +390,7 @@ a {
 }
 
 .branch-editorial-btn {
-  position: absolute;
+  position: relative;
   pointer-events: auto;
   background: transparent;
   border: none;
@@ -399,13 +400,23 @@ a {
   gap: 10px;
   padding: 12px 18px; /* Larger hit target for easier touch/click interaction */
   border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
+  transition: background-color 150ms ease, color 150ms ease, transform 120ms ease;
   outline: none;
 }
 
-/* Hover effects for endpoints */
-.branch-editorial-btn:hover {
-  background-color: rgba(22, 139, 255, 0.03); /* Subtle, ultra-light elegant halo */
+.branch-editorial-btn:active {
+  transform: scale(0.98);
+}
+
+/* Hover effects for endpoints (Mouse only) */
+@media (hover: hover) and (pointer: fine) {
+  .branch-editorial-btn:hover {
+    background-color: rgba(22, 139, 255, 0.03); /* Subtle, ultra-light elegant halo */
+  }
+
+  .branch-editorial-btn:hover .branch-btn-dot {
+    transform: scale(1.4);
+  }
 }
 
 .branch-editorial-btn:focus-visible {
@@ -418,10 +429,6 @@ a {
   height: 9px;
   border-radius: 50%;
   transition: transform var(--transition-fast) ease;
-}
-
-.branch-editorial-btn:hover .branch-btn-dot {
-  transform: scale(1.4);
 }
 
 .branch-editorial-btn.active .branch-btn-dot {
