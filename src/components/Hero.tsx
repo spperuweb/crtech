@@ -117,6 +117,18 @@ export default function Hero() {
     }, 0);
   };
 
+  const getCardTransforms = (key: BranchKey, isSelected: boolean) => {
+    const xPercent = key === 'energia' ? -108 : key === 'drones' ? -50 : 8;
+    const yPercent = -50;
+    const rotate = key === 'energia' ? (isSelected ? -3 : -7) : key === 'drones' ? 0 : (isSelected ? 3 : 7);
+    const y = isSelected ? -12 : 20;
+    const scale = isSelected ? 1.04 : 0.94;
+    const opacity = isSelected ? 1 : 0.78;
+    const zIndex = isSelected ? 3 : (key === 'drones' ? 2 : 1);
+
+    return { xPercent, yPercent, rotate, y, scale, opacity, zIndex };
+  };
+
   // GSAP 1: Initial Animation Sequence
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -130,15 +142,16 @@ export default function Hero() {
           const cardEl = getCardRef(key).current;
           if (!cardEl) return;
           const isSelected = key === selectedBranch;
-          const baseRotate = key === 'energia' ? -6 : key === 'drones' ? 0 : 6;
-          const activeRotate = key === 'energia' ? -3 : key === 'drones' ? 0 : 3;
+          const transforms = getCardTransforms(key, isSelected);
 
           gsap.set(cardEl, {
-            rotate: isSelected ? activeRotate : baseRotate,
-            y: isSelected ? -12 : 18,
-            scale: isSelected ? 1.03 : 0.94,
-            opacity: isSelected ? 1 : 0.78,
-            zIndex: isSelected ? 30 : (key === 'drones' ? 15 : 10)
+            xPercent: transforms.xPercent,
+            yPercent: transforms.yPercent,
+            rotate: transforms.rotate,
+            y: transforms.y,
+            scale: transforms.scale,
+            opacity: transforms.opacity,
+            zIndex: transforms.zIndex
           });
         });
       });
@@ -153,9 +166,9 @@ export default function Hero() {
         gsap.set(".hero-fan-container", { opacity: 0, y: 14 });
 
         // Initial GSAP card offsets prior to animation
-        if (cardEnergiaRef.current) gsap.set(cardEnergiaRef.current, { x: 48, rotate: -6, opacity: 0 });
-        if (cardDronesRef.current) gsap.set(cardDronesRef.current, { y: 18, rotate: 0, opacity: 0 });
-        if (cardItRef.current) gsap.set(cardItRef.current, { x: -48, rotate: 6, opacity: 0 });
+        if (cardEnergiaRef.current) gsap.set(cardEnergiaRef.current, { xPercent: -108, yPercent: -50, x: -48, rotate: -7, opacity: 0 });
+        if (cardDronesRef.current) gsap.set(cardDronesRef.current, { xPercent: -50, yPercent: -50, y: 18, rotate: 0, opacity: 0 });
+        if (cardItRef.current) gsap.set(cardItRef.current, { xPercent: 8, yPercent: -50, x: 48, rotate: 7, opacity: 0 });
 
         tl.to([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], {
           opacity: 1,
@@ -172,20 +185,13 @@ export default function Hero() {
         }, "-=0.3")
         .to([cardEnergiaRef.current, cardDronesRef.current, cardItRef.current], {
           x: 0,
-          y: (i) => {
-            const key = branchKeys[i];
-            return key === selectedBranch ? -12 : 18;
-          },
-          rotate: (i) => {
-            const key = branchKeys[i];
-            if (key === selectedBranch) {
-              return key === 'energia' ? -3 : key === 'drones' ? 0 : 3;
-            }
-            return key === 'energia' ? -6 : key === 'drones' ? 0 : 6;
-          },
-          scale: (i) => (branchKeys[i] === selectedBranch ? 1.03 : 0.94),
-          opacity: (i) => (branchKeys[i] === selectedBranch ? 1 : 0.78),
-          zIndex: (i) => (branchKeys[i] === selectedBranch ? 30 : branchKeys[i] === 'drones' ? 15 : 10),
+          xPercent: (i) => getCardTransforms(branchKeys[i], branchKeys[i] === selectedBranch).xPercent,
+          yPercent: -50,
+          y: (i) => getCardTransforms(branchKeys[i], branchKeys[i] === selectedBranch).y,
+          rotate: (i) => getCardTransforms(branchKeys[i], branchKeys[i] === selectedBranch).rotate,
+          scale: (i) => getCardTransforms(branchKeys[i], branchKeys[i] === selectedBranch).scale,
+          opacity: (i) => getCardTransforms(branchKeys[i], branchKeys[i] === selectedBranch).opacity,
+          zIndex: (i) => getCardTransforms(branchKeys[i], branchKeys[i] === selectedBranch).zIndex,
           duration: 0.65,
           stagger: 0.08,
           ease: 'power3.out'
@@ -218,30 +224,27 @@ export default function Hero() {
       if (!cardEl) return;
 
       const isSelected = key === selectedBranch;
-      const baseRotate = key === 'energia' ? -6 : key === 'drones' ? 0 : 6;
-      const activeRotate = key === 'energia' ? -3 : key === 'drones' ? 0 : 3;
-
-      const targetRotate = isSelected ? activeRotate : baseRotate;
-      const targetY = isSelected ? -12 : 18;
-      const targetScale = isSelected ? 1.03 : 0.94;
-      const targetOpacity = isSelected ? 1 : 0.78;
-      const targetZIndex = isSelected ? 30 : (key === 'drones' ? 15 : 10);
+      const transforms = getCardTransforms(key, isSelected);
 
       if (isReduced) {
         gsap.set(cardEl, {
-          rotate: targetRotate,
-          y: targetY,
-          scale: targetScale,
-          opacity: targetOpacity,
-          zIndex: targetZIndex
+          xPercent: transforms.xPercent,
+          yPercent: transforms.yPercent,
+          rotate: transforms.rotate,
+          y: transforms.y,
+          scale: transforms.scale,
+          opacity: transforms.opacity,
+          zIndex: transforms.zIndex
         });
       } else {
         gsap.to(cardEl, {
-          rotate: targetRotate,
-          y: targetY,
-          scale: targetScale,
-          opacity: targetOpacity,
-          zIndex: targetZIndex,
+          xPercent: transforms.xPercent,
+          yPercent: transforms.yPercent,
+          rotate: transforms.rotate,
+          y: transforms.y,
+          scale: transforms.scale,
+          opacity: transforms.opacity,
+          zIndex: transforms.zIndex,
           duration: 0.32,
           ease: 'power2.inOut'
         });
@@ -256,13 +259,13 @@ export default function Hero() {
 
       if (isReduced) {
         gsap.set(captionEl, {
-          display: isCurrent ? 'flex' : 'none',
+          display: isCurrent ? 'grid' : 'none',
           opacity: isCurrent ? 1 : 0,
           y: 0
         });
       } else {
         if (isCurrent) {
-          gsap.set(captionEl, { display: 'flex', opacity: 0, y: 8 });
+          gsap.set(captionEl, { display: 'grid', opacity: 0, y: 8 });
           gsap.to(captionEl, {
             opacity: 1,
             y: 0,
@@ -340,9 +343,9 @@ export default function Hero() {
             >
               <div className="fan-card-image-wrapper">
                 <img 
-                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422177/Ecoflow_delta_PRO_g9xhmt.png" 
-                  alt="Energía Portátil EcoFlow Delta Pro" 
-                  className="fan-card-img fan-card-img-contain"
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422204/Ecoflow_paneles_solares_e4mpcp.png" 
+                  alt="Paneles Solares y Energía Portátil EcoFlow" 
+                  className="fan-card-img"
                 />
                 <div className="fan-card-overlay">
                   <div className="fan-card-badge">
@@ -368,7 +371,7 @@ export default function Hero() {
               <div className="fan-card-image-wrapper">
                 <img 
                   src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779933447/fd3-image-17_e1q8iz.jpg" 
-                  alt="Dron profesional SwellPro" 
+                  alt="Dron profesional SwellPro para inspección y logística" 
                   className="fan-card-img"
                 />
                 <div className="fan-card-overlay">
@@ -393,17 +396,24 @@ export default function Hero() {
               type="button"
             >
               <div className="fan-card-image-wrapper">
-                <div className="editorial-it-display w-full h-full flex items-center justify-center bg-slate-900 p-2">
-                  <svg viewBox="0 0 400 160" fill="none" className="it-minimal-svg w-full" aria-hidden="true">
-                    <path d="M40 80 Q 200 10, 360 80" stroke="#7067E8" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.4" />
-                    <path d="M40 80 H 360" stroke="#7067E8" strokeWidth="1.5" opacity="0.6" />
-                    <circle cx="40" cy="80" r="6" fill="#7067E8" />
-                    <circle cx="200" cy="80" r="8" fill="#48BFEA" />
-                    <circle cx="360" cy="80" r="6" fill="#7067E8" />
-                    
-                    <text x="40" y="115" fill="#E2E8F0" fontSize="11" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
-                    <text x="200" y="115" fill="#FFFFFF" fontSize="12" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
-                    <text x="360" y="115" fill="#E2E8F0" fontSize="11" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
+                <div className="editorial-it-display w-full h-full flex items-center justify-center bg-slate-950 p-3">
+                  <svg viewBox="0 0 240 240" fill="none" className="it-minimal-svg w-4/5 h-4/5" aria-hidden="true">
+                    <rect x="20" y="30" width="200" height="42" rx="8" fill="#1E293B" stroke="#7067E8" strokeWidth="2" />
+                    <circle cx="44" cy="51" r="5" fill="#7067E8" />
+                    <circle cx="62" cy="51" r="5" fill="#48BFEA" />
+                    <line x1="88" y1="51" x2="190" y2="51" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
+
+                    <rect x="20" y="94" width="200" height="42" rx="8" fill="#1E293B" stroke="#48BFEA" strokeWidth="2" />
+                    <circle cx="44" cy="115" r="5" fill="#48BFEA" />
+                    <circle cx="62" cy="115" r="5" fill="#10B981" />
+                    <line x1="88" y1="115" x2="190" y2="115" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
+
+                    <rect x="20" y="158" width="200" height="42" rx="8" fill="#1E293B" stroke="#7067E8" strokeWidth="2" />
+                    <circle cx="44" cy="179" r="5" fill="#7067E8" />
+                    <circle cx="62" cy="179" r="5" fill="#F4A825" />
+                    <line x1="88" y1="179" x2="190" y2="179" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
+
+                    <path d="M120 72 V 94 M120 136 V 158" stroke="#7067E8" strokeWidth="2" strokeDasharray="2 2" opacity="0.8" />
                   </svg>
                 </div>
                 <div className="fan-card-overlay">
@@ -424,7 +434,7 @@ export default function Hero() {
                 key={key}
                 ref={getCaptionRef(key)}
                 className={`caption-block-${key} hero-caption absolute inset-0 w-full`}
-                style={{ display: key === selectedBranch ? 'flex' : 'none', opacity: key === selectedBranch ? 1 : 0 }}
+                style={{ display: key === selectedBranch ? 'grid' : 'none', opacity: key === selectedBranch ? 1 : 0 }}
               >
                 <span className="hero-caption-label" style={{ color: branches[key].color }}>
                   {branches[key].tag.toUpperCase()} — {branches[key].name.toUpperCase()}
