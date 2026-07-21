@@ -84,197 +84,148 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Side: Interactive Editorial Visual */}
-        <div className="hero-interactive" id="hero-interactive-zone">
+        {/* Right Side: Interactive Editorial Visual with Premium Open Layout */}
+        <div className="hero-editorial-right" id="hero-interactive-zone">
           
           {/* Branch routes / path diagram */}
-          <div className="routes-diagram-wrapper">
+          <div className="branches-interactive-network">
             <svg 
-              className="routes-svg" 
-              viewBox="0 0 400 220" 
+              className="branches-editorial-svg" 
+              viewBox="0 0 500 130" 
               fill="none" 
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
             >
-              {/* Central Core representing CR Tech */}
-              <circle cx="200" cy="180" r="14" fill="#168BFF" fillOpacity="0.15" />
-              <circle cx="200" cy="180" r="6" fill="#168BFF" />
+              {/* Central Core representing CR Tech at (250, 115) */}
+              <circle cx="250" cy="115" r="4" fill="#168BFF" />
+              <circle cx="250" cy="115" r="10" stroke="#168BFF" strokeWidth="0.75" strokeOpacity="0.4" fill="none" />
               
               {/* Connective Paths */}
-              {/* Path 1: To Drones (Aire) on the Left */}
+              {/* Path 1: To Drones (Aire) on the Left (70, 30) */}
               <path 
-                d="M190 170 C 130 150, 80 120, 70 80" 
-                stroke={selectedBranch === 'drones' ? '#48BFEA' : '#DCE6EF'} 
-                strokeWidth={selectedBranch === 'drones' ? '3' : '1.5'} 
-                strokeDasharray={selectedBranch === 'drones' ? '0' : '4 4'}
+                d="M 250 115 C 170 115, 95 85, 70 30" 
+                stroke={selectedBranch === 'drones' ? '#48BFEA' : '#E2E8F0'} 
+                strokeWidth={selectedBranch === 'drones' ? '2.5' : '1'} 
                 style={{ transition: 'all 0.3s ease' }}
               />
-              {/* Path 2: To Energía (Campo) in the Center */}
+              <circle cx="70" cy="30" r="4" fill={selectedBranch === 'drones' ? '#48BFEA' : '#CBD5E1'} style={{ transition: 'all 0.3s ease' }} />
+              
+              {/* Path 2: To Energía (Campo) in the Center (250, 20) */}
               <path 
-                d="M200 166 L 200 90" 
-                stroke={selectedBranch === 'energia' ? '#F4A825' : '#DCE6EF'} 
-                strokeWidth={selectedBranch === 'energia' ? '3' : '1.5'}
-                strokeDasharray={selectedBranch === 'energia' ? '0' : '4 4'}
+                d="M 250 115 L 250 20" 
+                stroke={selectedBranch === 'energia' ? '#F4A825' : '#E2E8F0'} 
+                strokeWidth={selectedBranch === 'energia' ? '2.5' : '1'} 
                 style={{ transition: 'all 0.3s ease' }}
               />
-              {/* Path 3: To Servicios TI (Empresa) on the Right */}
+              <circle cx="250" cy="20" r="4" fill={selectedBranch === 'energia' ? '#F4A825' : '#CBD5E1'} style={{ transition: 'all 0.3s ease' }} />
+              
+              {/* Path 3: To Servicios TI (Empresa) on the Right (430, 30) */}
               <path 
-                d="M210 170 C 270 150, 320 120, 330 80" 
-                stroke={selectedBranch === 'it' ? '#7067E8' : '#DCE6EF'} 
-                strokeWidth={selectedBranch === 'it' ? '3' : '1.5'}
-                strokeDasharray={selectedBranch === 'it' ? '0' : '4 4'}
+                d="M 250 115 C 330 115, 405 85, 430 30" 
+                stroke={selectedBranch === 'it' ? '#7067E8' : '#E2E8F0'} 
+                strokeWidth={selectedBranch === 'it' ? '2.5' : '1'} 
                 style={{ transition: 'all 0.3s ease' }}
               />
-
-              {/* Destination Nodes */}
-              {/* Node Left: Aire (Drones) */}
-              <circle 
-                cx="70" 
-                cy="80" 
-                r="8" 
-                fill={selectedBranch === 'drones' ? '#48BFEA' : '#FFFFFF'} 
-                stroke="#48BFEA" 
-                strokeWidth="2" 
-              />
-              {/* Node Center: Campo (Energía) */}
-              <circle 
-                cx="200" 
-                cy="90" 
-                r="8" 
-                fill={selectedBranch === 'energia' ? '#F4A825' : '#FFFFFF'} 
-                stroke="#F4A825" 
-                strokeWidth="2" 
-              />
-              {/* Node Right: Empresa (Servicios TI) */}
-              <circle 
-                cx="330" 
-                cy="80" 
-                r="8" 
-                fill={selectedBranch === 'it' ? '#7067E8' : '#FFFFFF'} 
-                stroke="#7067E8" 
-                strokeWidth="2" 
-              />
+              <circle cx="430" cy="30" r="4" fill={selectedBranch === 'it' ? '#7067E8' : '#CBD5E1'} style={{ transition: 'all 0.3s ease' }} />
             </svg>
+
+            {/* Fully keyboard-accessible branch selector buttons positioned at the endpoints of the SVG */}
+            <div className="branch-label-buttons" role="tablist" aria-label="Seleccionar rama de negocio">
+              <button
+                onClick={() => handleBranchSelect('drones')}
+                className={`branch-editorial-btn btn-drones ${selectedBranch === 'drones' ? 'active' : ''}`}
+                role="tab"
+                aria-selected={selectedBranch === 'drones'}
+                aria-controls="hero-interactive-zone"
+                type="button"
+                style={{ left: '14%', top: '15%', transform: 'translate(-50%, -50%)' }}
+              >
+                <span className="branch-btn-dot" style={{ backgroundColor: '#48BFEA' }}></span>
+                <div className="branch-btn-text">
+                  <span className="branch-btn-tag">Aire</span>
+                  <span className="branch-btn-name">Drones</span>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleBranchSelect('energia')}
+                className={`branch-editorial-btn btn-energia ${selectedBranch === 'energia' ? 'active' : ''}`}
+                role="tab"
+                aria-selected={selectedBranch === 'energia'}
+                aria-controls="hero-interactive-zone"
+                type="button"
+                style={{ left: '50%', top: '2%', transform: 'translate(-50%, -50%)' }}
+              >
+                <span className="branch-btn-dot" style={{ backgroundColor: '#F4A825' }}></span>
+                <div className="branch-btn-text">
+                  <span className="branch-btn-tag">Campo</span>
+                  <span className="branch-btn-name">Energía</span>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleBranchSelect('it')}
+                className={`branch-editorial-btn btn-it ${selectedBranch === 'it' ? 'active' : ''}`}
+                role="tab"
+                aria-selected={selectedBranch === 'it'}
+                aria-controls="hero-interactive-zone"
+                type="button"
+                style={{ left: '86%', top: '15%', transform: 'translate(-50%, -50%)' }}
+              >
+                <span className="branch-btn-dot" style={{ backgroundColor: '#7067E8' }}></span>
+                <div className="branch-btn-text">
+                  <span className="branch-btn-tag">Empresa</span>
+                  <span className="branch-btn-name">Servicios TI</span>
+                </div>
+              </button>
+            </div>
           </div>
 
-          {/* Dynamic Image / Content Viewer with distinct editorial styles */}
-          <div className="editorial-view-container">
+          {/* Dynamic Image / Content Viewer with elegant mask (no card) */}
+          <div className="hero-editorial-image-frame">
             {selectedBranch === 'drones' && (
-              <div className="editorial-wrapper drones-editorial-wrapper">
-                <div className="diagonal-image-frame">
-                  <img 
-                    src={assets.drones.productHorizontal} 
-                    alt="Dron profesional de SwellPro" 
-                    className="editorial-img object-cover"
-                    fetchPriority="high"
-                  />
-                </div>
-              </div>
+              <img 
+                src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1600,c_limit/v1779933439/fd3-image-06_qz20uf.jpg" 
+                alt="Dron profesional SwellPro sobrevolando el mar" 
+                className="editorial-display-img object-cover animate-fade-in"
+                fetchPriority="high"
+              />
             )}
 
             {selectedBranch === 'energia' && (
-              <div className="editorial-wrapper energia-editorial-wrapper">
-                <div className="clean-product-frame">
-                  <img 
-                    src={assets.ecoFlow.deltaPro} 
-                    alt="EcoFlow Delta Pro Portable Power Station" 
-                    className="editorial-img object-contain"
-                    fetchPriority="high"
-                  />
-                </div>
+              <div className="editorial-product-display animate-fade-in">
+                <img 
+                  src={assets.ecoFlow.deltaPro} 
+                  alt="Estación de energía EcoFlow Delta Pro" 
+                  className="editorial-display-img object-contain animate-fade-in"
+                  fetchPriority="high"
+                />
               </div>
             )}
 
             {selectedBranch === 'it' && (
-              <div className="editorial-wrapper it-editorial-wrapper">
-                <div className="abstract-it-shape">
-                  <svg viewBox="0 0 200 200" className="it-vector-art" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="violet-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#7067E8" stopOpacity="0.2" />
-                        <stop offset="100%" stopColor="#7067E8" stopOpacity="0.9" />
-                      </linearGradient>
-                    </defs>
-                    <path 
-                      d="M20,100 Q50,30 100,100 T180,100" 
-                      fill="none" 
-                      stroke="#7067E8" 
-                      strokeWidth="3" 
-                    />
-                    <path 
-                      d="M20,130 Q70,70 120,130 T180,130" 
-                      fill="none" 
-                      stroke="#7067E8" 
-                      strokeWidth="1.5" 
-                      strokeOpacity="0.5" 
-                    />
-                    <circle cx="100" cy="100" r="40" fill="url(#violet-grad)" />
-                    <rect x="85" y="85" width="30" height="30" rx="6" fill="#7067E8" />
-                    <circle cx="100" cy="100" r="4" fill="#FFFFFF" />
-                  </svg>
-                </div>
+              <div className="editorial-it-display animate-fade-in">
+                <svg viewBox="0 0 400 160" fill="none" className="it-minimal-svg" aria-hidden="true">
+                  <path d="M40 80 Q 200 10, 360 80" stroke="#7067E8" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
+                  <path d="M40 80 H 360" stroke="#7067E8" strokeWidth="1" opacity="0.5" />
+                  <circle cx="40" cy="80" r="5" fill="#7067E8" />
+                  <circle cx="200" cy="80" r="7" fill="#168BFF" />
+                  <circle cx="360" cy="80" r="5" fill="#7067E8" />
+                  
+                  <text x="40" y="115" fill="#07152C" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
+                  <text x="200" y="115" fill="#07152C" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
+                  <text x="360" y="115" fill="#07152C" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
+                </svg>
               </div>
             )}
           </div>
 
-          {/* Fully keyboard-accessible branch selector */}
-          <div className="branch-selector-panel" role="tablist" aria-label="Seleccionar rama de negocio">
-            <button
-              onClick={() => handleBranchSelect('drones')}
-              className={`branch-select-tab ${selectedBranch === 'drones' ? 'active accent-cyan' : ''}`}
-              role="tab"
-              aria-selected={selectedBranch === 'drones'}
-              aria-controls="hero-interactive-zone"
-              type="button"
-            >
-              <div className="tab-indicator-dot" style={{ backgroundColor: '#48BFEA' }}></div>
-              <div className="tab-header-meta">
-                <span className="tab-tag">Aire</span>
-                <span className="tab-name">Drones</span>
-              </div>
-              <span className="tab-desc">SwellPro Perú</span>
-            </button>
-
-            <button
-              onClick={() => handleBranchSelect('energia')}
-              className={`branch-select-tab ${selectedBranch === 'energia' ? 'active accent-amber' : ''}`}
-              role="tab"
-              aria-selected={selectedBranch === 'energia'}
-              aria-controls="hero-interactive-zone"
-              type="button"
-            >
-              <div className="tab-indicator-dot" style={{ backgroundColor: '#F4A825' }}></div>
-              <div className="tab-header-meta">
-                <span className="tab-tag">Campo</span>
-                <span className="tab-name">Energía</span>
-              </div>
-              <span className="tab-desc">EcoFlow</span>
-            </button>
-
-            <button
-              onClick={() => handleBranchSelect('it')}
-              className={`branch-select-tab ${selectedBranch === 'it' ? 'active accent-violet' : ''}`}
-              role="tab"
-              aria-selected={selectedBranch === 'it'}
-              aria-controls="hero-interactive-zone"
-              type="button"
-            >
-              <div className="tab-indicator-dot" style={{ backgroundColor: '#7067E8' }}></div>
-              <div className="tab-header-meta">
-                <span className="tab-tag">Empresa</span>
-                <span className="tab-name">Servicios TI</span>
-              </div>
-              <span className="tab-desc">Soporte y Redes</span>
-            </button>
-          </div>
-
-          {/* Underlay Info Box */}
-          <div className="interactive-info-panel" style={{ borderLeftColor: branches[selectedBranch].color }}>
-            <span className="interactive-panel-tag" style={{ color: branches[selectedBranch].color, backgroundColor: branches[selectedBranch].bgColor }}>
-              {branches[selectedBranch].tag}
+          {/* Underlay Info Caption - Editorial Layout */}
+          <div className="hero-editorial-caption">
+            <span className="caption-tag" style={{ color: branches[selectedBranch].color }}>
+              {branches[selectedBranch].tag} — {branches[selectedBranch].name}
             </span>
-            <h4 className="interactive-panel-name">{branches[selectedBranch].name}</h4>
-            <p className="interactive-panel-phrase">{branches[selectedBranch].phrase}</p>
+            <p className="caption-text">{branches[selectedBranch].phrase}</p>
           </div>
 
         </div>

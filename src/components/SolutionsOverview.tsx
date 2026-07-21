@@ -12,7 +12,7 @@ export default function SolutionsOverview() {
 
       <div className="solutions-blocks-container">
         
-        {/* BLOCK 1: Drones Profesionales */}
+        {/* BLOCK 1: Drones Profesionales (Aire) */}
         <div className="solution-block-item" id="drones">
           <div className="solution-block-grid">
             
@@ -20,7 +20,7 @@ export default function SolutionsOverview() {
               <span className="block-tag tag-cyan">Aire</span>
               <h3 className="block-title">Drones Profesionales</h3>
               <p className="block-description">
-                Tecnología aérea para inspección, seguridad, monitoreo, pesca, rescate y operaciones de campo.
+                Tecnología aérea robusta para inspección, seguridad, pesca, rescate y operaciones exigentes en mar y tierra peruana.
               </p>
               
               <ul className="block-features-list">
@@ -33,19 +33,19 @@ export default function SolutionsOverview() {
                 <li>
                   <span className="feature-icon cian">✓</span>
                   <div>
-                    <strong>Capacitación:</strong> Entrenamiento práctico y técnico para pilotos y equipos de campo.
+                    <strong>Capacitación especializada:</strong> Entrenamiento práctico y técnico para pilotos y equipos de campo.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon cian">✓</span>
                   <div>
-                    <strong>Soporte local:</strong> Servicio técnico calificado para diagnósticos, mantenimiento y calibraciones.
+                    <strong>Soporte técnico local:</strong> Servicio local para diagnósticos rápidos, mantenimiento y calibraciones.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon cian">✓</span>
                   <div>
-                    <strong>Repuestos:</strong> Stock de partes críticas y accesorios para minimizar tiempos de inactividad.
+                    <strong>Repuestos críticos:</strong> Stock local de partes y accesorios para garantizar continuidad de vuelos.
                   </div>
                 </li>
               </ul>
@@ -67,10 +67,10 @@ export default function SolutionsOverview() {
             </div>
 
             <div className="solution-block-media">
-              <div className="media-card-frame cyan-border">
+              <div className="media-card-frame">
                 <img 
                   src={assets.drones.inAction} 
-                  alt="Dron profesional SwellPro sobrevolando el océano para operaciones de pesca y rescate" 
+                  alt="Dron profesional SwellPro en acción sobrevolando el mar" 
                   className="block-media-img"
                   loading="lazy"
                   decoding="async"
@@ -78,7 +78,7 @@ export default function SolutionsOverview() {
                   height="400"
                 />
                 <div className="media-caption">
-                  <span>Operación de monitoreo aéreo real</span>
+                  <span>Dron SwellPro FD3 en operación de monitoreo real</span>
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function SolutionsOverview() {
           </div>
         </div>
 
-        {/* BLOCK 2: Energía Portátil */}
+        {/* BLOCK 2: Energía Portátil (Campo) */}
         <div className="solution-block-item alt-bg" id="energia">
           <div className="solution-block-grid reverse">
             
@@ -94,32 +94,32 @@ export default function SolutionsOverview() {
               <span className="block-tag tag-amber">Campo</span>
               <h3 className="block-title">Energía Portátil</h3>
               <p className="block-description">
-                Estaciones EcoFlow y generación solar para mantener equipos y operaciones activas donde la red no está disponible.
+                Sistemas de energía autónoma EcoFlow y paneles solares para mantener operaciones críticas activas en cualquier ubicación.
               </p>
               
               <ul className="block-features-list">
                 <li>
                   <span className="feature-icon amber">✓</span>
                   <div>
-                    <strong>Trabajo de campo:</strong> Energía limpia y silenciosa para alimentar herramientas y laboratorios remotos.
+                    <strong>Trabajo de campo autónomo:</strong> Energía limpia, silenciosa y constante para laboratorios remotos y herramientas.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon amber">✓</span>
                   <div>
-                    <strong>Respaldo crítico:</strong> Sistemas autónomos que reaccionan de inmediato ante cortes de suministro.
+                    <strong>Respaldo crítico inmediato:</strong> Sistemas inteligentes que reaccionan instantáneamente ante cortes de suministro.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon amber">✓</span>
                   <div>
-                    <strong>Carga de equipos:</strong> Hub de carga rápida para drones, baterías, radios y computadoras.
+                    <strong>Hub de carga de campo:</strong> Estación centralizada de alta velocidad para drones, radios y ordenadores de campo.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon amber">✓</span>
                   <div>
-                    <strong>Operaciones móviles:</strong> Soluciones compactas adaptables a vehículos y campamentos temporales.
+                    <strong>Despliegue ágil:</strong> Soluciones compactas adaptables a vehículos todoterreno y campamentos móviles.
                   </div>
                 </li>
               </ul>
@@ -141,33 +141,37 @@ export default function SolutionsOverview() {
 
             <div className="solution-block-media">
               <div className="double-media-layout">
-                <div className="media-card-frame amber-border primary-frame">
-                  <img 
-                    src={assets.ecoFlow.deltaPro} 
-                    alt="EcoFlow Delta Pro unidad de energía portátil de alta capacidad" 
-                    className="block-media-img object-contain"
-                    loading="lazy"
-                    decoding="async"
-                    width="400"
-                    height="280"
-                  />
+                <div className="media-card-frame primary-frame">
+                  <div className="outdoor-simulated-bg">
+                    <img 
+                      src={assets.ecoFlow.deltaPro} 
+                      alt="EcoFlow Delta Pro estación de energía portátil" 
+                      className="block-media-img object-contain"
+                      loading="lazy"
+                      decoding="async"
+                      width="400"
+                      height="280"
+                    />
+                  </div>
                   <div className="media-caption">
-                    <span>Estación de energía EcoFlow Delta Pro</span>
+                    <span>EcoFlow Delta Pro en campamento de campo</span>
                   </div>
                 </div>
                 
                 <div className="media-card-frame secondary-frame">
-                  <img 
-                    src={assets.ecoFlow.solarPanel} 
-                    alt="EcoFlow panel solar portátil plegable" 
-                    className="block-media-img object-contain"
-                    loading="lazy"
-                    decoding="async"
-                    width="280"
-                    height="180"
-                  />
+                  <div className="outdoor-simulated-bg">
+                    <img 
+                      src={assets.ecoFlow.solarPanel} 
+                      alt="EcoFlow paneles solares plegables" 
+                      className="block-media-img object-contain"
+                      loading="lazy"
+                      decoding="async"
+                      width="280"
+                      height="180"
+                    />
+                  </div>
                   <div className="media-caption">
-                    <span>Carga Solar limpia</span>
+                    <span>Panel Solar plegable en operación</span>
                   </div>
                 </div>
               </div>
@@ -176,7 +180,7 @@ export default function SolutionsOverview() {
           </div>
         </div>
 
-        {/* BLOCK 3: Servicios TI */}
+        {/* BLOCK 3: Servicios TI (Empresa) */}
         <div className="solution-block-item" id="servicios-ti">
           <div className="solution-block-grid">
             
@@ -184,32 +188,32 @@ export default function SolutionsOverview() {
               <span className="block-tag tag-violet">Empresa</span>
               <h3 className="block-title">Servicios TI</h3>
               <p className="block-description">
-                Infraestructura, conectividad, soporte y seguridad tecnológica para sostener la operación de empresas e instituciones.
+                Infraestructura de red, conectividad segura y soporte tecnológico continuo para blindar las operaciones de tu negocio.
               </p>
               
               <ul className="block-features-list">
                 <li>
                   <span className="feature-icon violet">✓</span>
                   <div>
-                    <strong>Redes:</strong> Diseño, cableado estructurado, enlaces de fibra y sistemas inalámbricos estables.
+                    <strong>Redes e Infraestructura:</strong> Cableado estructurado estructurado, enlaces inalámbricos estables y fibra óptica.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon violet">✓</span>
                   <div>
-                    <strong>Soporte TI:</strong> Mantenimiento preventivo, correctivo y asistencia remota para equipos de cómputo.
+                    <strong>Soporte operativo continuo:</strong> Asistencia especializada y mantenimiento de sistemas para evitar caídas.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon violet">✓</span>
                   <div>
-                    <strong>Videovigilancia:</strong> Cámaras de seguridad con monitoreo centralizado y almacenamiento local/nube.
+                    <strong>Seguridad perimetral:</strong> Firewalls, routers de nivel empresarial y protección de datos críticos.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon violet">✓</span>
                   <div>
-                    <strong>Respaldo y Conectividad:</strong> Soluciones de backup y configuración de routers y firewalls corporativos.
+                    <strong>Videovigilancia inteligente:</strong> Sistemas CCTV con almacenamiento seguro y monitoreo centralizado.
                   </div>
                 </li>
               </ul>
@@ -230,35 +234,55 @@ export default function SolutionsOverview() {
             </div>
 
             <div className="solution-block-media">
-              <div className="media-card-frame violet-border abstract-media-card">
-                {/* Custom modern server cluster line art */}
-                <div className="server-line-art-container">
-                  <svg viewBox="0 0 300 220" fill="none" className="server-svg" aria-hidden="true">
-                    {/* Server Rack 1 */}
-                    <rect x="50" y="30" width="200" height="44" rx="4" fill="#061329" stroke="#7067E8" strokeWidth="1.5" />
-                    <line x1="70" y1="52" x2="150" y2="52" stroke="#FFFFFF" strokeWidth="2" strokeOpacity="0.8" />
-                    <circle cx="210" cy="52" r="3" fill="#10B981" />
-                    <circle cx="225" cy="52" r="3" fill="#7067E8" />
-                    
-                    {/* Server Rack 2 */}
-                    <rect x="50" y="88" width="200" height="44" rx="4" fill="#061329" stroke="#7067E8" strokeWidth="1.5" />
-                    <line x1="70" y1="110" x2="130" y2="110" stroke="#FFFFFF" strokeWidth="2" strokeOpacity="0.8" />
-                    <circle cx="210" cy="110" r="3" fill="#10B981" />
-                    <circle cx="225" cy="110" r="3" fill="#7067E8" />
+              <div className="media-card-frame abstract-media-card">
+                <div className="it-connectivity-diagram">
+                  <svg viewBox="0 0 500 240" fill="none" className="connectivity-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#168BFF" stopOpacity="0.8" />
+                        <stop offset="50%" stopColor="#7067E8" stopOpacity="0.8" />
+                        <stop offset="100%" stopColor="#10B981" stopOpacity="0.8" />
+                      </linearGradient>
+                    </defs>
 
-                    {/* Server Rack 3 */}
-                    <rect x="50" y="146" width="200" height="44" rx="4" fill="#061329" stroke="#7067E8" strokeWidth="1.5" />
-                    <line x1="70" y1="168" x2="160" y2="168" stroke="#FFFFFF" strokeWidth="2" strokeOpacity="0.8" />
-                    <circle cx="210" cy="168" r="3" fill="#10B981" />
-                    <circle cx="225" cy="168" r="3" fill="#7067E8" />
-                    
-                    {/* Decorative networking nodes */}
-                    <path d="M40 52 L 20 110 L 40 168" stroke="#7067E8" strokeWidth="1" strokeOpacity="0.4" strokeDasharray="3 3" />
-                    <circle cx="20" cy="110" r="4" fill="#7067E8" />
+                    {/* Connecting path */}
+                    <path 
+                      d="M 50 120 C 150 120, 150 60, 250 60 C 350 60, 350 180, 450 180" 
+                      stroke="url(#lineGrad)" 
+                      strokeWidth="2" 
+                      strokeDasharray="4 4"
+                      opacity="0.3"
+                    />
+                    <path 
+                      d="M 50 120 C 150 120, 150 60, 250 60 C 350 60, 350 180, 450 180" 
+                      stroke="url(#lineGrad)" 
+                      strokeWidth="2" 
+                      strokeLinecap="round"
+                      opacity="0.7"
+                    />
+
+                    {/* Nodes */}
+                    {/* Node 1: Infraestructura */}
+                    <circle cx="50" cy="120" r="5" fill="#168BFF" />
+                    <circle cx="50" cy="120" r="12" stroke="#168BFF" strokeWidth="1" strokeOpacity="0.3" fill="none" />
+                    <text x="50" y="155" fill="#07152C" fontSize="12" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
+                    <text x="50" y="172" fill="#5F6D80" fontSize="10" textAnchor="middle" fontFamily="var(--font-headings)">Redes y Conectividad</text>
+
+                    {/* Node 2: Soporte */}
+                    <circle cx="250" cy="60" r="5" fill="#7067E8" />
+                    <circle cx="250" cy="60" r="12" stroke="#7067E8" strokeWidth="1" strokeOpacity="0.3" fill="none" />
+                    <text x="250" y="95" fill="#07152C" fontSize="12" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
+                    <text x="250" y="112" fill="#5F6D80" fontSize="10" textAnchor="middle" fontFamily="var(--font-headings)">Continuidad</text>
+
+                    {/* Node 3: Seguridad */}
+                    <circle cx="450" cy="180" r="5" fill="#10B981" />
+                    <circle cx="450" cy="180" r="12" stroke="#10B981" strokeWidth="1" strokeOpacity="0.3" fill="none" />
+                    <text x="450" y="215" fill="#07152C" fontSize="12" fontWeight="700" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
+                    <text x="450" y="232" fill="#5F6D80" fontSize="10" textAnchor="middle" fontFamily="var(--font-headings)">Videovigilancia</text>
                   </svg>
                 </div>
                 <div className="media-caption">
-                  <span>Infraestructura digital y redes estables</span>
+                  <span>Plataforma operativa sutil de red integrada</span>
                 </div>
               </div>
             </div>

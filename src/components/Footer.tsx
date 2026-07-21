@@ -93,9 +93,7 @@ export default function Footer() {
             © {currentYear} CR Technologies & Services E.I.R.L. Todos los derechos reservados.
           </p>
           <div className="tech-meta-row">
-            <span>Vite + React + TS</span>
-            <span>•</span>
-            <span>Fase 1: Home Premium Estática</span>
+            <span>Distribución Oficial SwellPro & EcoFlow • Soluciones Tecnológicas Aplicadas en el Perú</span>
           </div>
         </div>
       </div>
