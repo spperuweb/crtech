@@ -25,7 +25,6 @@ export default function Footer() {
           
           <div className="footer-legal-details">
             <span className="legal-item"><strong>Razón Social:</strong> CR Technologies & Services E.I.R.L.</span>
-            <span className="legal-item"><strong>RUC:</strong> 20615939791</span>
             <span className="legal-item"><strong>Sede:</strong> Lima, Perú</span>
           </div>
         </div>

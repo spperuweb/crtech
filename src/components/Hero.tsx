@@ -45,6 +45,7 @@ export default function Hero() {
   const itCaptionRef = useRef<HTMLDivElement>(null);
 
   const prevBranchRef = useRef<BranchKey>('drones');
+  const initialTimelineRef = useRef<gsap.core.Timeline | null>(null);
 
   const branches: Record<BranchKey, BranchData> = {
     drones: {
@@ -187,7 +188,7 @@ export default function Hero() {
             if (img) gsap.set(img, { scale: 1 });
           }
           if (captionEl) {
-            gsap.set(captionEl, { display: isCurrent ? 'block' : 'none', opacity: isCurrent ? 1 : 0, y: 0 });
+            gsap.set(captionEl, { display: isCurrent ? 'flex' : 'none', opacity: isCurrent ? 1 : 0, y: 0 });
           }
         });
       });
@@ -197,6 +198,7 @@ export default function Hero() {
         const tl = gsap.timeline({
           defaults: { ease: 'power2.out' }
         });
+        initialTimelineRef.current = tl;
 
         // Initial invisible states with targeted offsets
         gsap.set([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], { opacity: 0, y: 16 });
@@ -242,7 +244,10 @@ export default function Hero() {
           strokeDashoffset: 0,
           duration: 0.85,
           stagger: 0.1,
-          ease: 'power2.inOut'
+          ease: 'power2.inOut',
+          onComplete: () => {
+            gsap.set(paths, { clearProps: "strokeDasharray,strokeDashoffset" });
+          }
         }, "-=0.2")
         .to([dotDronesRef.current, dotEnergiaRef.current, dotItRef.current], {
           opacity: 1,
@@ -275,7 +280,12 @@ export default function Hero() {
       });
     }, heroRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      if (initialTimelineRef.current) {
+        initialTimelineRef.current.kill();
+      }
+    };
   }, []);
 
   // GSAP 2: Branch switching and active states transition
@@ -289,7 +299,13 @@ export default function Hero() {
     const dotRefs = [dotDronesRef.current, dotEnergiaRef.current, dotItRef.current];
     const colors = ['#48BFEA', '#F4A825', '#7067E8'];
 
-    // Part A: Animate SVG network lines and terminal dots
+    // Kill initial timeline to prevent overlap or overriding state
+    if (initialTimelineRef.current) {
+      initialTimelineRef.current.kill();
+      initialTimelineRef.current = null;
+    }
+
+    // 1. Line SVG transitions (active path contrast, others muted)
     branchKeys.forEach((key, i) => {
       const isSelected = key === selectedBranch;
       const pathEl = pathRefs[i];
@@ -308,7 +324,7 @@ export default function Hero() {
             stroke: isSelected ? colors[i] : '#CBD5E1',
             strokeWidth: isSelected ? 3.5 : 1.5,
             opacity: isSelected ? 1 : 0.3,
-            duration: 0.3,
+            duration: 0.25,
             ease: 'power2.out'
           });
         }
@@ -331,7 +347,7 @@ export default function Hero() {
             gsap.to(dotEl, {
               fill: isSelected ? colors[i] : '#94A3B8',
               r: isSelected ? 7 : 5,
-              duration: 0.3,
+              duration: 0.25,
               ease: 'power2.out'
             });
           }
@@ -339,97 +355,91 @@ export default function Hero() {
       }
     });
 
-    // Part B: Switch viewer media panel and caption info cards
-    if (prevBranch !== selectedBranch) {
-      const prevMedia = getMediaRef(prevBranch).current;
-      const prevCaption = getCaptionRef(prevBranch).current;
-      const nextMedia = getMediaRef(selectedBranch).current;
-      const nextCaption = getCaptionRef(selectedBranch).current;
+    // 2. Interactive Media / Caption display switching
+    branchKeys.forEach(key => {
+      const isCurrent = key === selectedBranch;
+      const mediaEl = getMediaRef(key).current;
+      const captionEl = getCaptionRef(key).current;
 
-      // Clean up previous animations immediately to prevent stacking or overlap
-      if (prevMedia) gsap.killTweensOf(prevMedia);
-      if (prevCaption) gsap.killTweensOf(prevCaption);
-      if (nextMedia) gsap.killTweensOf(nextMedia);
-      if (nextCaption) gsap.killTweensOf(nextCaption);
+      if (mediaEl) {
+        gsap.killTweensOf(mediaEl);
+        const img = mediaEl.querySelector('.editorial-display-img');
+        if (img) gsap.killTweensOf(img);
 
-      const prevImg = prevMedia?.querySelector('.editorial-display-img');
-      const nextImg = nextMedia?.querySelector('.editorial-display-img');
-      if (prevImg) gsap.killTweensOf(prevImg);
-      if (nextImg) gsap.killTweensOf(nextImg);
-
-      if (isReduced) {
-        // Quick 150ms opacity crossfade for reduced motion
-        if (prevMedia) gsap.set(prevMedia, { opacity: 0, display: 'none' });
-        if (prevCaption) gsap.set(prevCaption, { opacity: 0, display: 'none' });
-
-        if (nextMedia) {
-          gsap.set(nextMedia, { display: 'block', opacity: 0 });
-          gsap.to(nextMedia, { opacity: 1, duration: 0.15, ease: 'none' });
-        }
-        if (nextCaption) {
-          gsap.set(nextCaption, { display: 'block', opacity: 0 });
-          gsap.to(nextCaption, { opacity: 1, duration: 0.15, ease: 'none' });
-        }
-      } else {
-        // Premium editorial transition
-        // Animate exit of current content
-        if (prevMedia) {
-          gsap.to(prevMedia, {
-            opacity: 0,
-            y: -8, // displacement 6-8px
-            duration: 0.14, // 0.12-0.16s
-            ease: 'power2.in',
-            onComplete: () => {
-              gsap.set(prevMedia, { display: 'none' });
-            }
+        if (isReduced) {
+          gsap.set(mediaEl, {
+            display: isCurrent ? 'block' : 'none',
+            opacity: isCurrent ? 1 : 0,
+            y: 0
           });
-        }
-        if (prevCaption) {
-          gsap.to(prevCaption, {
-            opacity: 0,
-            y: -8,
-            duration: 0.14,
-            ease: 'power2.in',
-            onComplete: () => {
-              gsap.set(prevCaption, { display: 'none' });
-            }
-          });
-        }
+          if (img) gsap.set(img, { scale: 1 });
+        } else {
+          if (isCurrent) {
+            // Entrance
+            gsap.set(mediaEl, { display: 'block', opacity: 0, y: 11 });
+            if (img) gsap.set(img, { scale: 1.015 });
 
-        // Animate entrance of new content
-        if (nextMedia) {
-          gsap.set(nextMedia, { display: 'block', opacity: 0, y: 12 });
-          if (nextImg) {
-            gsap.set(nextImg, { scale: 1.015 });
-          }
-
-          gsap.to(nextMedia, {
-            opacity: 1,
-            y: 0,
-            duration: 0.4, // 0.35-0.45s
-            ease: 'power3.out'
-          });
-
-          if (nextImg) {
-            gsap.to(nextImg, {
-              scale: 1,
+            gsap.to(mediaEl, {
+              opacity: 1,
+              y: 0,
               duration: 0.4,
               ease: 'power3.out'
             });
+            if (img) {
+              gsap.to(img, {
+                scale: 1,
+                duration: 0.4,
+                ease: 'power3.out'
+              });
+            }
+          } else {
+            // Exit
+            gsap.to(mediaEl, {
+              opacity: 0,
+              y: -7,
+              duration: 0.14,
+              ease: 'power2.in',
+              onComplete: () => {
+                gsap.set(mediaEl, { display: 'none' });
+              }
+            });
           }
         }
+      }
 
-        if (nextCaption) {
-          gsap.set(nextCaption, { display: 'block', opacity: 0, y: 12 });
-          gsap.to(nextCaption, {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            ease: 'power3.out'
+      if (captionEl) {
+        gsap.killTweensOf(captionEl);
+        if (isReduced) {
+          gsap.set(captionEl, {
+            display: isCurrent ? 'flex' : 'none',
+            opacity: isCurrent ? 1 : 0,
+            y: 0
           });
+        } else {
+          if (isCurrent) {
+            // Entrance
+            gsap.set(captionEl, { display: 'flex', opacity: 0, y: 11 });
+            gsap.to(captionEl, {
+              opacity: 1,
+              y: 0,
+              duration: 0.4,
+              ease: 'power3.out'
+            });
+          } else {
+            // Exit
+            gsap.to(captionEl, {
+              opacity: 0,
+              y: -7,
+              duration: 0.14,
+              ease: 'power2.in',
+              onComplete: () => {
+                gsap.set(captionEl, { display: 'none' });
+              }
+            });
+          }
         }
       }
-    }
+    });
   }, [selectedBranch]);
 
   return (
@@ -486,6 +496,7 @@ export default function Hero() {
               {/* Path 1: To Drones (Aire) on the Left (70, 30) */}
               <path 
                 ref={pathDronesRef}
+                className="branch-path"
                 d="M 250 115 C 170 115, 95 85, 70 30" 
                 stroke={selectedBranch === 'drones' ? '#48BFEA' : '#CBD5E1'} 
                 strokeWidth={selectedBranch === 'drones' ? '3.5' : '1.5'} 
@@ -503,6 +514,7 @@ export default function Hero() {
               {/* Path 2: To Energía (Campo) in the Center (250, 20) */}
               <path 
                 ref={pathEnergiaRef}
+                className="branch-path"
                 d="M 250 115 L 250 20" 
                 stroke={selectedBranch === 'energia' ? '#F4A825' : '#CBD5E1'} 
                 strokeWidth={selectedBranch === 'energia' ? '3.5' : '1.5'} 
@@ -520,6 +532,7 @@ export default function Hero() {
               {/* Path 3: To Servicios TI (Empresa) on the Right (430, 30) */}
               <path 
                 ref={pathItRef}
+                className="branch-path"
                 d="M 250 115 C 330 115, 405 85, 430 30" 
                 stroke={selectedBranch === 'it' ? '#7067E8' : '#CBD5E1'} 
                 strokeWidth={selectedBranch === 'it' ? '3.5' : '1.5'} 
@@ -544,8 +557,8 @@ export default function Hero() {
             >
               {/* Button Wrapper 1: Drones */}
               <div 
-                className="branch-btn-wrapper absolute" 
-                style={{ left: '14%', top: '15%', transform: 'translate(-50%, -50%)', zIndex: 10 }}
+                className="branch-btn-wrapper" 
+                style={{ left: '14%', top: '23%', transform: 'translate(-50%, -50%)', zIndex: 10 }}
               >
                 <button
                   ref={btnDronesRef}
@@ -569,8 +582,8 @@ export default function Hero() {
 
               {/* Button Wrapper 2: Energía */}
               <div 
-                className="branch-btn-wrapper absolute" 
-                style={{ left: '50%', top: '2%', transform: 'translate(-50%, -50%)', zIndex: 10 }}
+                className="branch-btn-wrapper" 
+                style={{ left: '50%', top: '15%', transform: 'translate(-50%, -50%)', zIndex: 10 }}
               >
                 <button
                   ref={btnEnergiaRef}
@@ -594,8 +607,8 @@ export default function Hero() {
 
               {/* Button Wrapper 3: Servicios TI */}
               <div 
-                className="branch-btn-wrapper absolute" 
-                style={{ left: '86%', top: '15%', transform: 'translate(-50%, -50%)', zIndex: 10 }}
+                className="branch-btn-wrapper" 
+                style={{ left: '86%', top: '23%', transform: 'translate(-50%, -50%)', zIndex: 10 }}
               >
                 <button
                   ref={btnItRef}
