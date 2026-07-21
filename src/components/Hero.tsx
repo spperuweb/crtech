@@ -24,8 +24,11 @@ export default function Hero() {
   const cardDronesRef = useRef<HTMLButtonElement>(null);
   const cardItRef = useRef<HTMLButtonElement>(null);
 
-  const captionRef = useRef<HTMLDivElement>(null);
+  const dronesCaptionRef = useRef<HTMLDivElement>(null);
+  const energiaCaptionRef = useRef<HTMLDivElement>(null);
+  const itCaptionRef = useRef<HTMLDivElement>(null);
 
+  const prevBranchRef = useRef<BranchKey>('drones');
   const initialTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const isFirstBranchEffectRef = useRef(true);
 
@@ -60,12 +63,18 @@ export default function Hero() {
   };
 
   const branchKeys: BranchKey[] = ['drones', 'energia', 'it'];
-  const currentBranch = branches[selectedBranch];
+  const selectedData = branches[selectedBranch];
 
   const getCardRef = (key: BranchKey) => {
     if (key === 'energia') return cardEnergiaRef;
     if (key === 'drones') return cardDronesRef;
     return cardItRef;
+  };
+
+  const getCaptionRef = (key: BranchKey) => {
+    if (key === 'drones') return dronesCaptionRef;
+    if (key === 'energia') return energiaCaptionRef;
+    return itCaptionRef;
   };
 
   const handleBranchSelect = (key: BranchKey) => {
@@ -146,10 +155,6 @@ export default function Hero() {
             zIndex: transforms.zIndex
           });
         });
-
-        if (captionRef.current) {
-          gsap.set(captionRef.current, { opacity: 1, y: 0 });
-        }
       });
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -165,7 +170,6 @@ export default function Hero() {
         if (cardEnergiaRef.current) gsap.set(cardEnergiaRef.current, { xPercent: -108, yPercent: -50, x: -48, rotate: -7, opacity: 0 });
         if (cardDronesRef.current) gsap.set(cardDronesRef.current, { xPercent: -50, yPercent: -50, y: 18, rotate: 0, opacity: 0 });
         if (cardItRef.current) gsap.set(cardItRef.current, { xPercent: 8, yPercent: -50, x: 48, rotate: 7, opacity: 0 });
-        if (captionRef.current) gsap.set(captionRef.current, { opacity: 0, y: 8 });
 
         tl.to([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], {
           opacity: 1,
@@ -192,13 +196,7 @@ export default function Hero() {
           duration: 0.65,
           stagger: 0.08,
           ease: 'power3.out'
-        }, "-=0.4")
-        .to(captionRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.4,
-          ease: 'power2.out'
-        }, "-=0.2");
+        }, "-=0.4");
       });
     }, heroRef);
 
@@ -212,16 +210,12 @@ export default function Hero() {
       return;
     }
 
-    if (initialTimelineRef.current) {
-      initialTimelineRef.current.kill();
-      initialTimelineRef.current = null;
-    }
+    prevBranchRef.current = selectedBranch;
 
-    const cardEls = [cardEnergiaRef.current, cardDronesRef.current, cardItRef.current].filter(Boolean);
-    gsap.killTweensOf(cardEls);
-    if (captionRef.current) {
-      gsap.killTweensOf(captionRef.current);
+    if (initialTimelineRef.current?.isActive()) {
+      initialTimelineRef.current.progress(1);
     }
+    initialTimelineRef.current = null;
 
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -253,24 +247,45 @@ export default function Hero() {
           opacity: transforms.opacity,
           zIndex: transforms.zIndex,
           duration: 0.32,
-          ease: 'power2.inOut',
-          overwrite: 'auto'
+          ease: 'power2.inOut'
         });
       }
     });
 
     // Caption crossfade
-    if (captionRef.current) {
+    branchKeys.forEach((key) => {
+      const captionEl = getCaptionRef(key).current;
+      if (!captionEl) return;
+      const isCurrent = key === selectedBranch;
+
       if (isReduced) {
-        gsap.set(captionRef.current, { opacity: 1, y: 0 });
+        gsap.set(captionEl, {
+          display: isCurrent ? 'grid' : 'none',
+          opacity: isCurrent ? 1 : 0,
+          y: 0
+        });
       } else {
-        gsap.fromTo(
-          captionRef.current,
-          { opacity: 0, y: 6 },
-          { opacity: 1, y: 0, duration: 0.32, ease: 'power2.inOut', overwrite: 'auto' }
-        );
+        if (isCurrent) {
+          gsap.set(captionEl, { display: 'grid', opacity: 0, y: 8 });
+          gsap.to(captionEl, {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        } else {
+          gsap.to(captionEl, {
+            opacity: 0,
+            y: -6,
+            duration: 0.15,
+            ease: 'power2.in',
+            onComplete: () => {
+              gsap.set(captionEl, { display: 'none' });
+            }
+          });
+        }
       }
-    }
+    });
   }, [selectedBranch]);
 
   return (
@@ -415,17 +430,21 @@ export default function Hero() {
 
           {/* Underlay Info Caption */}
           <div className="hero-editorial-caption overflow-hidden">
-            <div 
-              ref={captionRef}
-              className="hero-caption"
-            >
-              <span className="hero-caption-label" style={{ color: currentBranch.color }}>
-                {currentBranch.tag.toUpperCase()} — {currentBranch.name.toUpperCase()}
-              </span>
-              <span className="hero-caption-description">
-                {currentBranch.phrase}
-              </span>
-            </div>
+            {branchKeys.map(key => (
+              <div 
+                key={key}
+                ref={getCaptionRef(key)}
+                className={`caption-block-${key} hero-caption absolute inset-0 w-full`}
+                style={{ display: key === selectedBranch ? 'grid' : 'none', opacity: key === selectedBranch ? 1 : 0 }}
+              >
+                <span className="hero-caption-label" style={{ color: selectedData.color }}>
+                  {selectedData.tag.toUpperCase()} — {selectedData.name.toUpperCase()}
+                </span>
+                <span className="hero-caption-description">
+                  {selectedData.phrase}
+                </span>
+              </div>
+            ))}
           </div>
 
         </div>
