@@ -46,6 +46,7 @@ export default function Hero() {
 
   const prevBranchRef = useRef<BranchKey>('drones');
   const initialTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const isFirstBranchEffectRef = useRef(true);
 
   const branches: Record<BranchKey, BranchData> = {
     drones: {
@@ -205,16 +206,14 @@ export default function Hero() {
         gsap.set([centralDotRef.current, centralHaloRef.current], { opacity: 0, scale: 0.9 });
         
         // Setup initial paths offsets
-        const paths = [pathDronesRef.current, pathEnergiaRef.current, pathItRef.current];
-        paths.forEach(p => {
-          if (p) {
-            const len = p.getTotalLength();
-            gsap.set(p, {
-              strokeDasharray: len,
-              strokeDashoffset: len,
-              opacity: 1
-            });
-          }
+        const paths = [pathDronesRef.current, pathEnergiaRef.current, pathItRef.current].filter((p): p is SVGPathElement => p !== null);
+        paths.forEach((path) => {
+          const length = path.getTotalLength();
+          gsap.set(path, {
+            strokeDasharray: length,
+            strokeDashoffset: length,
+            opacity: 1
+          });
         });
 
         // Setup dots and buttons invisible
@@ -246,7 +245,15 @@ export default function Hero() {
           stagger: 0.1,
           ease: 'power2.inOut',
           onComplete: () => {
-            gsap.set(paths, { clearProps: "strokeDasharray,strokeDashoffset" });
+            paths.forEach((path) => {
+              if (path) {
+                const length = path.getTotalLength();
+                gsap.set(path, {
+                  strokeDasharray: length,
+                  strokeDashoffset: 0
+                });
+              }
+            });
           }
         }, "-=0.2")
         .to([dotDronesRef.current, dotEnergiaRef.current, dotItRef.current], {
@@ -290,6 +297,11 @@ export default function Hero() {
 
   // GSAP 2: Branch switching and active states transition
   useLayoutEffect(() => {
+    if (isFirstBranchEffectRef.current) {
+      isFirstBranchEffectRef.current = false;
+      return;
+    }
+
     const prevBranch = prevBranchRef.current;
     prevBranchRef.current = selectedBranch;
 
@@ -299,11 +311,11 @@ export default function Hero() {
     const dotRefs = [dotDronesRef.current, dotEnergiaRef.current, dotItRef.current];
     const colors = ['#48BFEA', '#F4A825', '#7067E8'];
 
-    // Kill initial timeline to prevent overlap or overriding state
-    if (initialTimelineRef.current) {
-      initialTimelineRef.current.kill();
-      initialTimelineRef.current = null;
+    if (initialTimelineRef.current?.isActive()) {
+      initialTimelineRef.current.progress(1);
     }
+
+    initialTimelineRef.current = null;
 
     // 1. Line SVG transitions (active path contrast, others muted)
     branchKeys.forEach((key, i) => {
