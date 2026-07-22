@@ -33,9 +33,9 @@ export default function Footer() {
         <div className="footer-nav-column">
           <h4 className="footer-title">Soluciones</h4>
           <ul className="footer-links-list">
-            <li><a href="#drones">Drones Profesionales</a></li>
-            <li><a href="#energia">Energía Portátil</a></li>
-            <li><a href="#servicios-ti">Infraestructura TI</a></li>
+            <li><a href="#/drones">Drones Profesionales</a></li>
+            <li><a href="#/energia">Energía Portátil</a></li>
+            <li><a href="#/servicios-ti">Infraestructura TI</a></li>
           </ul>
         </div>
 

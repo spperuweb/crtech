@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // --------------------------------------------------
 // SELECTOR DATA & LOGIC TYPES
@@ -174,6 +178,9 @@ export default function EcoFlowLanding() {
   const [selectedTiempo, setSelectedTiempo] = useState<string>('');
   const [activeRecommendation, setActiveRecommendation] = useState<'RIVER' | 'DELTA' | 'PERSONALIZADA' | null>(null);
 
+  const pageRef = useRef<HTMLDivElement>(null);
+  const questionPanelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     // SEO setup for EcoFlow landing page
     document.title = 'EcoFlow Perú | Energía Portátil y Soluciones Solares | CR Tech';
@@ -186,6 +193,240 @@ export default function EcoFlowLanding() {
       );
     }
   }, []);
+
+  // GSAP Timelines and ScrollTriggers initialization
+  useLayoutEffect(() => {
+    if (!pageRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      // NORMAL MOTION (prefers-reduced-motion: no-preference)
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+
+        // 1. Hero Initial Load Entrance Timeline (Played ONCE)
+        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        heroTl
+          .fromTo('.hero-eyebrow-badge', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 })
+          .fromTo('.ecoflow-hero-title', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55 }, '-=0.35')
+          .fromTo('.ecoflow-hero-desc', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55 }, '-=0.4')
+          .fromTo('.ecoflow-hero-ctas', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.4')
+          .fromTo('.hero-trust-highlights .highlight-item', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, stagger: 0.07 }, '-=0.3')
+          .fromTo('.stage-generation', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
+          .fromTo('.stage-storage', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55 }, '-=0.35')
+          .fromTo('.stage-operation', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.35');
+
+        // 2. Hero Energy Connector (Pulse line & Traveling indicator dot)
+        const dotEl = pageRef.current?.querySelector('#hero-energy-dot');
+        const pulsePath = pageRef.current?.querySelector('#hero-energy-pulse-path');
+
+        if (dotEl && pulsePath) {
+          const connectorTl = gsap.timeline({ delay: 0.8 });
+          connectorTl
+            .to(dotEl, { opacity: 1, duration: 0.1 })
+            .to(pulsePath, { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut' }, '<')
+            .to(dotEl, { x: 360, y: 110, fill: '#0284C7', duration: 0.65, ease: 'power2.inOut' }, '<')
+            .to(dotEl, { x: 60, y: 240, fill: '#10B981', duration: 0.65, ease: 'power2.inOut' });
+        }
+
+        // 3. Section Reveals (ScrollTrigger per section, once: true)
+        
+        // Franja de confianza
+        gsap.fromTo(
+          '.trust-strip-item',
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.08,
+            scrollTrigger: {
+              trigger: '.ecoflow-trust-strip',
+              start: 'top 85%',
+              once: true
+            }
+          }
+        );
+
+        // Ecosistema Energético (Generación -> Conector 1 -> Almacenamiento -> Conector 2 -> Operación)
+        const ecoTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '.ecoflow-ecosystem-section',
+            start: 'top 82%',
+            once: true
+          }
+        });
+
+        ecoTl
+          .fromTo('.ecoflow-ecosystem-section .section-header', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 })
+          .fromTo('.flow-step-card:nth-of-type(1)', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45 }, '-=0.2')
+          .fromTo('.flow-connector-arrow:nth-of-type(2)', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.25, transformOrigin: 'left center' }, '-=0.1')
+          .fromTo('.flow-step-card:nth-of-type(3)', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45 }, '-=0.1')
+          .fromTo('.flow-connector-arrow:nth-of-type(4)', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.25, transformOrigin: 'left center' }, '-=0.1')
+          .fromTo('.flow-step-card:nth-of-type(5)', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45 }, '-=0.1');
+
+        // Aplicaciones
+        gsap.fromTo(
+          ['.ecoflow-applications-section .section-header', '.app-card'],
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.06,
+            scrollTrigger: {
+              trigger: '.ecoflow-applications-section',
+              start: 'top 82%',
+              once: true
+            }
+          }
+        );
+
+        // Selector
+        gsap.fromTo(
+          ['.ecoflow-selector-section .section-header', '.selector-interactive-card'],
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.55,
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: '.ecoflow-selector-section',
+              start: 'top 82%',
+              once: true
+            }
+          }
+        );
+
+        // Familias de Soluciones
+        gsap.fromTo(
+          ['.ecoflow-families-section .section-header', '.family-card'],
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.55,
+            stagger: 0.08,
+            scrollTrigger: {
+              trigger: '.ecoflow-families-section',
+              start: 'top 82%',
+              once: true
+            }
+          }
+        );
+
+        // Tecnologías
+        gsap.fromTo(
+          ['.ecoflow-tech-section .section-header', '.tech-pillar-card', '.tech-disclaimer'],
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.06,
+            scrollTrigger: {
+              trigger: '.ecoflow-tech-section',
+              start: 'top 82%',
+              once: true
+            }
+          }
+        );
+
+        // Métodos de Recarga
+        const rechTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '.ecoflow-recharge-section',
+            start: 'top 82%',
+            once: true
+          }
+        });
+
+        rechTl
+          .fromTo('.ecoflow-recharge-section .section-header', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 })
+          .fromTo('.recharge-divider', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.3, transformOrigin: 'left center', stagger: 0.08 }, '-=0.2')
+          .fromTo('.recharge-item', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, stagger: 0.08 }, '-=0.3');
+
+        // Asesoría y Soporte Local
+        gsap.fromTo(
+          ['.support-info-col', '.specialist-contact-card'],
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.55,
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: '.ecoflow-support-section',
+              start: 'top 82%',
+              once: true
+            }
+          }
+        );
+
+        // CTA Final
+        const ctaTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '.ecoflow-final-cta-section',
+            start: 'top 85%',
+            once: true
+          }
+        });
+
+        ctaTl
+          .fromTo('.final-cta-title', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45 })
+          .fromTo('.final-cta-desc', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45 }, '-=0.3')
+          .fromTo('.final-cta-btn-wrap', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45 }, '-=0.3');
+
+      });
+
+      // REDUCED MOTION (prefers-reduced-motion: reduce)
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(
+          [
+            '.hero-eyebrow-badge', '.ecoflow-hero-title', '.ecoflow-hero-desc', '.ecoflow-hero-ctas',
+            '.highlight-item', '.stage-generation', '.stage-storage', '.stage-operation',
+            '#hero-energy-dot', '#hero-energy-pulse-path', '.trust-strip-item',
+            '.flow-step-card', '.flow-connector-arrow', '.app-card', '.family-card',
+            '.tech-pillar-card', '.recharge-item', '.recharge-divider', '.support-info-col',
+            '.specialist-contact-card', '.final-cta-title', '.final-cta-desc', '.final-cta-btn-wrap'
+          ],
+          { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1, strokeDashoffset: 0 }
+        );
+      });
+
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Selector Step Change Transition
+  useEffect(() => {
+    if (!questionPanelRef.current) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      gsap.set(questionPanelRef.current, { opacity: 1, x: 0, scale: 1 });
+      return;
+    }
+
+    gsap.killTweensOf(questionPanelRef.current);
+
+    if (selectorStep <= 3) {
+      gsap.fromTo(
+        questionPanelRef.current,
+        { opacity: 0, x: 8 },
+        { opacity: 1, x: 0, duration: 0.2, ease: 'power3.out' }
+      );
+    } else {
+      gsap.fromTo(
+        questionPanelRef.current,
+        { opacity: 0, scale: 0.985 },
+        { opacity: 1, scale: 1, duration: 0.22, ease: 'power3.out' }
+      );
+    }
+  }, [selectorStep, activeRecommendation]);
 
   const closeMenu = () => setMobileMenuOpen(false);
 
@@ -212,7 +453,7 @@ export default function EcoFlowLanding() {
   const whatsappFinalCtaUrl = "https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20solicito%20asesor%C3%ADa%20para%20una%20soluci%C3%B3n%20EcoFlow.";
 
   return (
-    <div className="ecoflow-landing-wrapper">
+    <div ref={pageRef} className="ecoflow-landing-wrapper">
       {/* 1. HEADER DEDICADO ECOFLOW / CR TECH */}
       <header className="ecoflow-header sticky-header">
         <div className="header-container">
@@ -381,13 +622,30 @@ export default function EcoFlowLanding() {
               <div className="ecoflow-hero-visual-col">
                 <div className="energy-flow-visual-card">
                   
-                  {/* Subtle connecting curve vector */}
+                  {/* Subtle connecting curve vector with traveling energy indicator */}
                   <svg className="energy-flow-line-svg" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path 
+                      id="hero-energy-base-path"
                       d="M 60 70 Q 250 20 420 180 T 120 310" 
                       stroke="url(#solar-amber-gradient)" 
                       strokeWidth="2.5" 
                       strokeDasharray="6 6" 
+                    />
+                    <path 
+                      id="hero-energy-pulse-path"
+                      d="M 60 70 Q 250 20 420 180 T 120 310" 
+                      stroke="url(#solar-amber-gradient)" 
+                      strokeWidth="3.5" 
+                      strokeDasharray="600"
+                      strokeDashoffset="600"
+                    />
+                    <circle 
+                      id="hero-energy-dot"
+                      cx="60"
+                      cy="70"
+                      r="6"
+                      fill="#F59E0B"
+                      style={{ opacity: 0 }}
                     />
                     <defs>
                       <linearGradient id="solar-amber-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -694,6 +952,16 @@ export default function EcoFlowLanding() {
                 })}
               </div>
 
+              {/* Progress Bar Track */}
+              <div className="stepper-progress-track">
+                <div 
+                  className="stepper-progress-fill"
+                  style={{
+                    transform: `scaleX(${selectorStep > 3 ? 1 : (selectorStep - 1) / 2})`,
+                  }}
+                />
+              </div>
+
               {/* Step Questions & Options OR Recommendation View */}
               {selectorStep <= 3 ? (
                 <div className="selector-step-content">
@@ -725,7 +993,7 @@ export default function EcoFlowLanding() {
                     };
 
                     return (
-                      <div key={currentStepData.id} className="question-panel">
+                      <div key={currentStepData.id} ref={questionPanelRef} className="question-panel">
                         <h3 className="question-title">{currentStepData.question}</h3>
                         <div className="options-grid">
                           {currentStepData.options.map((opt) => {
@@ -788,7 +1056,7 @@ export default function EcoFlowLanding() {
                     );
 
                     return (
-                      <div className="recommendation-content">
+                      <div ref={questionPanelRef} className="recommendation-content">
                         <div className="rec-header-bar">
                           <span className={`rec-badge badge-${rec.familyKey.toLowerCase()}`}>
                             {rec.badgeLabel}

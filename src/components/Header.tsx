@@ -30,8 +30,8 @@ export default function Header() {
         <nav className="desktop-nav" aria-label="Navegación principal">
           <a href="#soluciones" className="nav-link">Soluciones</a>
           <a href="#/drones" className="nav-link">Drones</a>
-          <a href="#energia" className="nav-link">Energía</a>
-          <a href="#servicios-ti" className="nav-link">Servicios TI</a>
+          <a href="#/energia" className="nav-link">Energía</a>
+          <a href="#/servicios-ti" className="nav-link">Servicios TI</a>
           <a href="#nosotros" className="nav-link">Nosotros</a>
         </nav>
 
@@ -66,8 +66,8 @@ export default function Header() {
         <nav className="mobile-nav" aria-label="Navegación móvil">
           <a href="#soluciones" className="mobile-nav-link" onClick={closeMenu}>Soluciones</a>
           <a href="#/drones" className="mobile-nav-link" onClick={closeMenu}>Drones</a>
-          <a href="#energia" className="mobile-nav-link" onClick={closeMenu}>Energía</a>
-          <a href="#servicios-ti" className="mobile-nav-link" onClick={closeMenu}>Servicios TI</a>
+          <a href="#/energia" className="mobile-nav-link" onClick={closeMenu}>Energía</a>
+          <a href="#/servicios-ti" className="mobile-nav-link" onClick={closeMenu}>Servicios TI</a>
           <a href="#nosotros" className="mobile-nav-link" onClick={closeMenu}>Nosotros</a>
           
           <a 
