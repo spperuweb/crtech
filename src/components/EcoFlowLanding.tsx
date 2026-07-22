@@ -1,8 +1,178 @@
 import React, { useState, useEffect } from 'react';
 import { assets } from '../data/assets';
 
+// --------------------------------------------------
+// SELECTOR DATA & LOGIC TYPES
+// --------------------------------------------------
+interface SelectorOption {
+  id: string;
+  label: string;
+}
+
+interface SelectorStep {
+  id: number;
+  key: 'entorno' | 'carga' | 'tiempo';
+  nodeTitle: string;
+  question: string;
+  options: SelectorOption[];
+}
+
+const SELECTOR_STEPS: SelectorStep[] = [
+  {
+    id: 1,
+    key: 'entorno',
+    nodeTitle: 'Entorno',
+    question: '¿Dónde necesitas energía?',
+    options: [
+      { id: 'movilidad', label: 'Movilidad y actividades exteriores' },
+      { id: 'campo', label: 'Trabajo de campo y herramientas' },
+      { id: 'hogar', label: 'Hogar, oficina o pequeño negocio' },
+      { id: 'especial', label: 'Respaldo para una operación especial' },
+    ]
+  },
+  {
+    id: 2,
+    key: 'carga',
+    nodeTitle: 'Tipo de Carga',
+    question: '¿Qué necesitas alimentar principalmente?',
+    options: [
+      { id: 'ligeros', label: 'Teléfonos, iluminación, cámaras o laptop' },
+      { id: 'comunicaciones', label: 'Comunicaciones y varios equipos electrónicos' },
+      { id: 'pesados', label: 'Herramientas, refrigeración o bombas' },
+      { id: 'corte', label: 'Diferentes equipos durante un corte eléctrico' },
+    ]
+  },
+  {
+    id: 3,
+    key: 'tiempo',
+    nodeTitle: 'Tiempo de Uso',
+    question: '¿Durante cuánto tiempo necesitas mantenerlos activos?',
+    options: [
+      { id: 'horas', label: 'Algunas horas' },
+      { id: 'jornada', label: 'Una jornada de trabajo' },
+      { id: 'prolongado', label: 'Uso prolongado o respaldo recurrente' },
+      { id: 'nosabe', label: 'Todavía no lo sé' },
+    ]
+  }
+];
+
+interface RecommendationResult {
+  familyKey: 'RIVER' | 'DELTA' | 'PERSONALIZADA';
+  familyTitle: string;
+  badgeLabel: string;
+  reason: string;
+  factorsToConfirm: string[];
+  possibleAddons: string[];
+}
+
+function calculateRecommendation(
+  entornoId: string,
+  cargaId: string,
+  tiempoId: string
+): RecommendationResult {
+  if (
+    tiempoId === 'prolongado' ||
+    tiempoId === 'nosabe' ||
+    entornoId === 'especial'
+  ) {
+    return {
+      familyKey: 'PERSONALIZADA',
+      familyTitle: 'Configuración Personalizada',
+      badgeLabel: 'Evaluación Técnica Requerida',
+      reason:
+        'Tu escenario requiere revisar consumo, potencia de arranque, autonomía y métodos de recarga antes de seleccionar el equipo.',
+      factorsToConfirm: [
+        'Consumo total de los equipos y picos de arranque',
+        'Tiempo de autonomía real requerido',
+        'Disponibilidad y tipo de recarga en sitio'
+      ],
+      possibleAddons: [
+        'Paneles solares portátiles o de alta eficiencia',
+        'Baterías de expansión inteligentes según la línea',
+        'Cableado, adaptadores o accesorios de integración'
+      ]
+    };
+  }
+
+  if (
+    entornoId === 'campo' ||
+    entornoId === 'hogar' ||
+    cargaId === 'pesados' ||
+    cargaId === 'corte' ||
+    tiempoId === 'jornada'
+  ) {
+    return {
+      familyKey: 'DELTA',
+      familyTitle: 'Familia DELTA',
+      badgeLabel: 'Orientativo · Mayor Capacidad',
+      reason:
+        'Una estación de la familia DELTA puede ofrecer la capacidad y flexibilidad necesarias para cargas de mayor demanda.',
+      factorsToConfirm: [
+        'Consumo total en Watts de tus equipos',
+        'Picos de arranque en motores, bombas o herramientas',
+        'Tiempo de autonomía durante cortes o jornadas'
+      ],
+      possibleAddons: [
+        'Panel solar portátil o rígido compatible',
+        'Batería adicional inteligente de respaldo',
+        'Cables de transferencia o recarga rápida'
+      ]
+    };
+  }
+
+  return {
+    familyKey: 'RIVER',
+    familyTitle: 'Familia RIVER',
+    badgeLabel: 'Orientativo · Compacta',
+    reason:
+      'Una solución compacta de la familia RIVER puede ser el punto de partida para movilidad y cargas esenciales.',
+    factorsToConfirm: [
+      'Puertos necesarios (USB-C, AC 220V, 12V)',
+      'Consumo promedio de tus dispositivos esenciales',
+      'Frecuencia de recarga en campo o vehículo'
+    ],
+    possibleAddons: [
+      'Panel solar portátil plegable de rápida instalación',
+      'Cable de recarga para vehículo 12V/24V',
+      'Funda o accesorio de transporte'
+    ]
+  };
+}
+
+function getWhatsAppSelectorUrl(
+  entornoLabel: string,
+  cargaLabel: string,
+  tiempoLabel: string,
+  familyKey: string
+) {
+  const familyDisplay =
+    familyKey === 'RIVER'
+      ? 'RIVER'
+      : familyKey === 'DELTA'
+      ? 'DELTA'
+      : 'CONFIGURACIÓN PERSONALIZADA';
+
+  const text = `Hola CR Tech, completé el selector EcoFlow.
+
+Entorno: ${entornoLabel}
+Equipos: ${cargaLabel}
+Tiempo de uso: ${tiempoLabel}
+Recomendación orientativa: ${familyDisplay}
+
+Quiero validar qué configuración necesito.`;
+
+  return `https://wa.me/51991664146?text=${encodeURIComponent(text)}`;
+}
+
 export default function EcoFlowLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Selector state
+  const [selectorStep, setSelectorStep] = useState<number>(1);
+  const [selectedEntorno, setSelectedEntorno] = useState<string>('');
+  const [selectedCarga, setSelectedCarga] = useState<string>('');
+  const [selectedTiempo, setSelectedTiempo] = useState<string>('');
+  const [activeRecommendation, setActiveRecommendation] = useState<'RIVER' | 'DELTA' | 'PERSONALIZADA' | null>(null);
 
   useEffect(() => {
     // SEO setup for EcoFlow landing page
@@ -26,6 +196,14 @@ export default function EcoFlowLanding() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleResetSelector = () => {
+    setSelectorStep(1);
+    setSelectedEntorno('');
+    setSelectedCarga('');
+    setSelectedTiempo('');
+    setActiveRecommendation(null);
   };
 
   const whatsappQuoteUrl = "https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20quiero%20cotizar%20una%20soluci%C3%B3n%20EcoFlow.";
@@ -55,6 +233,9 @@ export default function EcoFlowLanding() {
           <nav className="desktop-nav" aria-label="Navegación EcoFlow">
             <a href="#aplicaciones-ecoflow" onClick={(e) => scrollToSection(e, 'aplicaciones-ecoflow')} className="nav-link">
               Aplicaciones
+            </a>
+            <a href="#selector-ecoflow" onClick={(e) => scrollToSection(e, 'selector-ecoflow')} className="nav-link">
+              Selector
             </a>
             <a href="#familias-ecoflow" onClick={(e) => scrollToSection(e, 'familias-ecoflow')} className="nav-link">
               Soluciones
@@ -105,6 +286,9 @@ export default function EcoFlowLanding() {
             <nav className="mobile-nav-links">
               <a href="#aplicaciones-ecoflow" onClick={(e) => scrollToSection(e, 'aplicaciones-ecoflow')} className="mobile-nav-link">
                 Aplicaciones
+              </a>
+              <a href="#selector-ecoflow" onClick={(e) => scrollToSection(e, 'selector-ecoflow')} className="mobile-nav-link">
+                Selector Orientativo
               </a>
               <a href="#familias-ecoflow" onClick={(e) => scrollToSection(e, 'familias-ecoflow')} className="mobile-nav-link">
                 Soluciones
@@ -335,7 +519,7 @@ export default function EcoFlowLanding() {
                 <div className="flow-step-body">
                   <h3 className="step-heading">Paneles Solares</h3>
                   <p className="step-text">
-                    Captura limpia mediante paneles portátiles o rígidos monocristalinos con tasa de conversión de hasta el 23%.
+                    Alternativas portátiles, rígidas y flexibles con características que varían según el modelo y el entorno de instalación.
                   </p>
                 </div>
               </div>
@@ -360,7 +544,7 @@ export default function EcoFlowLanding() {
                 <div className="flow-step-body">
                   <h3 className="step-heading">Estaciones Portátiles</h3>
                   <p className="step-text">
-                    Baterías de química LiFePO4 de larga vida (hasta 3,500 ciclos) con recarga ultra-rápida X-Stream y gestión inteligente BMS.
+                    Estaciones compactas con tecnología de recarga rápida y baterías de larga vida útil, según el modelo y la configuración.
                   </p>
                 </div>
               </div>
@@ -465,6 +649,220 @@ export default function EcoFlowLanding() {
           </div>
         </section>
 
+        {/* 5.5 SELECTOR ORIENTATIVO ECOFLOW */}
+        <section className="ecoflow-selector-section" id="selector-ecoflow">
+          <div className="section-container">
+            <div className="section-header text-center">
+              <span className="section-eyebrow">SELECTOR ORIENTATIVO ECOFLOW</span>
+              <h2 className="section-title">
+                Identifica la familia de solución adecuada para tu necesidad.
+              </h2>
+              <p className="section-subtitle">
+                Responde 3 preguntas breves sobre tu entorno, tipo de carga y tiempo de uso para guiar tu elección. La recomendación final se valida siempre con un especialista vía WhatsApp.
+              </p>
+            </div>
+
+            <div className="selector-interactive-card">
+              {/* Stepper Header Nodes */}
+              <div className="selector-stepper-nav" aria-label="Pasos del selector">
+                {SELECTOR_STEPS.map((stepNode) => {
+                  const isCompleted =
+                    (stepNode.key === 'entorno' && Boolean(selectedEntorno)) ||
+                    (stepNode.key === 'carga' && Boolean(selectedCarga)) ||
+                    (stepNode.key === 'tiempo' && Boolean(selectedTiempo));
+                  const isCurrent = selectorStep === stepNode.id;
+
+                  return (
+                    <button
+                      key={stepNode.id}
+                      type="button"
+                      onClick={() => {
+                        if (isCompleted || isCurrent) {
+                          setSelectorStep(stepNode.id);
+                        }
+                      }}
+                      className={`stepper-node ${isCurrent ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
+                      aria-current={isCurrent ? 'step' : undefined}
+                      disabled={!isCompleted && !isCurrent && stepNode.id > selectorStep}
+                    >
+                      <span className="step-num-badge">
+                        {isCompleted && !isCurrent ? '✓' : stepNode.id}
+                      </span>
+                      <span className="step-node-title">{stepNode.nodeTitle}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Step Questions & Options OR Recommendation View */}
+              {selectorStep <= 3 ? (
+                <div className="selector-step-content">
+                  {(() => {
+                    const currentStepData = SELECTOR_STEPS.find((s) => s.id === selectorStep)!;
+                    const currentSelectedValue =
+                      currentStepData.key === 'entorno'
+                        ? selectedEntorno
+                        : currentStepData.key === 'carga'
+                        ? selectedCarga
+                        : selectedTiempo;
+
+                    const handleSelectOption = (optionId: string) => {
+                      if (currentStepData.key === 'entorno') setSelectedEntorno(optionId);
+                      if (currentStepData.key === 'carga') setSelectedCarga(optionId);
+                      if (currentStepData.key === 'tiempo') setSelectedTiempo(optionId);
+
+                      if (selectorStep < 3) {
+                        setSelectorStep(selectorStep + 1);
+                      } else {
+                        // Calculate final recommendation
+                        const ent = currentStepData.key === 'entorno' ? optionId : selectedEntorno;
+                        const car = currentStepData.key === 'carga' ? optionId : selectedCarga;
+                        const tie = currentStepData.key === 'tiempo' ? optionId : selectedTiempo;
+                        const rec = calculateRecommendation(ent, car, tie);
+                        setActiveRecommendation(rec.familyKey);
+                        setSelectorStep(4); // Move to recommendation view
+                      }
+                    };
+
+                    return (
+                      <div key={currentStepData.id} className="question-panel">
+                        <h3 className="question-title">{currentStepData.question}</h3>
+                        <div className="options-grid">
+                          {currentStepData.options.map((opt) => {
+                            const isSelected = currentSelectedValue === opt.id;
+                            return (
+                              <button
+                                key={opt.id}
+                                type="button"
+                                onClick={() => handleSelectOption(opt.id)}
+                                className={`option-card-btn ${isSelected ? 'selected' : ''}`}
+                                aria-pressed={isSelected}
+                              >
+                                <span className="option-radio-dot" />
+                                <span className="option-label-text">{opt.label}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Navigation Actions */}
+                        <div className="step-actions-bar">
+                          {selectorStep > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => setSelectorStep(selectorStep - 1)}
+                              className="btn btn-secondary btn-sm"
+                            >
+                              ← Paso anterior
+                            </button>
+                          )}
+                          {(Boolean(selectedEntorno) || Boolean(selectedCarga) || Boolean(selectedTiempo)) && (
+                            <button
+                              type="button"
+                              onClick={handleResetSelector}
+                              className="btn-text-reset"
+                            >
+                              Reiniciar
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              ) : (
+                /* Recommendation Step (Step 4) */
+                <div className="selector-result-panel">
+                  {(() => {
+                    const rec = calculateRecommendation(selectedEntorno, selectedCarga, selectedTiempo);
+
+                    const entornoObj = SELECTOR_STEPS[0].options.find((o) => o.id === selectedEntorno);
+                    const cargaObj = SELECTOR_STEPS[1].options.find((o) => o.id === selectedCarga);
+                    const tiempoObj = SELECTOR_STEPS[2].options.find((o) => o.id === selectedTiempo);
+
+                    const waUrl = getWhatsAppSelectorUrl(
+                      entornoObj?.label || selectedEntorno,
+                      cargaObj?.label || selectedCarga,
+                      tiempoObj?.label || selectedTiempo,
+                      rec.familyKey
+                    );
+
+                    return (
+                      <div className="recommendation-content">
+                        <div className="rec-header-bar">
+                          <span className={`rec-badge badge-${rec.familyKey.toLowerCase()}`}>
+                            {rec.badgeLabel}
+                          </span>
+                          <h3 className="rec-title">{rec.familyTitle}</h3>
+                          <p className="rec-reason">{rec.reason}</p>
+                        </div>
+
+                        <div className="rec-details-grid">
+                          <div className="rec-detail-card">
+                            <h4 className="card-subheading">Aspectos a confirmar con el especialista:</h4>
+                            <ul className="rec-bullet-list">
+                              {rec.factorsToConfirm.map((factor, idx) => (
+                                <li key={idx}>
+                                  <svg className="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                  <span>{factor}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="rec-detail-card">
+                            <h4 className="card-subheading">Posibles complementos sugeridos:</h4>
+                            <ul className="rec-bullet-list">
+                              {rec.possibleAddons.map((addon, idx) => (
+                                <li key={idx}>
+                                  <svg className="plus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                  <span>{addon}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+
+                        {/* Recommendation CTA Actions */}
+                        <div className="rec-actions-group">
+                          <a
+                            href={waUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-amber rec-primary-cta"
+                          >
+                            <span>Validar mi necesidad por WhatsApp</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="btn-icon">
+                              <line x1="5" y1="12" x2="19" y2="12"/>
+                              <polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                          </a>
+
+                          <a
+                            href="#familias-ecoflow"
+                            onClick={(e) => scrollToSection(e, 'familias-ecoflow')}
+                            className="btn btn-secondary rec-secondary-cta"
+                          >
+                            <span>Ver catálogo de soluciones</span>
+                          </a>
+
+                          <button
+                            type="button"
+                            onClick={handleResetSelector}
+                            className="btn-text-restart"
+                          >
+                            Cambiar mis respuestas
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
         {/* 6. FAMILIAS DE SOLUCIONES */}
         <section className="ecoflow-families-section" id="familias-ecoflow">
           <div className="section-container">
@@ -481,7 +879,10 @@ export default function EcoFlowLanding() {
             <div className="families-grid">
               
               {/* Family 1: RIVER */}
-              <div className="family-card">
+              <div 
+                className={`family-card ${activeRecommendation === 'RIVER' ? 'family-highlighted' : ''}`}
+                aria-current={activeRecommendation === 'RIVER' ? 'true' : undefined}
+              >
                 <div className="family-badge amber">SERIE RIVER</div>
                 <div className="family-media-box">
                   <img 
@@ -494,12 +895,12 @@ export default function EcoFlowLanding() {
                 <div className="family-content">
                   <h3 className="family-title">RIVER — Movilidad y cargas esenciales</h3>
                   <p className="family-desc">
-                    Soluciones compactas para iluminación, comunicaciones, computadoras, carga de equipos y trabajo móvil.
+                    Estaciones compactas con tecnología de recarga rápida y baterías de larga vida útil, según el modelo y la configuración.
                   </p>
                   <ul className="family-highlights">
-                    <li>Designación ultraligera para fácil transporte manual</li>
-                    <li>Recarga ultra-rápida de 0 a 100% en 60 minutos</li>
-                    <li>Baterías LFP con más de 3,000 ciclos de vida útil</li>
+                    <li>Formato compacto de fácil traslado manual</li>
+                    <li>Apropiado para iluminación, laptops y electrónica esencial</li>
+                    <li>Carga rápida e integración con paneles solares</li>
                   </ul>
                   <a 
                     href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CR Tech, deseo consultar una configuración con EcoFlow RIVER.')}`}
@@ -514,7 +915,10 @@ export default function EcoFlowLanding() {
               </div>
 
               {/* Family 2: DELTA */}
-              <div className="family-card featured-family">
+              <div 
+                className={`family-card featured-family ${activeRecommendation === 'DELTA' ? 'family-highlighted' : ''}`}
+                aria-current={activeRecommendation === 'DELTA' ? 'true' : undefined}
+              >
                 <div className="family-badge blue">SERIE DELTA</div>
                 <div className="family-media-box">
                   <img 
@@ -527,12 +931,12 @@ export default function EcoFlowLanding() {
                 <div className="family-content">
                   <h3 className="family-title">DELTA — Respaldo y mayor capacidad</h3>
                   <p className="family-desc">
-                    Estaciones diseñadas para herramientas, equipos profesionales, respaldo doméstico y operaciones con mayores exigencias de potencia.
+                    Soluciones de mayor capacidad con opciones de expansión y respaldo disponibles según el modelo.
                   </p>
                   <ul className="family-highlights">
-                    <li>Capacidad expandible mediante baterías inteligentes extra</li>
-                    <li>Inversor de onda senoidal pura de alto amperaje</li>
-                    <li>Conmutación rápida para respaldo automático de red</li>
+                    <li>Potencia para herramientas, refrigeración y respaldo</li>
+                    <li>Opciones de expansión de batería según el modelo</li>
+                    <li>Capacidad para responder a picos de consumo exigentes</li>
                   </ul>
                   <a 
                     href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CR Tech, deseo consultar una configuración con EcoFlow DELTA.')}`}
@@ -563,9 +967,9 @@ export default function EcoFlowLanding() {
                     Paneles, sistemas PowerStream y dispositivos complementarios para generar, administrar y aprovechar la energía de manera flexible.
                   </p>
                   <ul className="family-highlights">
-                    <li>Paneles solares plegables e impermeables IP68</li>
-                    <li>Inversores micro-grid PowerStream para autoconsumo</li>
-                    <li>Acondicionamiento y accesorios de integración</li>
+                    <li>Alternativas portátiles, rígidas y flexibles según el modelo y entorno</li>
+                    <li>Sistemas e inversores para autoconsumo y generación solar</li>
+                    <li>Accesorios de conexión, montajes y acondicionamiento</li>
                   </ul>
                   <a 
                     href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CR Tech, deseo consultar sobre paneles solares y ecosistema EcoFlow.')}`}
@@ -602,7 +1006,7 @@ export default function EcoFlowLanding() {
                 <div className="pillar-num">01</div>
                 <h3 className="pillar-title">X-Stream Technology</h3>
                 <p className="pillar-desc">
-                  Sistema de recarga directa desde la red de corriente alterna sin adaptadores pesados. Permite cargar la estación hasta un 80% en aproximadamente 50 minutos.
+                  Sistema de recarga rápida cuyo rendimiento varía según el modelo, la fuente de entrada y las condiciones de uso.
                 </p>
               </div>
 
@@ -610,7 +1014,7 @@ export default function EcoFlowLanding() {
                 <div className="pillar-num">02</div>
                 <h3 className="pillar-title">X-Boost Management</h3>
                 <p className="pillar-desc">
-                  Algoritmo inteligente de gestión de voltaje que permite alimentar cargas de alta demanda resistiva que superan la potencia salida nominal del equipo.
+                  Gestión inteligente que permite responder a determinadas cargas de mayor demanda, según la compatibilidad del equipo.
                 </p>
               </div>
 
@@ -618,7 +1022,7 @@ export default function EcoFlowLanding() {
                 <div className="pillar-num">03</div>
                 <h3 className="pillar-title">BMS (Battery Management System)</h3>
                 <p className="pillar-desc">
-                  Supervisión constante de voltaje, corriente y temperatura. Mantiene el balance dinámico de las celdas LiFePO4 garantizando una vida útil prolongada.
+                  El sistema de gestión de batería supervisa variables como voltaje, corriente y temperatura para mantener un funcionamiento controlado.
                 </p>
               </div>
 
@@ -626,14 +1030,14 @@ export default function EcoFlowLanding() {
                 <div className="pillar-num">04</div>
                 <h3 className="pillar-title">Aplicación EcoFlow</h3>
                 <p className="pillar-desc">
-                  Control remoto mediante Wi-Fi o Bluetooth para verificar niveles de consumo, ajustar velocidades de carga, automatizar salidas y monitorear la entrada solar.
+                  Permite consultar y controlar funciones compatibles mediante Wi-Fi o Bluetooth, según el modelo.
                 </p>
               </div>
 
             </div>
 
             <p className="tech-disclaimer text-center">
-              * Las funciones, compatibilidad y rendimiento varían según el modelo y la configuración seleccionada.
+              * Las características, autonomía, potencia, conectividad y tiempos de recarga dependen del modelo, los equipos conectados y la configuración seleccionada.
             </p>
           </div>
         </section>
@@ -730,7 +1134,10 @@ export default function EcoFlowLanding() {
 
               {/* Side Card: Direct Specialist Contact */}
               <div className="support-card-col">
-                <div className="specialist-contact-card">
+                <div 
+                  className={`specialist-contact-card ${activeRecommendation === 'PERSONALIZADA' ? 'family-highlighted' : ''}`}
+                  aria-current={activeRecommendation === 'PERSONALIZADA' ? 'true' : undefined}
+                >
                   <div className="card-badge">ASESORÍA OFICIAL</div>
                   <h3 className="card-heading">Cuéntanos qué necesitas mantener activo.</h3>
                   <p className="card-text">
@@ -813,6 +1220,7 @@ export default function EcoFlowLanding() {
               <h4 className="footer-col-title">EcoFlow Perú</h4>
               <ul className="footer-links">
                 <li><a href="#aplicaciones-ecoflow" onClick={(e) => scrollToSection(e, 'aplicaciones-ecoflow')}>Aplicaciones</a></li>
+                <li><a href="#selector-ecoflow" onClick={(e) => scrollToSection(e, 'selector-ecoflow')}>Selector Orientativo</a></li>
                 <li><a href="#familias-ecoflow" onClick={(e) => scrollToSection(e, 'familias-ecoflow')}>Soluciones</a></li>
                 <li><a href="#tecnologia-ecoflow" onClick={(e) => scrollToSection(e, 'tecnologia-ecoflow')}>Tecnología</a></li>
                 <li><a href="#soporte-ecoflow" onClick={(e) => scrollToSection(e, 'soporte-ecoflow')}>Soporte Local</a></li>
