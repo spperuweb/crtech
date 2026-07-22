@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Types for Diagnostic Data
 interface QuestionOption {
@@ -59,6 +63,9 @@ interface DiagnosticResult {
 }
 
 export default function ServiciosTILanding() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const stepCardRef = useRef<HTMLDivElement>(null);
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedArea, setSelectedArea] = useState<string>('Redes e infraestructura');
 
@@ -89,6 +96,288 @@ export default function ServiciosTILanding() {
       );
     }
   }, []);
+
+  // GSAP kinetic signature & scroll triggers
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        // 1. HERO TIMELINE & KINETIC TOPOLOGY SIGNATURE ("EL SISTEMA ENTRA EN OPERACIÓN")
+        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        heroTl
+          .fromTo('.hero-eyebrow-badge', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 })
+          .fromTo('.ti-hero-title', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55 }, '-=0.35')
+          .fromTo('.ti-hero-desc', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.35')
+          .fromTo('.ti-hero-ctas', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45 }, '-=0.3')
+          .fromTo('.ti-hero-trust-highlights .highlight-item', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06 }, '-=0.25')
+          .fromTo('.topology-card-wrapper', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
+          // Topology Kinetic Sequence: Central node -> Connections -> Subnodes -> Status Active
+          .fromTo('.topo-node-central', { opacity: 0 }, { opacity: 1, duration: 0.35 }, '-=0.2')
+          .fromTo('.topo-path', { opacity: 0 }, { opacity: 1, duration: 0.35, stagger: 0.06 }, '-=0.15')
+          .fromTo('.topo-node-red', { opacity: 0 }, { opacity: 1, duration: 0.25 }, '-=0.1')
+          .fromTo('.topo-node-equipos', { opacity: 0 }, { opacity: 1, duration: 0.25 }, '-=0.1')
+          .fromTo('.topo-node-soporte', { opacity: 0 }, { opacity: 1, duration: 0.25 }, '-=0.1')
+          .fromTo('.topo-node-seguridad', { opacity: 0 }, { opacity: 1, duration: 0.25 }, '-=0.1')
+          .fromTo('.topo-node-backup, .topo-path-backup', { opacity: 0 }, { opacity: 1, duration: 0.3 }, '-=0.1')
+          .fromTo('.topology-status-pill', { opacity: 0 }, { opacity: 1, duration: 0.3 }, '-=0.1');
+
+        // 2. FRANJA DE CONFIANZA
+        gsap.fromTo(
+          '.ti-trust-card',
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            stagger: 0.06,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '.ti-trust-strip',
+              start: 'top 85%',
+              once: true
+            }
+          }
+        );
+
+        // 3. CADENA DE DEPENDENCIAS (UNA FALLA AISLADA)
+        const probTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '.ti-problem-section',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        probTl
+          .fromTo('.ti-problem-section .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('.operativa-item, .operativa-arrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' }, '-=0.2');
+
+        // 4. DIAGNÓSTICO
+        gsap.fromTo(
+          '#diagnostico .diagnostico-wrapper',
+          { opacity: 0, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: '#diagnostico',
+              start: 'top 80%',
+              once: true
+            }
+          }
+        );
+
+        // 5. REDES E INFRAESTRUCTURA + DIAGRAMA DE RED
+        const redesTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#infraestructura',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        redesTl
+          .fromTo('#infraestructura .ti-col-info', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('#infraestructura .diagram-card', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.35')
+          .fromTo('#infraestructura .arch-step, #infraestructura .arch-arrow', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out' }, '-=0.2');
+
+        // 6. SOPORTE TI + RECORRIDO DE SOPORTE
+        const soporteTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#soporte',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        soporteTl
+          .fromTo('#soporte .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('#soporte .ti-col-info', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+          .fromTo('#soporte .process-step-item', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' }, '-=0.25');
+
+        // 7. VIDEOVIGILANCIA + FLUJO DE SEGURIDAD
+        const seguridadTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#seguridad',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        seguridadTl
+          .fromTo('#seguridad .ti-col-info', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('#seguridad .security-scheme-card', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.35')
+          .fromTo('#seguridad .scheme-box, #seguridad .scheme-arrow', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out' }, '-=0.2');
+
+        // 8. CONTINUIDAD + DIAGRAMA DE REDUNDANCIA
+        const contTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#continuidad',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        contTl
+          .fromTo('#continuidad .ti-col-info', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('#continuidad .redundancy-card', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.35')
+          .fromTo('#continuidad .node-main', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.2')
+          .fromTo('#continuidad .path-active, #continuidad .path-backup', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.08 }, '-=0.15')
+          .fromTo('#continuidad .node-reconnect', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.3 }, '-=0.1');
+
+        // 9. MAPA GENERAL DE CAPAS
+        const mapTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#soluciones',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        mapTl
+          .fromTo('#soluciones .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('.core-operacion-center', { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.1)' }, '-=0.2')
+          .fromTo('.ring-inner', { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.15')
+          .fromTo('.ring-mid-1', { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.15')
+          .fromTo('.ring-mid-2', { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.15')
+          .fromTo('.ring-outer', { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.15');
+
+        // 10. ESCENARIOS FRECUENTES
+        const escTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#escenarios',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        escTl
+          .fromTo('#escenarios .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('.escenario-cell', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, '-=0.25')
+          .fromTo('.escenarios-cta-wrap', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.15');
+
+        // 11. MÉTODO DE TRABAJO
+        const methodTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#metodo',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        methodTl
+          .fromTo('#metodo .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('.method-step-block', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' }, '-=0.25');
+
+        // 12. FAQ
+        const faqTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#faq',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        faqTl
+          .fromTo('#faq .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('.faq-item-card', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.05, ease: 'power2.out' }, '-=0.25');
+
+        // 13. CONTACTO DIRECTO
+        const asesoriaTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#asesoria',
+            start: 'top 80%',
+            once: true
+          }
+        });
+        asesoriaTl
+          .fromTo('#asesoria .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('.area-option-card', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' }, '-=0.25')
+          .fromTo('.asesoria-action-bar', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.15');
+
+        // 14. CTA FINAL
+        const ctaFinalTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '.ti-final-cta-section',
+            start: 'top 85%',
+            once: true
+          }
+        });
+        ctaFinalTl
+          .fromTo('.final-cta-title', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+          .fromTo('.final-cta-desc', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '-=0.3')
+          .fromTo('.final-cta-btn-wrap', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.25');
+      });
+
+      mm.add('(prefers-reduced-motion: reduce)', () => {
+        gsap.set(
+          [
+            '.hero-eyebrow-badge',
+            '.ti-hero-title',
+            '.ti-hero-desc',
+            '.ti-hero-ctas',
+            '.highlight-item',
+            '.topology-card-wrapper',
+            '.ti-trust-card',
+            '.operativa-item',
+            '.operativa-arrow',
+            '.diagnostico-wrapper',
+            '.diagram-card',
+            '.arch-step',
+            '.arch-arrow',
+            '.process-step-item',
+            '.security-scheme-card',
+            '.scheme-box',
+            '.scheme-arrow',
+            '.redundancy-card',
+            '.node-main',
+            '.path-active',
+            '.path-backup',
+            '.node-reconnect',
+            '.core-operacion-center',
+            '.ring-inner',
+            '.ring-mid-1',
+            '.ring-mid-2',
+            '.ring-outer',
+            '.escenario-cell',
+            '.escenarios-cta-wrap',
+            '.method-step-block',
+            '.faq-item-card',
+            '.area-option-card',
+            '.asesoria-action-bar',
+            '.final-cta-title',
+            '.final-cta-desc',
+            '.final-cta-btn-wrap'
+          ],
+          { opacity: 1, y: 0 }
+        );
+        gsap.set(
+          [
+            '.topo-node-central',
+            '.topo-path',
+            '.topo-node-sub',
+            '.topo-node-red',
+            '.topo-node-equipos',
+            '.topo-node-soporte',
+            '.topo-node-seguridad',
+            '.topo-node-backup',
+            '.topo-path-backup',
+            '.topology-status-pill'
+          ],
+          { opacity: 1 }
+        );
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Diagnostic Step transition microinteraction
+  useEffect(() => {
+    if (stepCardRef.current) {
+      gsap.killTweensOf(stepCardRef.current);
+      gsap.fromTo(
+        stepCardRef.current,
+        { opacity: 0, x: 8 },
+        { opacity: 1, x: 0, duration: 0.2, ease: 'power3.out' }
+      );
+    }
+  }, [diagStep]);
 
   const closeMenu = () => setMobileMenuOpen(false);
 
@@ -310,7 +599,7 @@ Quiero validar el alcance con un especialista.`;
   ];
 
   return (
-    <div className="servicios-ti-wrapper">
+    <div className="servicios-ti-wrapper" ref={containerRef}>
       {/* 1. HEADER SUBLANDING SERVICIOS TI */}
       <header className="servicios-ti-header sticky-header">
         <div className="header-container">
@@ -450,58 +739,70 @@ Quiero validar el alcance con un especialista.`;
                     <rect width="600" height="380" fill="url(#grid-pattern)" opacity="0.6" />
 
                     {/* Connecting paths */}
-                    <path d="M 110 90 Q 220 90 300 190" stroke="#0284C7" strokeWidth="2.5" fill="none" strokeDasharray="4 2" />
-                    <path d="M 490 90 Q 380 90 300 190" stroke="#7C3AED" strokeWidth="2.5" fill="none" />
-                    <path d="M 110 290 Q 220 290 300 190" stroke="#0284C7" strokeWidth="2.5" fill="none" />
-                    <path d="M 490 290 Q 380 290 300 190" stroke="#10B981" strokeWidth="2.5" fill="none" />
+                    <path className="topo-path" d="M 110 90 Q 220 90 300 190" stroke="#0284C7" strokeWidth="2.5" fill="none" strokeDasharray="4 2" />
+                    <path className="topo-path" d="M 490 90 Q 380 90 300 190" stroke="#7C3AED" strokeWidth="2.5" fill="none" />
+                    <path className="topo-path" d="M 110 290 Q 220 290 300 190" stroke="#0284C7" strokeWidth="2.5" fill="none" />
+                    <path className="topo-path" d="M 490 290 Q 380 290 300 190" stroke="#10B981" strokeWidth="2.5" fill="none" />
 
                     {/* Alert / Failover line */}
-                    <path d="M 300 190 L 300 330" stroke="#94A3B8" strokeWidth="2" strokeDasharray="4 4" />
+                    <path className="topo-path-backup" d="M 300 190 L 300 330" stroke="#94A3B8" strokeWidth="2" strokeDasharray="4 4" />
 
                     {/* Central Node: OPERACIÓN */}
                     <g transform="translate(300, 190)">
-                      <circle r="48" fill="#06142D" />
-                      <circle r="42" fill="#0B192C" stroke="#0284C7" strokeWidth="2" />
-                      <circle r="6" fill="#10B981" cy="-22" />
-                      <text x="0" y="2" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="800" letterSpacing="0.05em">OPERACIÓN</text>
-                      <text x="0" y="16" textAnchor="middle" fill="#94A3B8" fontSize="9" fontWeight="600">CENTRAL</text>
+                      <g className="topo-node-central">
+                        <circle r="48" fill="#06142D" />
+                        <circle r="42" fill="#0B192C" stroke="#0284C7" strokeWidth="2" />
+                        <circle r="6" fill="#10B981" cy="-22" />
+                        <text x="0" y="2" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="800" letterSpacing="0.05em">OPERACIÓN</text>
+                        <text x="0" y="16" textAnchor="middle" fill="#94A3B8" fontSize="9" fontWeight="600">CENTRAL</text>
+                      </g>
                     </g>
 
                     {/* Node 1: RED & CONECTIVIDAD */}
                     <g transform="translate(110, 90)">
-                      <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#0284C7" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(2,132,199,0.08))" />
-                      <circle cx="-38" cy="0" r="12" fill="#F0F9FF" />
-                      <path d="M -42 -4 L -34 4 M -42 4 L -34 -4" stroke="#0284C7" strokeWidth="2" />
-                      <text x="10" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">RED & ENLACES</text>
-                      <text x="10" y="10" textAnchor="middle" fill="#0284C7" fontSize="9" fontWeight="700">Conectividad</text>
+                      <g className="topo-node-sub topo-node-red">
+                        <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#0284C7" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(2,132,199,0.08))" />
+                        <circle cx="-38" cy="0" r="12" fill="#F0F9FF" />
+                        <path d="M -42 -4 L -34 4 M -42 4 L -34 -4" stroke="#0284C7" strokeWidth="2" />
+                        <text x="10" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">RED & ENLACES</text>
+                        <text x="10" y="10" textAnchor="middle" fill="#0284C7" fontSize="9" fontWeight="700">Conectividad</text>
+                      </g>
                     </g>
 
                     {/* Node 2: EQUIPOS & USUARIOS */}
                     <g transform="translate(490, 90)">
-                      <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#7C3AED" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(124,58,237,0.08))" />
-                      <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">EQUIPOS TI</text>
-                      <text x="0" y="10" textAnchor="middle" fill="#7C3AED" fontSize="9" fontWeight="700">Estaciones</text>
+                      <g className="topo-node-sub topo-node-equipos">
+                        <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#7C3AED" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(124,58,237,0.08))" />
+                        <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">EQUIPOS TI</text>
+                        <text x="0" y="10" textAnchor="middle" fill="#7C3AED" fontSize="9" fontWeight="700">Estaciones</text>
+                      </g>
                     </g>
 
                     {/* Node 3: SOPORTE TÉCNICO */}
                     <g transform="translate(110, 290)">
-                      <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#0284C7" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(2,132,199,0.08))" />
-                      <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">SOPORTE</text>
-                      <text x="0" y="10" textAnchor="middle" fill="#0284C7" fontSize="9" fontWeight="700">Mantenimiento</text>
+                      <g className="topo-node-sub topo-node-soporte">
+                        <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#0284C7" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(2,132,199,0.08))" />
+                        <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">SOPORTE</text>
+                        <text x="0" y="10" textAnchor="middle" fill="#0284C7" fontSize="9" fontWeight="700">Mantenimiento</text>
+                      </g>
                     </g>
 
                     {/* Node 4: VIDEOVIGILANCIA */}
                     <g transform="translate(490, 290)">
-                      <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#10B981" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(16,185,129,0.08))" />
-                      <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">SEGURIDAD</text>
-                      <text x="0" y="10" textAnchor="middle" fill="#10B981" fontSize="9" fontWeight="700">Monitoreo</text>
+                      <g className="topo-node-sub topo-node-seguridad">
+                        <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#10B981" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(16,185,129,0.08))" />
+                        <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">SEGURIDAD</text>
+                        <text x="0" y="10" textAnchor="middle" fill="#10B981" fontSize="9" fontWeight="700">Monitoreo</text>
+                      </g>
                     </g>
 
                     {/* Respaldo */}
                     <g transform="translate(300, 335)">
-                      <rect x="-70" y="-14" width="140" height="28" rx="14" fill="#FEF2F2" stroke="#FECDD3" strokeWidth="1" />
-                      <circle cx="-52" cy="0" r="4" fill="#EF4444" />
-                      <text x="6" y="4" textAnchor="middle" fill="#991B1B" fontSize="9" fontWeight="700">RESPALDO & RESPUESTA</text>
+                      <g className="topo-node-backup">
+                        <rect x="-70" y="-14" width="140" height="28" rx="14" fill="#FEF2F2" stroke="#FECDD3" strokeWidth="1" />
+                        <circle cx="-52" cy="0" r="4" fill="#EF4444" />
+                        <text x="6" y="4" textAnchor="middle" fill="#991B1B" fontSize="9" fontWeight="700">RESPALDO & RESPUESTA</text>
+                      </g>
                     </g>
                   </svg>
                 </div>
@@ -626,7 +927,7 @@ Quiero validar el alcance con un especialista.`;
                 </p>
               </div>
 
-              <div className="diagnostico-interactive-card">
+              <div className="diagnostico-interactive-card" ref={stepCardRef}>
                 {/* Header bar showing step progress */}
                 <div className="diag-progress-bar">
                   <div className="diag-step-indicator">
@@ -639,7 +940,10 @@ Quiero validar el alcance con un especialista.`;
                   <div className="diag-track">
                     <div 
                       className="diag-fill" 
-                      style={{ width: `${diagStep === 4 ? 100 : (diagStep / 3) * 100}%` }}
+                      style={{ 
+                        transform: `scaleX(${diagStep === 4 ? 1 : diagStep / 3})`,
+                        transformOrigin: 'left center'
+                      }}
                     ></div>
                   </div>
                 </div>

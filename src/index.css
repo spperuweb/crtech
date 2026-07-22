@@ -5274,6 +5274,7 @@ a {
 .nav-link-return {
   color: #0284C7 !important;
   font-weight: 600 !important;
+  white-space: nowrap;
 }
 
 /* Hero Section */
@@ -6418,8 +6419,9 @@ a {
 
 .diag-fill {
   height: 100%;
+  width: 100%;
   background-color: #0284C7;
-  transition: width 300ms ease;
+  transition: transform 300ms ease;
 }
 
 .diag-fieldset {
