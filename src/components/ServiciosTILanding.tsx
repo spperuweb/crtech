@@ -1,9 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import { assets } from '../data/assets';
 
+// Types for Diagnostic Data
+interface QuestionOption {
+  id: string;
+  label: string;
+}
+
+interface Question {
+  id: 'necesidad' | 'entorno' | 'estado';
+  title: string;
+  options: QuestionOption[];
+}
+
+const DIAGNOSTIC_QUESTIONS: Question[] = [
+  {
+    id: 'necesidad',
+    title: '¿Qué situación necesitas revisar?',
+    options: [
+      { id: 'red_inestable', label: 'La red o conexión es inestable.' },
+      { id: 'equipos_fallas', label: 'Los equipos presentan fallas recurrentes.' },
+      { id: 'videovigilancia', label: 'Necesito implementar o mejorar videovigilancia.' },
+      { id: 'respaldos', label: 'Me preocupan respaldos y continuidad.' },
+      { id: 'toda_infra', label: 'Necesito evaluar toda la infraestructura.' },
+      { id: 'sin_identificar', label: 'Todavía no identifico la causa.' }
+    ]
+  },
+  {
+    id: 'entorno',
+    title: '¿En qué entorno se encuentra la infraestructura?',
+    options: [
+      { id: 'oficina', label: 'Oficina o pequeño negocio.' },
+      { id: 'local_comercial', label: 'Local comercial.' },
+      { id: 'almacen_taller', label: 'Almacén, taller o instalación operativa.' },
+      { id: 'institucion', label: 'Institución educativa o administrativa.' },
+      { id: 'varias_sedes', label: 'Varias sedes.' },
+      { id: 'otro_entorno', label: 'Otro entorno.' }
+    ]
+  },
+  {
+    id: 'estado',
+    title: '¿Cuál describe mejor la situación?',
+    options: [
+      { id: 'planificando', label: 'Estoy planificando un proyecto.' },
+      { id: 'problemas_recurrentes', label: 'Existen problemas recurrentes.' },
+      { id: 'actualizar', label: 'Necesito actualizar una instalación existente.' },
+      { id: 'incidencia_activa', label: 'Hay una incidencia activa.' },
+      { id: 'mantenimiento_prev', label: 'Necesito mantenimiento preventivo.' },
+      { id: 'definiendo_alcance', label: 'Todavía estoy definiendo el alcance.' }
+    ]
+  }
+];
+
+interface DiagnosticResult {
+  areaSugerida: string;
+  motivo: string;
+  preparar: string[];
+}
+
 export default function ServiciosTILanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedArea, setSelectedArea] = useState<string>('Redes e infraestructura');
+
+  // Diagnostic state
+  const [diagStep, setDiagStep] = useState<number>(1); // 1, 2, 3 or 4 (result)
+  const [diagAnswers, setDiagAnswers] = useState<{
+    necesidad: string;
+    entorno: string;
+    estado: string;
+  }>({
+    necesidad: '',
+    entorno: '',
+    estado: ''
+  });
+
+  // FAQ state (accordion)
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   useEffect(() => {
     // SEO setup for Servicios TI sublanding page
@@ -29,13 +101,137 @@ export default function ServiciosTILanding() {
     }
   };
 
-  // WhatsApp link construction with dynamic area of interest
+  // WhatsApp link construction for quick direct contact selector
   const buildWhatsappUrl = (area: string) => {
     const text = `Hola CR Tech, quiero solicitar una evaluación de Servicios TI.\n\nÁrea de interés: ${area}\n\nNecesito orientación para definir el alcance del proyecto.`;
     return `https://wa.me/51991664146?text=${encodeURIComponent(text)}`;
   };
 
   const defaultWhatsappUrl = 'https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20quiero%20evaluar%20la%20infraestructura%20TI%20de%20mi%20empresa.';
+
+  // Diagnostic logic calculate recommendation
+  const calculateResult = (): DiagnosticResult => {
+    const { necesidad, entorno, estado } = diagAnswers;
+
+    // Rule 1: Evaluación Integral
+    if (
+      necesidad === 'Necesito evaluar toda la infraestructura.' ||
+      necesidad === 'Todavía no identifico la causa.' ||
+      entorno === 'Varias sedes.' ||
+      estado === 'Todavía estoy definiendo el alcance.'
+    ) {
+      return {
+        areaSugerida: 'Evaluación Integral de Infraestructura',
+        motivo: 'Tu situación involucra diferentes capas de la operación (o requiere priorización). Una evaluación integral permitirá distinguir qué parte corresponde a conectividad, equipos, seguridad o continuidad.',
+        preparar: [
+          'Cantidad aproximada de usuarios y estaciones.',
+          'Número de sedes o espacios involucrados.',
+          'Descripción general de los problemas o metas.',
+          'Equipos existentes (routers, servidores, cámaras).',
+          'Horarios u momentos en que ocurren interrupciones.'
+        ]
+      };
+    }
+
+    // Rule 2: Redes e Infraestructura
+    if (necesidad === 'La red o conexión es inestable.' || estado === 'Estoy planificando un proyecto.') {
+      return {
+        areaSugerida: 'Redes e Infraestructura',
+        motivo: 'Conviene comenzar con una evaluación de redes e infraestructura para revisar distribución física, cableado, enlaces, equipos de comunicación y puntos críticos de estabilidad.',
+        preparar: [
+          'Cantidad de dispositivos o usuarios conectados.',
+          'Distribución del espacio (oficinas, almacén, niveles).',
+          'Proveedor actual de internet y ancho de banda.',
+          'Planos o croquis del área (si están disponibles).'
+        ]
+      };
+    }
+
+    // Rule 3: Soporte TI
+    if (
+      necesidad === 'Los equipos presentan fallas recurrentes.' ||
+      estado === 'Necesito mantenimiento preventivo.' ||
+      estado === 'Hay una incidencia activa.'
+    ) {
+      return {
+        areaSugerida: 'Soporte TI y Mantenimiento',
+        motivo: 'Conviene comenzar con un diagnóstico de soporte TI para identificar la causa raíz de las fallas, definir prioridades de intervención y establecer acciones de mantenimiento.',
+        preparar: [
+          'Cantidad y tipo de equipos afectados (laptops, PCs, servidores).',
+          'Síntomas o fallas principales observadas.',
+          'Antigüedad aproximada de los equipos.',
+          'Averías o reemplazos previos realizados.'
+        ]
+      };
+    }
+
+    // Rule 4: Videovigilancia y Seguridad
+    if (necesidad === 'Necesito implementar o mejorar videovigilancia.') {
+      return {
+        areaSugerida: 'Videovigilancia y Seguridad',
+        motivo: 'Conviene comenzar con una evaluación de videovigilancia para revisar puntos de cobertura, ángulos de visión, cableado/red de transmisión, monitoreo y capacidad de almacenamiento.',
+        preparar: [
+          'Zonas prioritarias a monitorear (accesos, almacenes, exterior).',
+          'Cámaras existentes (si aplica) y grabador (NVR/DVR).',
+          'Requerimientos de acceso remoto o centro de control.',
+          'Días de almacenamiento deseados.'
+        ]
+      };
+    }
+
+    // Rule 5: Continuidad y Respaldos
+    if (necesidad === 'Me preocupan respaldos y continuidad.') {
+      return {
+        areaSugerida: 'Continuidad y Respaldos',
+        motivo: 'Conviene comenzar identificando configuraciones, copias de seguridad existentes y dependencias críticas para definir un alcance de continuidad operativa.',
+        preparar: [
+          'Sistemas o archivos indispensables para operar.',
+          'Métodos de respaldo actuales (si existen).',
+          'Puntos de falla conocidos en la conectividad.',
+          'Acceso a contraseñas y documentación de red.'
+        ]
+      };
+    }
+
+    // Default Fallback
+    return {
+      areaSugerida: 'Redes e Infraestructura',
+      motivo: 'Conviene comenzar con una revisión de la infraestructura base para asegurar la conectividad y disponibilidad de tus operaciones.',
+      preparar: [
+        'Cantidad aproximada de usuarios.',
+        'Número de sedes o espacios.',
+        'Descripción del problema o requerimiento.'
+      ]
+    };
+  };
+
+  const buildDiagnosticWhatsappUrl = () => {
+    const result = calculateResult();
+    const text = `Hola CR Tech, completé el diagnóstico orientativo de Servicios TI.
+
+Necesidad principal: ${diagAnswers.necesidad || 'No especificado'}
+Tipo de entorno: ${diagAnswers.entorno || 'No especificado'}
+Estado actual: ${diagAnswers.estado || 'No especificado'}
+Área sugerida para comenzar: ${result.areaSugerida}
+
+Quiero validar el alcance con un especialista.`;
+
+    return `https://wa.me/51991664146?text=${encodeURIComponent(text)}`;
+  };
+
+  const handleOptionSelect = (questionId: 'necesidad' | 'entorno' | 'estado', optionLabel: string) => {
+    setDiagAnswers(prev => ({ ...prev, [questionId]: optionLabel }));
+    if (diagStep < 3) {
+      setDiagStep(prev => prev + 1);
+    } else {
+      setDiagStep(4); // Move to result
+    }
+  };
+
+  const handleResetDiagnostic = () => {
+    setDiagStep(1);
+    setDiagAnswers({ necesidad: '', entorno: '', estado: '' });
+  };
 
   const areaOptions = [
     {
@@ -86,6 +282,33 @@ export default function ServiciosTILanding() {
     }
   ];
 
+  const faqItems = [
+    {
+      q: '¿Pueden revisar una infraestructura que ya está instalada?',
+      a: 'Sí. La evaluación inicial permite identificar el estado de la instalación existente y definir qué elementos pueden conservarse, reorganizarse o actualizarse.'
+    },
+    {
+      q: '¿El servicio puede ser remoto o presencial?',
+      a: 'Depende del diagnóstico, la ubicación y el tipo de incidencia. Algunas revisiones pueden comenzar de forma remota y otras requieren una visita técnica.'
+    },
+    {
+      q: '¿CR Tech suministra también los equipos?',
+      a: 'El alcance puede incluir suministro, configuración e instalación de equipos, según las necesidades y la propuesta aprobada.'
+    },
+    {
+      q: '¿Trabajan redes y videovigilancia dentro del mismo proyecto?',
+      a: 'Sí, cuando el alcance lo requiere pueden evaluarse como partes relacionadas de la infraestructura.'
+    },
+    {
+      q: '¿Realizan mantenimiento preventivo?',
+      a: 'Puede definirse un alcance de mantenimiento según los equipos, la infraestructura y la frecuencia acordada.'
+    },
+    {
+      q: '¿Qué información se necesita para cotizar?',
+      a: 'Conviene conocer la ubicación, cantidad de usuarios, espacios involucrados, equipos existentes y objetivo del proyecto. Una evaluación permite precisar el alcance.'
+    }
+  ];
+
   return (
     <div className="servicios-ti-wrapper">
       {/* 1. HEADER SUBLANDING SERVICIOS TI */}
@@ -105,10 +328,11 @@ export default function ServiciosTILanding() {
           </div>
 
           <nav className="desktop-nav" aria-label="Navegación Servicios TI">
-            <a href="#soluciones" onClick={(e) => scrollToSection(e, 'soluciones')} className="nav-link">Soluciones</a>
+            <a href="#diagnostico" onClick={(e) => scrollToSection(e, 'diagnostico')} className="nav-link">Diagnóstico</a>
             <a href="#infraestructura" onClick={(e) => scrollToSection(e, 'infraestructura')} className="nav-link">Infraestructura</a>
-            <a href="#metodo" onClick={(e) => scrollToSection(e, 'metodo')} className="nav-link">Método</a>
             <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="nav-link">Soporte</a>
+            <a href="#escenarios" onClick={(e) => scrollToSection(e, 'escenarios')} className="nav-link">Escenarios</a>
+            <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="nav-link">FAQ</a>
             <a href="#" className="nav-link nav-link-return">← Volver a CRTech</a>
           </nav>
 
@@ -138,10 +362,11 @@ export default function ServiciosTILanding() {
 
         <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'active' : ''}`}>
           <nav className="mobile-nav" aria-label="Navegación móvil Servicios TI">
-            <a href="#soluciones" onClick={(e) => scrollToSection(e, 'soluciones')} className="mobile-nav-link">Soluciones</a>
+            <a href="#diagnostico" onClick={(e) => scrollToSection(e, 'diagnostico')} className="mobile-nav-link">Diagnóstico</a>
             <a href="#infraestructura" onClick={(e) => scrollToSection(e, 'infraestructura')} className="mobile-nav-link">Infraestructura</a>
-            <a href="#metodo" onClick={(e) => scrollToSection(e, 'metodo')} className="mobile-nav-link">Método</a>
             <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="mobile-nav-link">Soporte</a>
+            <a href="#escenarios" onClick={(e) => scrollToSection(e, 'escenarios')} className="mobile-nav-link">Escenarios</a>
+            <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="mobile-nav-link">FAQ</a>
             <a href="#" onClick={closeMenu} className="mobile-nav-link">← Volver a CRTech Principal</a>
             <a 
               href={defaultWhatsappUrl} 
@@ -171,8 +396,8 @@ export default function ServiciosTILanding() {
 
               <div className="ti-hero-ctas">
                 <a 
-                  href="#asesoria" 
-                  onClick={(e) => scrollToSection(e, 'asesoria')} 
+                  href="#diagnostico" 
+                  onClick={(e) => scrollToSection(e, 'diagnostico')} 
                   className="btn btn-primary"
                 >
                   Evaluar mi infraestructura
@@ -225,16 +450,12 @@ export default function ServiciosTILanding() {
                     <rect width="600" height="380" fill="url(#grid-pattern)" opacity="0.6" />
 
                     {/* Connecting paths */}
-                    {/* Path 1: Red -> Operación */}
                     <path d="M 110 90 Q 220 90 300 190" stroke="#0284C7" strokeWidth="2.5" fill="none" strokeDasharray="4 2" />
-                    {/* Path 2: Equipos -> Operación */}
                     <path d="M 490 90 Q 380 90 300 190" stroke="#7C3AED" strokeWidth="2.5" fill="none" />
-                    {/* Path 3: Soporte -> Operación */}
                     <path d="M 110 290 Q 220 290 300 190" stroke="#0284C7" strokeWidth="2.5" fill="none" />
-                    {/* Path 4: Seguridad -> Operación */}
                     <path d="M 490 290 Q 380 290 300 190" stroke="#10B981" strokeWidth="2.5" fill="none" />
 
-                    {/* Alert / Failover line (Red alert indicator) */}
+                    {/* Alert / Failover line */}
                     <path d="M 300 190 L 300 330" stroke="#94A3B8" strokeWidth="2" strokeDasharray="4 4" />
 
                     {/* Central Node: OPERACIÓN */}
@@ -246,7 +467,7 @@ export default function ServiciosTILanding() {
                       <text x="0" y="16" textAnchor="middle" fill="#94A3B8" fontSize="9" fontWeight="600">CENTRAL</text>
                     </g>
 
-                    {/* Node 1: RED & CONECTIVIDAD (Top-Left) */}
+                    {/* Node 1: RED & CONECTIVIDAD */}
                     <g transform="translate(110, 90)">
                       <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#0284C7" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(2,132,199,0.08))" />
                       <circle cx="-38" cy="0" r="12" fill="#F0F9FF" />
@@ -255,28 +476,28 @@ export default function ServiciosTILanding() {
                       <text x="10" y="10" textAnchor="middle" fill="#0284C7" fontSize="9" fontWeight="700">Conectividad</text>
                     </g>
 
-                    {/* Node 2: EQUIPOS & USUARIOS (Top-Right) */}
+                    {/* Node 2: EQUIPOS & USUARIOS */}
                     <g transform="translate(490, 90)">
                       <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#7C3AED" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(124,58,237,0.08))" />
                       <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">EQUIPOS TI</text>
                       <text x="0" y="10" textAnchor="middle" fill="#7C3AED" fontSize="9" fontWeight="700">Estaciones</text>
                     </g>
 
-                    {/* Node 3: SOPORTE TÉCNICO (Bottom-Left) */}
+                    {/* Node 3: SOPORTE TÉCNICO */}
                     <g transform="translate(110, 290)">
                       <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#0284C7" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(2,132,199,0.08))" />
                       <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">SOPORTE</text>
                       <text x="0" y="10" textAnchor="middle" fill="#0284C7" fontSize="9" fontWeight="700">Mantenimiento</text>
                     </g>
 
-                    {/* Node 4: VIDEOVIGILANCIA (Bottom-Right) */}
+                    {/* Node 4: VIDEOVIGILANCIA */}
                     <g transform="translate(490, 290)">
                       <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#10B981" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(16,185,129,0.08))" />
                       <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">SEGURIDAD</text>
                       <text x="0" y="10" textAnchor="middle" fill="#10B981" fontSize="9" fontWeight="700">Monitoreo</text>
                     </g>
 
-                    {/* Discrete Alert Indicator (Red status indicator) for Failover */}
+                    {/* Respaldo */}
                     <g transform="translate(300, 335)">
                       <rect x="-70" y="-14" width="140" height="28" rx="14" fill="#FEF2F2" stroke="#FECDD3" strokeWidth="1" />
                       <circle cx="-52" cy="0" r="4" fill="#EF4444" />
@@ -327,7 +548,7 @@ export default function ServiciosTILanding() {
           </div>
         </section>
 
-        {/* 4. PROBLEMA OPERATIVO */}
+        {/* 4. PROBLEMA OPERATIVO - LÍNEA OPERATIVA CONECTADA */}
         <section className="ti-problem-section">
           <div className="section-container">
             <div className="section-header center">
@@ -338,54 +559,175 @@ export default function ServiciosTILanding() {
               </p>
             </div>
 
-            {/* Banda Editorial de Continuidad Operativa */}
-            <div className="operational-flow-band">
-              <div className="flow-band-item">
-                <div className="flow-node-badge badge-blue">01</div>
-                <h3 className="flow-item-title">Conectividad</h3>
-                <p className="flow-item-desc">Enlaces, conmutación y tráfico de datos continuo entre áreas.</p>
+            {/* Línea Operativa Conectada (Conectividad -> Equipos -> Seguridad -> Continuidad) */}
+            <div className="connected-operativa-line">
+              <div className="operativa-item">
+                <div className="operativa-node-header">
+                  <span className="operativa-badge badge-blue">01</span>
+                  <h3 className="operativa-item-title">Conectividad</h3>
+                </div>
+                <p className="operativa-item-desc">Enlaces, conmutación y tráfico de datos continuo entre áreas y sedes.</p>
               </div>
 
-              <div className="flow-band-connector">
-                <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h30M27 5l8 7-8 7" />
+              <div className="operativa-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </div>
 
-              <div className="flow-band-item">
-                <div className="flow-node-badge badge-violet">02</div>
-                <h3 className="flow-item-title">Equipos</h3>
-                <p className="flow-item-desc">Estaciones de trabajo y dispositivos configurados en estado óptimo.</p>
+              <div className="operativa-item">
+                <div className="operativa-node-header">
+                  <span className="operativa-badge badge-violet">02</span>
+                  <h3 className="operativa-item-title">Equipos</h3>
+                </div>
+                <p className="operativa-item-desc">Estaciones de trabajo y dispositivos configurados en estado óptimo.</p>
               </div>
 
-              <div className="flow-band-connector">
-                <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h30M27 5l8 7-8 7" />
+              <div className="operativa-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </div>
 
-              <div className="flow-band-item">
-                <div className="flow-node-badge badge-green">03</div>
-                <h3 className="flow-item-title">Seguridad</h3>
-                <p className="flow-item-desc">Protección física, videovigilancia y resguardo perimetral.</p>
+              <div className="operativa-item">
+                <div className="operativa-node-header">
+                  <span className="operativa-badge badge-green">03</span>
+                  <h3 className="operativa-item-title">Seguridad</h3>
+                </div>
+                <p className="operativa-item-desc">Protección física, videovigilancia y resguardo perimetral de accesos.</p>
               </div>
 
-              <div className="flow-band-connector">
-                <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h30M27 5l8 7-8 7" />
+              <div className="operativa-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </div>
 
-              <div className="flow-band-item">
-                <div className="flow-node-badge badge-amber">04</div>
-                <h3 className="flow-item-title">Continuidad</h3>
-                <p className="flow-item-desc">Respaldos estructurados y pronta recuperación ante incidencias.</p>
+              <div className="operativa-item">
+                <div className="operativa-node-header">
+                  <span className="operativa-badge badge-amber">04</span>
+                  <h3 className="operativa-item-title">Continuidad</h3>
+                </div>
+                <p className="operativa-item-desc">Respaldos estructurados y pronta recuperación ante incidencias.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 5. REDES E INFRAESTRUCTURA */}
+        {/* 5. DIAGNÓSTICO INTERACTIVO (NUEVA SECCIÓN FASE 7B) */}
+        <section className="ti-diagnostico-section" id="diagnostico">
+          <div className="section-container">
+            <div className="diagnostico-wrapper">
+              <div className="section-header center">
+                <span className="section-eyebrow">DIAGNÓSTICO ORIENTATIVO</span>
+                <h2 className="section-title">Identifica dónde puede comenzar la evaluación.</h2>
+                <p className="section-desc max-w-2xl">
+                  Responde tres preguntas sobre la situación actual de tu operación. La orientación final será validada por un especialista de CR Tech.
+                </p>
+              </div>
+
+              <div className="diagnostico-interactive-card">
+                {/* Header bar showing step progress */}
+                <div className="diag-progress-bar">
+                  <div className="diag-step-indicator">
+                    {diagStep <= 3 ? (
+                      <span>PASO <strong>{diagStep}</strong> DE <strong>3</strong></span>
+                    ) : (
+                      <span className="text-success font-bold">ORIENTACIÓN SUGERIDA</span>
+                    )}
+                  </div>
+                  <div className="diag-track">
+                    <div 
+                      className="diag-fill" 
+                      style={{ width: `${diagStep === 4 ? 100 : (diagStep / 3) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                {/* STEPS 1 - 3 */}
+                {diagStep <= 3 && (
+                  <fieldset className="diag-fieldset">
+                    <legend className="diag-question-title">
+                      {DIAGNOSTIC_QUESTIONS[diagStep - 1].title}
+                    </legend>
+
+                    <div className="diag-options-grid">
+                      {DIAGNOSTIC_QUESTIONS[diagStep - 1].options.map((opt) => {
+                        const currentQId = DIAGNOSTIC_QUESTIONS[diagStep - 1].id;
+                        const isSelected = diagAnswers[currentQId] === opt.label;
+
+                        return (
+                          <button
+                            key={opt.id}
+                            type="button"
+                            className={`diag-option-btn ${isSelected ? 'selected' : ''}`}
+                            onClick={() => handleOptionSelect(currentQId, opt.label)}
+                          >
+                            <span className="diag-radio-circle"></span>
+                            <span className="diag-option-text">{opt.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="diag-nav-actions">
+                      {diagStep > 1 && (
+                        <button 
+                          type="button" 
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => setDiagStep(prev => prev - 1)}
+                        >
+                          ← Paso anterior
+                        </button>
+                      )}
+                    </div>
+                  </fieldset>
+                )}
+
+                {/* STEP 4: RESULT SCREEN */}
+                {diagStep === 4 && (
+                  <div className="diag-result-container" aria-live="polite">
+                    <div className="result-header">
+                      <span className="result-badge-tag">ÁREA RECOMENDADA PARA COMENZAR</span>
+                      <h3 className="result-area-title">{calculateResult().areaSugerida}</h3>
+                      <p className="result-motivo">{calculateResult().motivo}</p>
+                    </div>
+
+                    <div className="result-prepare-box">
+                      <h4 className="prepare-box-title">Información útil para preparar la evaluación:</h4>
+                      <ul className="prepare-items-list">
+                        {calculateResult().preparar.map((item, idx) => (
+                          <li key={idx}><span className="prep-bullet">•</span> {item}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="result-actions-bar">
+                      <a 
+                        href={buildDiagnosticWhatsappUrl()} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="btn btn-primary btn-lg"
+                      >
+                        Solicitar evaluación por WhatsApp
+                      </a>
+
+                      <button 
+                        type="button" 
+                        className="btn btn-secondary"
+                        onClick={handleResetDiagnostic}
+                      >
+                        Cambiar respuestas
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 6. REDES E INFRAESTRUCTURA */}
         <section className="ti-solution-section" id="infraestructura">
           <div className="section-container">
             <div className="ti-two-col-grid">
@@ -418,7 +760,7 @@ export default function ServiciosTILanding() {
               <div className="ti-col-diagram">
                 <div className="diagram-card">
                   <div className="diagram-header">
-                    <span className="diagram-title">ARQUITECTURA DE RED DE DATO</span>
+                    <span className="diagram-title">ARQUITECTURA DE RED DE DATOS</span>
                   </div>
                   <div className="arch-diagram-flow">
                     <div className="arch-step">
@@ -447,7 +789,7 @@ export default function ServiciosTILanding() {
           </div>
         </section>
 
-        {/* 6. SOPORTE TI CONTINUO */}
+        {/* 7. SOPORTE TI CONTINUO */}
         <section className="ti-solution-section bg-alt" id="soporte">
           <div className="section-container">
             <div className="section-header">
@@ -520,7 +862,7 @@ export default function ServiciosTILanding() {
           </div>
         </section>
 
-        {/* 7. VIDEOVIGILANCIA Y SEGURIDAD */}
+        {/* 8. VIDEOVIGILANCIA Y SEGURIDAD */}
         <section className="ti-solution-section" id="seguridad">
           <div className="section-container">
             <div className="ti-two-col-grid">
@@ -584,7 +926,7 @@ export default function ServiciosTILanding() {
           </div>
         </section>
 
-        {/* 8. CONTINUIDAD Y RESPALDO */}
+        {/* 9. CONTINUIDAD Y RESPALDO */}
         <section className="ti-solution-section bg-alt" id="continuidad">
           <div className="section-container">
             <div className="ti-two-col-grid">
@@ -614,7 +956,6 @@ export default function ServiciosTILanding() {
                 </a>
               </div>
 
-              {/* Redundancy Diagram Visual */}
               <div className="ti-col-diagram">
                 <div className="redundancy-card">
                   <h3 className="redundancy-title">DIAGRAMA DE REDUNDANCIA Y RESPALDO</h3>
@@ -640,7 +981,7 @@ export default function ServiciosTILanding() {
           </div>
         </section>
 
-        {/* 9. MAPA DE SOLUCIONES (CAPAS CONCÉNTRICAS) */}
+        {/* 10. MAPA DE SOLUCIONES (CAPAS CONCÉNTRICAS) */}
         <section className="ti-solutions-map-section" id="soluciones">
           <div className="section-container">
             <div className="section-header center">
@@ -671,7 +1012,54 @@ export default function ServiciosTILanding() {
           </div>
         </section>
 
-        {/* 10. MÉTODO DE TRABAJO */}
+        {/* 11. ESCENARIOS FRECUENTES (NUEVA SECCIÓN FASE 7B) */}
+        <section className="ti-escenarios-section" id="escenarios">
+          <div className="section-container">
+            <div className="section-header center">
+              <span className="section-eyebrow">ESCENARIOS FRECUENTES</span>
+              <h2 className="section-title">Situaciones que conviene evaluar antes de que afecten la operación.</h2>
+            </div>
+
+            <div className="escenarios-editorial-grid">
+              <div className="escenario-cell">
+                <span className="cell-num">01</span>
+                <h3 className="cell-title">Conectividad irregular</h3>
+                <p className="cell-desc">Usuarios, dispositivos o espacios que pierden acceso o presentan una conexión inestable.</p>
+              </div>
+
+              <div className="escenario-cell">
+                <span className="cell-num">02</span>
+                <h3 className="cell-title">Equipos con incidencias recurrentes</h3>
+                <p className="cell-desc">Fallas que se repiten y requieren revisar mantenimiento, configuración o necesidad de actualización.</p>
+              </div>
+
+              <div className="escenario-cell">
+                <span className="cell-num">03</span>
+                <h3 className="cell-title">Cobertura de seguridad incompleta</h3>
+                <p className="cell-desc">Zonas sin visibilidad suficiente o sistemas de cámaras que necesitan reorganización.</p>
+              </div>
+
+              <div className="escenario-cell">
+                <span className="cell-num">04</span>
+                <h3 className="cell-title">Información y configuraciones sin respaldo claro</h3>
+                <p className="cell-desc">Dependencia de equipos, accesos o archivos que no cuentan con un procedimiento documentado de recuperación.</p>
+              </div>
+            </div>
+
+            <div className="escenarios-cta-wrap center">
+              <a 
+                href={defaultWhatsappUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-primary"
+              >
+                Conversar sobre mi situación
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* 12. MÉTODO DE TRABAJO */}
         <section className="ti-method-section" id="metodo">
           <div className="section-container">
             <div className="section-header center">
@@ -679,43 +1067,86 @@ export default function ServiciosTILanding() {
               <h2 className="section-title">Implementación técnica con un proceso claro.</h2>
             </div>
 
-            <div className="method-steps-grid">
-              <div className="method-card">
-                <div className="method-badge">01</div>
-                <h3 className="method-title">Diagnóstico</h3>
+            <div className="method-connected-line">
+              <div className="method-step-block">
+                <div className="method-step-head">
+                  <span className="method-badge">01</span>
+                  <h3 className="method-title">Diagnóstico</h3>
+                </div>
                 <p className="method-desc">Revisamos necesidades, entorno, usuarios, equipos y puntos críticos de la infraestructura existente.</p>
               </div>
 
-              <div className="method-card">
-                <div className="method-badge">02</div>
-                <h3 className="method-title">Diseño</h3>
+              <div className="method-step-block">
+                <div className="method-step-head">
+                  <span className="method-badge">02</span>
+                  <h3 className="method-title">Diseño</h3>
+                </div>
                 <p className="method-desc">Definimos la arquitectura, especificaciones de componentes y el alcance adecuado para la empresa.</p>
               </div>
 
-              <div className="method-card">
-                <div className="method-badge">03</div>
-                <h3 className="method-title">Implementación</h3>
+              <div className="method-step-block">
+                <div className="method-step-head">
+                  <span className="method-badge">03</span>
+                  <h3 className="method-title">Implementación</h3>
+                </div>
                 <p className="method-desc">Instalamos, configuramos, realizamos pruebas de esfuerzo y documentamos la solución entregada.</p>
               </div>
 
-              <div className="method-card">
-                <div className="method-badge">04</div>
-                <h3 className="method-title">Soporte</h3>
+              <div className="method-step-block">
+                <div className="method-step-head">
+                  <span className="method-badge">04</span>
+                  <h3 className="method-title">Soporte</h3>
+                </div>
                 <p className="method-desc">Realizamos mantenimiento preventivo y brindamos acompañamiento técnico continuo según el contrato.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 11. SECCIÓN DE ASESORÍA Y SELECCIÓN */}
+        {/* 13. FAQ (NUEVA SECCIÓN FASE 7B) */}
+        <section className="ti-faq-section" id="faq">
+          <div className="section-container">
+            <div className="section-header center">
+              <span className="section-eyebrow">PREGUNTAS FRECUENTES</span>
+              <h2 className="section-title">Preguntas antes de solicitar una evaluación.</h2>
+            </div>
+
+            <div className="faq-accordion-list max-w-3xl">
+              {faqItems.map((item, idx) => {
+                const isOpen = openFaqIndex === idx;
+                return (
+                  <div key={idx} className="faq-item-card">
+                    <button
+                      type="button"
+                      className="faq-trigger-btn"
+                      onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-ans-${idx}`}
+                    >
+                      <span className="faq-question-text">{item.q}</span>
+                      <span className={`faq-icon-plus ${isOpen ? 'open' : ''}`}>+</span>
+                    </button>
+                    {isOpen && (
+                      <div id={`faq-ans-${idx}`} className="faq-answer-panel">
+                        <p className="faq-answer-text">{item.a}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* 14. SELECTOR COMPACTO DE CONTACTO DIRECTO */}
         <section className="ti-asesoria-section" id="asesoria">
           <div className="section-container">
             <div className="asesoria-card-container">
               <div className="section-header center">
-                <span className="section-eyebrow">EVALUACIÓN INICIAL</span>
-                <h2 className="section-title">Cuéntanos qué parte de tu operación necesita más estabilidad.</h2>
+                <span className="section-eyebrow">CONTACTO DIRECTO</span>
+                <h2 className="section-title">Consulta directa por área de interés</h2>
                 <p className="section-desc">
-                  Podemos comenzar revisando la red, los equipos, la videovigilancia o una necesidad de soporte específica.
+                  Si ya sabes qué solución necesitas, selecciona el área y comunícate directamente con nuestro equipo.
                 </p>
               </div>
 
@@ -759,7 +1190,7 @@ export default function ServiciosTILanding() {
           </div>
         </section>
 
-        {/* 12. CTA FINAL */}
+        {/* 15. CTA FINAL */}
         <section className="ti-final-cta-section">
           <div className="section-container center-content">
             <h2 className="final-cta-title">Una operación conectada necesita una infraestructura que pueda sostenerla.</h2>
@@ -780,7 +1211,7 @@ export default function ServiciosTILanding() {
         </section>
       </main>
 
-      {/* 13. FOOTER */}
+      {/* 16. FOOTER REORGANIZADO EN 4 COLUMNAS */}
       <footer className="site-footer" id="main-footer">
         <div className="footer-container">
           <div className="footer-brand-column">

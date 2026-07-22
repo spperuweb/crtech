@@ -6219,4 +6219,700 @@ a {
   justify-content: center;
 }
 
+/* ==================================================
+   FASE 7B — SERVICIOS TI EDITORIAL POLISH & DIAGNOSTIC STYLES
+   ================================================== */
+
+/* Container width polish (approx 1180 - 1240 px) */
+.servicios-ti-wrapper .section-container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Vertical Rhythm Normalization */
+.ti-hero-section,
+.ti-problem-section,
+.ti-diagnostico-section,
+.ti-solution-section,
+.ti-solutions-map-section,
+.ti-escenarios-section,
+.ti-method-section,
+.ti-faq-section,
+.ti-asesoria-section,
+.ti-final-cta-section {
+  padding: 96px 0;
+}
+
+@media (max-width: 991px) {
+  .ti-hero-section,
+  .ti-problem-section,
+  .ti-diagnostico-section,
+  .ti-solution-section,
+  .ti-solutions-map-section,
+  .ti-escenarios-section,
+  .ti-method-section,
+  .ti-faq-section,
+  .ti-asesoria-section,
+  .ti-final-cta-section {
+    padding: 80px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .ti-hero-section,
+  .ti-problem-section,
+  .ti-diagnostico-section,
+  .ti-solution-section,
+  .ti-solutions-map-section,
+  .ti-escenarios-section,
+  .ti-method-section,
+  .ti-faq-section,
+  .ti-asesoria-section,
+  .ti-final-cta-section {
+    padding: 64px 0;
+  }
+}
+
+/* 2. Connected Operativa Line (Una falla aislada) */
+.connected-operativa-line {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 48px;
+  position: relative;
+}
+
+@media (min-width: 992px) {
+  .connected-operativa-line {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 12px;
+  }
+}
+
+.operativa-item {
+  flex: 1;
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.operativa-item:hover {
+  border-color: #0284C7;
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.06);
+}
+
+.operativa-node-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.operativa-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.operativa-item-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #06142D;
+}
+
+.operativa-item-desc {
+  font-size: 14px;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+.operativa-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0284C7;
+  padding: 8px 0;
+}
+
+@media (min-width: 992px) {
+  .operativa-arrow {
+    padding: 0 4px;
+  }
+}
+
+.operativa-arrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 991px) {
+  .operativa-arrow svg {
+    transform: rotate(90deg);
+  }
+}
+
+/* 4. Diagnóstico Interactivo */
+.ti-diagnostico-section {
+  background-color: #F8FAFC;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.diagnostico-wrapper {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.diagnostico-interactive-card {
+  background-color: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 20px;
+  padding: 32px 24px;
+  box-shadow: 0 16px 40px rgba(6, 20, 45, 0.05);
+  margin-top: 36px;
+}
+
+@media (min-width: 768px) {
+  .diagnostico-interactive-card {
+    padding: 44px 40px;
+  }
+}
+
+.diag-progress-bar {
+  margin-bottom: 28px;
+}
+
+.diag-step-indicator {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #0284C7;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-success {
+  color: #059669;
+}
+
+.diag-track {
+  width: 100%;
+  height: 6px;
+  background-color: #E2E8F0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.diag-fill {
+  height: 100%;
+  background-color: #0284C7;
+  transition: width 300ms ease;
+}
+
+.diag-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.diag-question-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #06142D;
+  margin-bottom: 24px;
+  line-height: 1.35;
+}
+
+@media (min-width: 768px) {
+  .diag-question-title {
+    font-size: 22px;
+  }
+}
+
+.diag-options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .diag-options-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.diag-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 150ms ease;
+  min-height: 52px; /* touch target */
+}
+
+.diag-option-btn:hover, .diag-option-btn:focus-visible {
+  border-color: #0284C7;
+  background-color: #FFFFFF;
+  outline: none;
+}
+
+.diag-option-btn.selected {
+  border-color: #0284C7;
+  background-color: #F0F9FF;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.1);
+}
+
+.diag-radio-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #CBD5E1;
+  flex-shrink: 0;
+  transition: all 150ms ease;
+}
+
+.diag-option-btn.selected .diag-radio-circle {
+  border-color: #0284C7;
+  background-color: #0284C7;
+  box-shadow: inset 0 0 0 3px #FFFFFF;
+}
+
+.diag-option-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1E293B;
+  line-height: 1.4;
+}
+
+.diag-nav-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Result Screen Styles */
+.diag-result-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.result-header {
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 20px;
+}
+
+.result-badge-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #059669;
+  background-color: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.result-area-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #06142D;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+  .result-area-title {
+    font-size: 28px;
+  }
+}
+
+.result-motivo {
+  font-size: 16px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.result-prepare-box {
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.prepare-box-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #06142D;
+  margin-bottom: 12px;
+}
+
+.prepare-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prepare-items-list li {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.prep-bullet {
+  color: #0284C7;
+  font-weight: 800;
+  margin-right: 6px;
+}
+
+.result-actions-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@media (min-width: 640px) {
+  .result-actions-bar {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* 7. Escenarios Frecuentes Section */
+.ti-escenarios-section {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.escenarios-editorial-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 48px;
+  margin-bottom: 40px;
+  border-top: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+@media (min-width: 768px) {
+  .escenarios-editorial-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.escenario-cell {
+  padding: 32px 24px;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .escenario-cell:nth-child(odd) {
+    border-right: 1px solid #E2E8F0;
+  }
+  .escenario-cell:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+.cell-num {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #0284C7;
+}
+
+.cell-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #06142D;
+}
+
+.cell-desc {
+  font-size: 15px;
+  color: #64748B;
+  line-height: 1.55;
+}
+
+.escenarios-cta-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+/* Method connected line */
+.method-connected-line {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 48px;
+}
+
+@media (min-width: 768px) {
+  .method-connected-line {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .method-connected-line {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.method-step-block {
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.method-step-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 8. FAQ Section */
+.ti-faq-section {
+  background-color: #F8FAFC;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.faq-accordion-list {
+  margin: 40px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item-card {
+  background-color: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 150ms ease;
+}
+
+.faq-item-card:hover {
+  border-color: #0284C7;
+}
+
+.faq-trigger-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 16px;
+  min-height: 52px;
+}
+
+.faq-trigger-btn:focus-visible {
+  outline: 2px solid #0284C7;
+  outline-offset: -2px;
+}
+
+.faq-question-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: #06142D;
+  line-height: 1.4;
+}
+
+.faq-icon-plus {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0284C7;
+  transition: transform 200ms ease;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.faq-icon-plus.open {
+  transform: rotate(45deg);
+}
+
+.faq-answer-panel {
+  padding: 0 24px 20px 24px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.faq-answer-text {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+/* 10. Footer Reorganization (4 columns) */
+.site-footer {
+  background-color: #06142D;
+  color: #94A3B8;
+  padding: 64px 0 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.site-footer .footer-container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 24px 48px 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px;
+}
+
+@media (max-width: 991px) {
+  .site-footer .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (max-width: 639px) {
+  .site-footer .footer-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.footer-brand-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-logo-img {
+  max-height: 38px;
+  width: auto;
+  object-fit: contain;
+}
+
+.footer-brand-desc {
+  font-size: 13.5px;
+  color: #94A3B8;
+  line-height: 1.55;
+}
+
+.footer-legal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: #CBD5E1;
+}
+
+.footer-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+}
+
+.footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links-list a {
+  font-size: 13.5px;
+  color: #94A3B8;
+  transition: color 150ms ease;
+}
+
+.footer-links-list a:hover {
+  color: #38BDF8;
+}
+
+.footer-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #FFFFFF !important;
+}
+
+.footer-icon {
+  width: 18px;
+  height: 18px;
+  color: #38BDF8;
+}
+
+.footer-schedule {
+  font-size: 13px;
+  color: #94A3B8;
+  line-height: 1.45;
+}
+
+.footer-sub-bar {
+  background-color: #030B19;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 20px 0;
+}
+
+.footer-sub-bar-container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .footer-sub-bar-container {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.copyright-text {
+  font-size: 13px;
+  color: #64748B;
+}
+
+.tech-meta-row span {
+  font-size: 12.5px;
+  color: #64748B;
+}
+
+
 
