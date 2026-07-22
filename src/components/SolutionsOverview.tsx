@@ -28,6 +28,8 @@ export default function SolutionsOverview() {
             },
           }
         );
+        gsap.set(['.drone-flight-path', '.energy-flow-path', '.ti-main-path', '.ti-path-subtle-1', '.ti-path-subtle-2'], { strokeDashoffset: 0, opacity: 1 });
+        gsap.set(['.drone-path-dot', '.energy-node-solar', '.energy-node-delta', '.ti-node-group'], { opacity: 1, scale: 1 });
         return;
       }
 
@@ -82,6 +84,18 @@ export default function SolutionsOverview() {
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.06 },
             '-=0.3'
+          )
+          .fromTo(
+            '#drones .drone-flight-path',
+            { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0.3 },
+            { strokeDashoffset: 0, opacity: 1, duration: 0.85, ease: 'power2.out' },
+            '-=0.4'
+          )
+          .fromTo(
+            '#drones .drone-path-dot',
+            { opacity: 0, scale: 0 },
+            { opacity: 1, scale: 1, duration: 0.3, ease: 'power3.out', transformOrigin: 'center center' },
+            '-=0.2'
           );
 
         // Energía Block
@@ -110,6 +124,18 @@ export default function SolutionsOverview() {
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.06 },
             '-=0.3'
+          )
+          .fromTo(
+            '#energia .energy-flow-path',
+            { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0.2 },
+            { strokeDashoffset: 0, opacity: 0.95, duration: 0.85, ease: 'power2.out' },
+            '-=0.4'
+          )
+          .fromTo(
+            '#energia .energy-node-solar, #energia .energy-node-delta',
+            { opacity: 0, scale: 0.8 },
+            { opacity: 1, scale: 1, duration: 0.35, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center center' },
+            '-=0.2'
           );
 
         // Servicios TI Block
@@ -138,38 +164,154 @@ export default function SolutionsOverview() {
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.06 },
             '-=0.3'
+          )
+          .fromTo(
+            '#servicios-ti .ti-main-path',
+            { strokeDasharray: 1, strokeDashoffset: 1 },
+            { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' },
+            '-=0.4'
+          )
+          .fromTo(
+            ['#servicios-ti .ti-path-subtle-1', '#servicios-ti .ti-path-subtle-2'],
+            { strokeDasharray: 1, strokeDashoffset: 1 },
+            { strokeDashoffset: 0, duration: 0.6, ease: 'power2.out', stagger: 0.1 },
+            '<0.1'
+          )
+          .fromTo(
+            '#servicios-ti .ti-node-group',
+            { opacity: 0, scale: 0.85 },
+            { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out', stagger: 0.08, transformOrigin: 'center center' },
+            '-=0.3'
           );
       });
 
       // Mobile (< 768px)
       mm.add('(max-width: 767px)', () => {
-        ['#drones', '#energia', '#servicios-ti'].forEach((blockId) => {
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: blockId,
-              start: 'top 82%',
-              toggleActions: 'play none none none',
-              once: true,
-            },
-          });
-          tl.fromTo(
-            `${blockId} .solution-block-info`,
+        // Drones Mobile
+        const dronesMobTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#drones',
+            start: 'top 82%',
+            toggleActions: 'play none none none',
+            once: true,
+          },
+        });
+        dronesMobTl
+          .fromTo(
+            '#drones .solution-block-info',
             { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }
           )
-            .fromTo(
-              `${blockId} .solution-block-media`,
-              { opacity: 0, y: 20 },
-              { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' },
-              '-=0.3'
-            )
-            .fromTo(
-              `${blockId} .block-features-list li`,
-              { opacity: 0, y: 10 },
-              { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.05 },
-              '-=0.2'
-            );
+          .fromTo(
+            '#drones .solution-block-media',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' },
+            '-=0.3'
+          )
+          .fromTo(
+            '#drones .block-features-list li',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.05 },
+            '-=0.2'
+          )
+          .fromTo(
+            '#drones .drone-flight-path',
+            { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0.2 },
+            { strokeDashoffset: 0, opacity: 0.85, duration: 0.8, ease: 'power2.out' },
+            '-=0.3'
+          )
+          .fromTo(
+            '#drones .drone-path-dot',
+            { opacity: 0, scale: 0 },
+            { opacity: 1, scale: 1, duration: 0.3, ease: 'power3.out', transformOrigin: 'center center' },
+            '-=0.2'
+          );
+
+        // Energía Mobile
+        const energiaMobTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#energia',
+            start: 'top 82%',
+            toggleActions: 'play none none none',
+            once: true,
+          },
         });
+        energiaMobTl
+          .fromTo(
+            '#energia .solution-block-info',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }
+          )
+          .fromTo(
+            '#energia .solution-block-media',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' },
+            '-=0.3'
+          )
+          .fromTo(
+            '#energia .block-features-list li',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.05 },
+            '-=0.2'
+          )
+          .fromTo(
+            '#energia .energy-flow-path',
+            { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0.2 },
+            { strokeDashoffset: 0, opacity: 0.85, duration: 0.8, ease: 'power2.out' },
+            '-=0.3'
+          )
+          .fromTo(
+            '#energia .energy-node-solar, #energia .energy-node-delta',
+            { opacity: 0, scale: 0.8 },
+            { opacity: 1, scale: 1, duration: 0.35, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center center' },
+            '-=0.2'
+          );
+
+        // Servicios TI Mobile
+        const tiMobTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#servicios-ti',
+            start: 'top 82%',
+            toggleActions: 'play none none none',
+            once: true,
+          },
+        });
+        tiMobTl
+          .fromTo(
+            '#servicios-ti .solution-block-info',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }
+          )
+          .fromTo(
+            '#servicios-ti .solution-block-media',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' },
+            '-=0.3'
+          )
+          .fromTo(
+            '#servicios-ti .block-features-list li',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.05 },
+            '-=0.2'
+          )
+          .fromTo(
+            '#servicios-ti .ti-main-path',
+            { strokeDasharray: 1, strokeDashoffset: 1 },
+            { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' },
+            '-=0.3'
+          )
+          .fromTo(
+            ['#servicios-ti .ti-path-subtle-1', '#servicios-ti .ti-path-subtle-2'],
+            { strokeDasharray: 1, strokeDashoffset: 1 },
+            { strokeDashoffset: 0, duration: 0.6, ease: 'power2.out', stagger: 0.1 },
+            '<0.1'
+          )
+          .fromTo(
+            '#servicios-ti .ti-node-group',
+            { opacity: 0, scale: 0.85 },
+            { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out', stagger: 0.08, transformOrigin: 'center center' },
+            '-=0.3'
+          );
       });
     }, sectionRef);
 
@@ -251,6 +393,29 @@ export default function SolutionsOverview() {
                   width="600"
                   height="400"
                 />
+                <svg 
+                  viewBox="0 0 600 400" 
+                  fill="none" 
+                  className="drone-overlay-svg" 
+                  aria-hidden="true" 
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient id="dronePathGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.2" />
+                      <stop offset="100%" stopColor="#0284C7" stopOpacity="0.9" />
+                    </linearGradient>
+                  </defs>
+                  <path 
+                    className="drone-flight-path"
+                    d="M 60 320 C 180 290, 240 180, 420 120 C 470 100, 510 110, 530 90" 
+                    stroke="url(#dronePathGrad)" 
+                    strokeWidth="2" 
+                    strokeLinecap="round"
+                    pathLength="1"
+                  />
+                  <circle className="drone-path-dot" cx="530" cy="90" r="4.5" fill="#38BDF8" />
+                </svg>
                 <div className="media-caption">
                   <span>Dron SwellPro FD3 en operación de monitoreo real</span>
                 </div>
@@ -316,6 +481,31 @@ export default function SolutionsOverview() {
             <div className="solution-block-media">
               <div className="ecoflow-composition-wrapper">
                 <div className="ecoflow-glow-bg" aria-hidden="true"></div>
+                <svg 
+                  viewBox="0 0 500 400" 
+                  fill="none" 
+                  className="ecoflow-overlay-svg" 
+                  aria-hidden="true" 
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient id="amberFlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#D97706" stopOpacity="0.95" />
+                    </linearGradient>
+                  </defs>
+                  <path 
+                    className="energy-flow-path"
+                    d="M 120 110 C 200 85, 250 150, 310 230" 
+                    stroke="url(#amberFlowGrad)" 
+                    strokeWidth="2" 
+                    strokeDasharray="4 3"
+                    strokeLinecap="round"
+                    pathLength="1"
+                  />
+                  <circle className="energy-node-solar" cx="120" cy="110" r="4.5" fill="#F59E0B" />
+                  <circle className="energy-node-delta" cx="310" cy="230" r="5" fill="#D97706" />
+                </svg>
                 <div className="ecoflow-support-product">
                   <img 
                     src={assets.ecoFlow.solarPanel} 
@@ -414,46 +604,58 @@ export default function SolutionsOverview() {
 
                     {/* Secondary/Subtle backup & continuity lines (Continuidad y Respaldo) */}
                     <path 
+                      className="ti-path-subtle-1"
                       d="M 50 130 C 120 70, 180 50, 250 60" 
                       stroke="#7067E8" 
                       strokeWidth="1.5" 
                       strokeDasharray="3 4"
                       opacity="0.3"
+                      pathLength="1"
                     />
                     <path 
+                      className="ti-path-subtle-2"
                       d="M 250 60 C 310 130, 390 230, 450 200" 
                       stroke="#10B981" 
                       strokeWidth="1.5" 
                       strokeDasharray="3 4"
                       opacity="0.3"
+                      pathLength="1"
                     />
 
                     {/* Connecting main path */}
                     <path 
+                      className="ti-main-path"
                       d="M 50 130 C 150 130, 150 60, 250 60 C 350 60, 350 200, 450 200" 
                       stroke="url(#lineGrad)" 
                       strokeWidth="3.5" 
                       strokeLinecap="round"
+                      pathLength="1"
                     />
 
                     {/* Nodes */}
                     {/* Node 1: Infraestructura */}
-                    <circle cx="50" cy="130" r="7" fill="#168BFF" />
-                    <circle cx="50" cy="130" r="18" stroke="#168BFF" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
-                    <text x="50" y="172" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
-                    <text x="50" y="192" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Redes y Conectividad</text>
+                    <g className="ti-node-group">
+                      <circle cx="50" cy="130" r="7" fill="#168BFF" />
+                      <circle cx="50" cy="130" r="18" stroke="#168BFF" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
+                      <text x="50" y="172" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
+                      <text x="50" y="192" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Redes y Conectividad</text>
+                    </g>
 
                     {/* Node 2: Soporte */}
-                    <circle cx="250" cy="60" r="7" fill="#7067E8" />
-                    <circle cx="250" cy="60" r="18" stroke="#7067E8" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
-                    <text x="250" y="102" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
-                    <text x="250" y="122" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Continuidad</text>
+                    <g className="ti-node-group">
+                      <circle cx="250" cy="60" r="7" fill="#7067E8" />
+                      <circle cx="250" cy="60" r="18" stroke="#7067E8" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
+                      <text x="250" y="102" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
+                      <text x="250" y="122" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Continuidad</text>
+                    </g>
 
                     {/* Node 3: Seguridad */}
-                    <circle cx="450" cy="200" r="7" fill="#10B981" />
-                    <circle cx="450" cy="200" r="18" stroke="#10B981" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
-                    <text x="450" y="242" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
-                    <text x="450" y="262" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Videovigilancia</text>
+                    <g className="ti-node-group">
+                      <circle cx="450" cy="200" r="7" fill="#10B981" />
+                      <circle cx="450" cy="200" r="18" stroke="#10B981" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
+                      <text x="450" y="242" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
+                      <text x="450" y="262" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Videovigilancia</text>
+                    </g>
                   </svg>
                 </div>
                 <div className="media-caption">
