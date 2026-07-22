@@ -1,9 +1,61 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function TrustStrip() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.fromTo(
+          ['.trust-strip-title', '.trust-logo-item'],
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.15,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+              once: true,
+            },
+          }
+        );
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+          once: true,
+        },
+      });
+
+      tl.fromTo(
+        '.trust-strip-title',
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }
+      ).fromTo(
+        '.trust-logo-item',
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out', stagger: 0.08 },
+        '-=0.2'
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="trust-strip-section">
+    <section className="trust-strip-section" ref={sectionRef}>
       <div className="trust-strip-container">
         <h3 className="trust-strip-title">Representación oficial y respaldo local</h3>
         

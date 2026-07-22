@@ -1,9 +1,75 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function CEOSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.fromTo(
+          ['.ceo-photo', '.ceo-caption-overlay', '.ceo-content-side'],
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.15,
+            stagger: 0.05,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+              once: true,
+            },
+          }
+        );
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 78%',
+          toggleActions: 'play none none none',
+          once: true,
+        },
+      });
+
+      tl.fromTo(
+        '.ceo-photo',
+        { opacity: 0, scale: 0.98 },
+        { opacity: 1, scale: 1, duration: 0.65, ease: 'power3.out' }
+      )
+        .fromTo(
+          '.ceo-caption-overlay',
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' },
+          '-=0.25'
+        )
+        .fromTo(
+          ['.ceo-tag', '.ceo-section-title', '.ceo-paragraph'],
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', stagger: 0.08 },
+          '-=0.3'
+        )
+        .fromTo(
+          '.pillar-item',
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out', stagger: 0.07 },
+          '-=0.2'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="ceo-section" id="nosotros">
+    <section className="ceo-section" id="nosotros" ref={sectionRef}>
       <div className="ceo-container">
         <div className="ceo-grid">
           

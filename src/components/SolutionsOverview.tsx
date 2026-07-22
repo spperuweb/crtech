@@ -1,9 +1,183 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function SolutionsOverview() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.fromTo(
+          ['.section-header', '#drones .solution-block-info', '#drones .solution-block-media', '#energia .solution-block-info', '#energia .solution-block-media', '#servicios-ti .solution-block-info', '#servicios-ti .solution-block-media'],
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.15,
+            stagger: 0.05,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+              once: true,
+            },
+          }
+        );
+        return;
+      }
+
+      // 1. Header Animation
+      const headerTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.section-header',
+          start: 'top 82%',
+          toggleActions: 'play none none none',
+          once: true,
+        },
+      });
+
+      headerTl.fromTo(
+        '.section-title',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }
+      ).fromTo(
+        '.highlight-text',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.45, ease: 'power3.out' },
+        '-=0.2'
+      );
+
+      const mm = gsap.matchMedia();
+
+      // Desktop & Tablet (>= 768px)
+      mm.add('(min-width: 768px)', () => {
+        // Drones Block
+        const dronesTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#drones',
+            start: 'top 78%',
+            toggleActions: 'play none none none',
+            once: true,
+          },
+        });
+        dronesTl
+          .fromTo(
+            '#drones .solution-block-info',
+            { opacity: 0, x: -24 },
+            { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }
+          )
+          .fromTo(
+            '#drones .solution-block-media',
+            { opacity: 0, x: 24, scale: 0.98 },
+            { opacity: 1, x: 0, scale: 1, duration: 0.65, ease: 'power3.out' },
+            '<'
+          )
+          .fromTo(
+            '#drones .block-features-list li',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.06 },
+            '-=0.3'
+          );
+
+        // Energía Block
+        const energiaTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#energia',
+            start: 'top 78%',
+            toggleActions: 'play none none none',
+            once: true,
+          },
+        });
+        energiaTl
+          .fromTo(
+            '#energia .solution-block-media',
+            { opacity: 0, x: -22 },
+            { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }
+          )
+          .fromTo(
+            '#energia .solution-block-info',
+            { opacity: 0, x: 22 },
+            { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' },
+            '<'
+          )
+          .fromTo(
+            '#energia .block-features-list li',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.06 },
+            '-=0.3'
+          );
+
+        // Servicios TI Block
+        const tiTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#servicios-ti',
+            start: 'top 78%',
+            toggleActions: 'play none none none',
+            once: true,
+          },
+        });
+        tiTl
+          .fromTo(
+            '#servicios-ti .solution-block-info',
+            { opacity: 0, x: -20 },
+            { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }
+          )
+          .fromTo(
+            '#servicios-ti .solution-block-media',
+            { opacity: 0, x: 20, scale: 0.985 },
+            { opacity: 1, x: 0, scale: 1, duration: 0.65, ease: 'power3.out' },
+            '<'
+          )
+          .fromTo(
+            '#servicios-ti .block-features-list li',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.06 },
+            '-=0.3'
+          );
+      });
+
+      // Mobile (< 768px)
+      mm.add('(max-width: 767px)', () => {
+        ['#drones', '#energia', '#servicios-ti'].forEach((blockId) => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: blockId,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+              once: true,
+            },
+          });
+          tl.fromTo(
+            `${blockId} .solution-block-info`,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }
+          )
+            .fromTo(
+              `${blockId} .solution-block-media`,
+              { opacity: 0, y: 20 },
+              { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' },
+              '-=0.3'
+            )
+            .fromTo(
+              `${blockId} .block-features-list li`,
+              { opacity: 0, y: 10 },
+              { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.05 },
+              '-=0.2'
+            );
+        });
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="solutions-section" id="soluciones">
+    <section className="solutions-section" id="soluciones" ref={sectionRef}>
       <div className="section-header">
         <h2 className="section-title">
           Una operación no necesita más tecnología. <span className="highlight-text">Necesita la tecnología correcta.</span>

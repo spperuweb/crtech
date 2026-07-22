@@ -1,9 +1,68 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function FinalCTA() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.fromTo(
+          '.final-cta-card',
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.15,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+              once: true,
+            },
+          }
+        );
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+          once: true,
+        },
+      });
+
+      tl.fromTo(
+        '.final-cta-card',
+        { opacity: 0, scale: 0.985 },
+        { opacity: 1, scale: 1, duration: 0.65, ease: 'power3.out' }
+      )
+        .fromTo(
+          ['.final-cta-title', '.final-cta-text'],
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08 },
+          '-=0.3'
+        )
+        .fromTo(
+          '.btn-cta-highlight',
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' },
+          '-=0.2'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="final-cta-section">
+    <section className="final-cta-section" ref={sectionRef}>
       <div className="final-cta-card">
         {/* Abstract subtle background layout */}
         <div className="cta-shapes" aria-hidden="true">
