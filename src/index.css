@@ -2364,11 +2364,29 @@ a {
   z-index: 2;
 }
 
+.drones-hero-poster-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
 .drones-hero-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+}
+
+.drones-hero-video.loaded {
+  opacity: 1;
 }
 
 .drones-video-toggle-btn {
@@ -3021,6 +3039,525 @@ a {
   .cta-btn-large {
     width: auto;
   }
+}
+
+
+/* 4B. Evidence Section (FASE 5B) */
+.drones-evidence-section {
+  background-color: #F8FAFC;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.evidence-layout-wrapper {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.evidence-top-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 992px) {
+  .evidence-top-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 28px;
+  }
+}
+
+.evidence-secondary-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.evidence-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .evidence-bottom-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile Horizontal Carril for Evidence Section (< 992px) */
+@media (max-width: 991px) {
+  .evidence-layout-wrapper {
+    gap: 20px;
+  }
+
+  .evidence-secondary-stack,
+  .evidence-bottom-row {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 12px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .evidence-secondary-stack .evidence-card,
+  .evidence-bottom-row .evidence-card {
+    min-width: 280px;
+    max-width: 320px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+}
+
+/* Evidence Card */
+.evidence-card {
+  background-color: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(7, 21, 44, 0.04);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.evidence-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(7, 21, 44, 0.08);
+}
+
+.evidence-media-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #06142D;
+  overflow: hidden;
+}
+
+.evidence-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 300ms ease;
+}
+
+.evidence-card:hover .evidence-poster-img {
+  transform: scale(1.03);
+}
+
+.evidence-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background-color: rgba(6, 20, 45, 0.85);
+  color: #38BDF8;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+  z-index: 3;
+}
+
+.evidence-play-btn .play-svg {
+  width: 22px;
+  height: 22px;
+  margin-left: 3px;
+}
+
+.evidence-play-btn:hover {
+  background-color: #0284C7;
+  color: #ffffff;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.evidence-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background-color: rgba(6, 20, 45, 0.85);
+  color: #38BDF8;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 2;
+}
+
+.evidence-card-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.evidence-card-main .evidence-card-info {
+  padding: 24px;
+}
+
+.evidence-card-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.evidence-card-main .evidence-card-title {
+  font-size: 22px;
+}
+
+.evidence-card-desc {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+.evidence-trigger-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0284C7;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: color var(--transition-fast);
+}
+
+.evidence-trigger-link:hover {
+  color: #0369A1;
+}
+
+.evidence-trigger-link .link-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
+}
+
+.evidence-trigger-link:hover .link-arrow {
+  transform: translateX(4px);
+}
+
+/* Visor de Video Modal (FASE 5B) */
+.drones-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(6, 20, 45, 0.92);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.drones-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  background-color: #0B192C;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+.drones-modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.drones-modal-close-btn:hover {
+  background-color: rgba(239, 68, 68, 0.85);
+  border-color: #EF4444;
+  transform: scale(1.05);
+}
+
+.drones-modal-close-btn .close-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.drones-modal-video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000000;
+}
+
+.drones-modal-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.drones-modal-info {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #0B192C;
+  color: #ffffff;
+}
+
+.modal-category-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #38BDF8;
+  text-transform: uppercase;
+  background-color: rgba(56, 189, 248, 0.12);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  align-self: flex-start;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.modal-case-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.modal-case-desc {
+  font-size: 15px;
+  color: #94A3B8;
+  line-height: 1.6;
+}
+
+.modal-cta-wrap {
+  margin-top: 12px;
+}
+
+.modal-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  min-height: 48px;
+}
+
+/* Catalog Variables Box (FASE 5B) */
+.sol-variables-box {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  padding: 14px 16px;
+  background-color: #F8FAFC;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.variables-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0284C7;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.variables-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.variables-list strong {
+  color: var(--color-dark);
+}
+
+/* "Cómo definimos tu configuración" Block (FASE 5B) */
+.drones-config-process-section {
+  background-color: #F1F5F9;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 56px 20px;
+}
+
+.config-process-header {
+  margin-bottom: 32px;
+}
+
+.config-steps-band {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .config-steps-band {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+}
+
+.config-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  flex: 1;
+}
+
+.step-num-badge {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0284C7;
+  background-color: rgba(2, 132, 199, 0.1);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.step-desc {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.config-step-arrow {
+  display: none;
+  font-size: 20px;
+  color: #94A3B8;
+  font-weight: 700;
+}
+
+@media (min-width: 900px) {
+  .config-step-arrow {
+    display: block;
+  }
+}
+
+/* FAQ Breve (FASE 5B) */
+.drones-faq-section {
+  background-color: #ffffff;
+}
+
+.faq-grid {
+  max-width: 800px;
+  margin: 40px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: #F8FAFC;
+  overflow: hidden;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.faq-card.open {
+  border-color: #0284C7;
+  background-color: #ffffff;
+}
+
+.faq-question-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.faq-icon-indicator {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0284C7;
+  flex-shrink: 0;
+}
+
+.faq-answer-body {
+  padding: 0 24px 20px;
+  border-top: 1px solid rgba(220, 230, 239, 0.5);
+}
+
+.faq-a-text {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  padding-top: 16px;
 }
 
 /* 9. Dedicated Drones Footer */

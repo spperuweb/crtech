@@ -1,10 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { assets } from '../data/assets';
 
+interface EvidenceCase {
+  id: string;
+  category: string;
+  title: string;
+  description: string;
+  videoUrl: string;
+  posterUrl: string;
+}
+
 export default function DronesLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [heroVideoLoaded, setHeroVideoLoaded] = useState(false);
+  const [activeModalCase, setActiveModalCase] = useState<EvidenceCase | null>(null);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
   const videoRef = useRef<HTMLVideoElement>(null);
+  const lastFocusedElementRef = useRef<HTMLElement | null>(null);
 
   // Check prefers-reduced-motion
   useEffect(() => {
@@ -15,6 +29,17 @@ export default function DronesLanding() {
     }
   }, []);
 
+  // Modal ESC key listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && activeModalCase) {
+        closeModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeModalCase]);
+
   const togglePlay = () => {
     if (!videoRef.current) return;
     if (isPlaying) {
@@ -23,6 +48,20 @@ export default function DronesLanding() {
     } else {
       videoRef.current.play().catch(() => {});
       setIsPlaying(true);
+    }
+  };
+
+  const openModal = (caseItem: EvidenceCase, triggerEl: React.MouseEvent<HTMLButtonElement>) => {
+    lastFocusedElementRef.current = triggerEl.currentTarget;
+    setActiveModalCase(caseItem);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setActiveModalCase(null);
+    document.body.style.overflow = '';
+    if (lastFocusedElementRef.current) {
+      lastFocusedElementRef.current.focus();
     }
   };
 
@@ -37,7 +76,35 @@ export default function DronesLanding() {
     }
   };
 
+  const toggleFaq = (index: number) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
+
   const whatsappUrl = assets.contact.swellProWhatsappUrl;
+  const evidenceCases: EvidenceCase[] = assets.drones.evidenceCases || [];
+
+  const mainEvidenceCase = evidenceCases[0];
+  const secondaryCasesTop = evidenceCases.slice(1, 3);
+  const secondaryCasesBottom = evidenceCases.slice(3, 5);
+
+  const faqs = [
+    {
+      q: "¿Los drones se entregan con capacitación?",
+      a: "CRTech ofrece capacitación práctica y acompañamiento para pilotos y equipos según la solución seleccionada."
+    },
+    {
+      q: "¿Cuentan con soporte y repuestos en Perú?",
+      a: "Brindamos diagnóstico, mantenimiento y orientación sobre repuestos disponibles para las plataformas comercializadas."
+    },
+    {
+      q: "¿Pueden utilizarse en operaciones sobre agua?",
+      a: "La selección depende del modelo, el entorno y el objetivo operativo. Evaluamos el caso antes de recomendar una configuración."
+    },
+    {
+      q: "¿Cómo sé qué plataforma necesito?",
+      a: "Cuéntanos el entorno, la misión y los equipos requeridos. Un especialista te orientará hacia una alternativa adecuada."
+    }
+  ];
 
   return (
     <div className="drones-landing-wrapper">
@@ -66,8 +133,14 @@ export default function DronesLanding() {
             <a href="#aplicaciones" onClick={(e) => scrollToSection(e, 'aplicaciones')} className="nav-link">
               Aplicaciones
             </a>
+            <a href="#evidencia" onClick={(e) => scrollToSection(e, 'evidencia')} className="nav-link">
+              Evidencia
+            </a>
             <a href="#capacidades" onClick={(e) => scrollToSection(e, 'capacidades')} className="nav-link">
               Capacidades
+            </a>
+            <a href="#modelos" onClick={(e) => scrollToSection(e, 'modelos')} className="nav-link">
+              Plataformas
             </a>
             <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="nav-link">
               Soporte
@@ -112,8 +185,14 @@ export default function DronesLanding() {
             <a href="#aplicaciones" onClick={(e) => scrollToSection(e, 'aplicaciones')} className="mobile-nav-link">
               Aplicaciones
             </a>
+            <a href="#evidencia" onClick={(e) => scrollToSection(e, 'evidencia')} className="mobile-nav-link">
+              Evidencia de campo
+            </a>
             <a href="#capacidades" onClick={(e) => scrollToSection(e, 'capacidades')} className="mobile-nav-link">
               Capacidades
+            </a>
+            <a href="#modelos" onClick={(e) => scrollToSection(e, 'modelos')} className="mobile-nav-link">
+              Plataformas
             </a>
             <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="mobile-nav-link">
               Soporte
@@ -209,7 +288,7 @@ export default function DronesLanding() {
 
             {/* Visual Column (56% approximate) with SVG Curve Signature */}
             <div className="drones-hero-visual">
-              {/* Firma visual: línea curva muy fina conectando copy con video (estática, max 1px, color azul agua) */}
+              {/* Firma visual: línea curva muy fina */}
               <svg 
                 className="drones-hero-signature-line" 
                 viewBox="0 0 500 300" 
@@ -227,9 +306,17 @@ export default function DronesLanding() {
               </svg>
 
               <div className="drones-video-frame">
+                {/* Poster fallback image permanently behind video */}
+                <img 
+                  src={assets.drones.heroPoster} 
+                  alt="SwellPro dron en operación real" 
+                  className="drones-hero-poster-fallback"
+                  loading="eager"
+                />
+
                 <video
                   ref={videoRef}
-                  className="drones-hero-video"
+                  className={`drones-hero-video ${heroVideoLoaded ? 'loaded' : ''}`}
                   src={assets.drones.heroVideo}
                   poster={assets.drones.heroPoster}
                   muted
@@ -237,6 +324,9 @@ export default function DronesLanding() {
                   loop
                   preload="metadata"
                   autoPlay
+                  onLoadedData={() => setHeroVideoLoaded(true)}
+                  onCanPlay={() => setHeroVideoLoaded(true)}
+                  onError={() => setHeroVideoLoaded(false)}
                 />
 
                 {/* Accessible Play/Pause Toggle */}
@@ -261,7 +351,7 @@ export default function DronesLanding() {
 
                 <div className="drones-video-badge">
                   <span className="live-dot"></span>
-                  <span>SwellPro FD3 en operación real</span>
+                  <span>SwellPro en operación real</span>
                 </div>
               </div>
             </div>
@@ -403,7 +493,156 @@ export default function DronesLanding() {
           </div>
         </section>
 
-        {/* 5. SECCIÓN "CAPACIDADES QUE SOSTIENEN LA OPERACIÓN" */}
+        {/* 5. NUEVA SECCIÓN DE EVIDENCIA DE CAMPO (FASE 5B) */}
+        <section className="drones-evidence-section" id="evidencia">
+          <div className="section-container">
+            <div className="section-header text-center">
+              <span className="section-eyebrow">EVIDENCIA DE CAMPO</span>
+              <h2 className="section-title">
+                En operación, no en exhibición.
+              </h2>
+              <p className="section-subtitle">
+                Registros reales de vuelos, capturas, liberación de carga y aplicaciones desarrolladas por SwellPro Perú.
+              </p>
+            </div>
+
+            {/* Layout Audiovisual Editorial (Desktop Layout & Mobile Carril) */}
+            <div className="evidence-layout-wrapper">
+              
+              {/* Top Block: Main Video Card (60%) + 2 Secondary Cards Stacked (40%) */}
+              <div className="evidence-top-grid">
+                
+                {/* Main Featured Case Card */}
+                {mainEvidenceCase && (
+                  <div className="evidence-card evidence-card-main">
+                    <div className="evidence-media-wrap">
+                      <img 
+                        src={mainEvidenceCase.posterUrl} 
+                        alt={mainEvidenceCase.title} 
+                        className="evidence-poster-img"
+                        loading="lazy"
+                      />
+                      <button 
+                        type="button" 
+                        className="evidence-play-btn"
+                        onClick={(e) => openModal(mainEvidenceCase, e)}
+                        aria-label={`Ver registro de video: ${mainEvidenceCase.title}`}
+                      >
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="play-svg">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </button>
+                      <span className="evidence-tag">{mainEvidenceCase.category}</span>
+                    </div>
+                    <div className="evidence-card-info">
+                      <h3 className="evidence-card-title">{mainEvidenceCase.title}</h3>
+                      <p className="evidence-card-desc">{mainEvidenceCase.description}</p>
+                      <button 
+                        type="button" 
+                        className="evidence-trigger-link"
+                        onClick={(e) => openModal(mainEvidenceCase, e)}
+                      >
+                        <span>Ver video de operación</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Secondary Cases Stacked (Desktop) / Carril item (Mobile) */}
+                <div className="evidence-secondary-stack">
+                  {secondaryCasesTop.map((item) => (
+                    <div className="evidence-card evidence-card-secondary" key={item.id}>
+                      <div className="evidence-media-wrap">
+                        <img 
+                          src={item.posterUrl} 
+                          alt={item.title} 
+                          className="evidence-poster-img"
+                          loading="lazy"
+                        />
+                        <button 
+                          type="button" 
+                          className="evidence-play-btn"
+                          onClick={(e) => openModal(item, e)}
+                          aria-label={`Ver registro: ${item.title}`}
+                        >
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="play-svg">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </button>
+                        <span className="evidence-tag">{item.category}</span>
+                      </div>
+                      <div className="evidence-card-info">
+                        <h3 className="evidence-card-title">{item.title}</h3>
+                        <p className="evidence-card-desc">{item.description}</p>
+                        <button 
+                          type="button" 
+                          className="evidence-trigger-link"
+                          onClick={(e) => openModal(item, e)}
+                        >
+                          <span>Ver registro</span>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+              </div>
+
+              {/* Bottom Row Grid (Cases 4 and 5) */}
+              <div className="evidence-bottom-row">
+                {secondaryCasesBottom.map((item) => (
+                  <div className="evidence-card evidence-card-horizontal" key={item.id}>
+                    <div className="evidence-media-wrap">
+                      <img 
+                        src={item.posterUrl} 
+                        alt={item.title} 
+                        className="evidence-poster-img"
+                        loading="lazy"
+                      />
+                      <button 
+                        type="button" 
+                        className="evidence-play-btn"
+                        onClick={(e) => openModal(item, e)}
+                        aria-label={`Ver registro: ${item.title}`}
+                      >
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="play-svg">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </button>
+                      <span className="evidence-tag">{item.category}</span>
+                    </div>
+                    <div className="evidence-card-info">
+                      <h3 className="evidence-card-title">{item.title}</h3>
+                      <p className="evidence-card-desc">{item.description}</p>
+                      <button 
+                        type="button" 
+                        className="evidence-trigger-link"
+                        onClick={(e) => openModal(item, e)}
+                      >
+                        <span>Ver registro</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* 6. SECCIÓN "CAPACIDADES QUE SOSTIENEN LA OPERACIÓN" */}
         <section className="drones-capabilities-section" id="capacidades">
           <div className="section-container">
             <div className="section-header text-center">
@@ -487,7 +726,7 @@ export default function DronesLanding() {
           </div>
         </section>
 
-        {/* 6. VISTA PREVIA DE SOLUCIONES */}
+        {/* 7. CATÁLOGO GENERAL / VISTA PREVIA DE SOLUCIONES (MEJORADA FASE 5B) */}
         <section className="drones-solutions-preview-section" id="modelos">
           <div className="section-container">
             <div className="section-header text-center">
@@ -515,15 +754,26 @@ export default function DronesLanding() {
                 <div className="sol-card-content">
                   <h3 className="sol-card-name">Inspección y monitoreo</h3>
                   <p className="sol-card-desc">
-                    Plataforma multirrotor impermeable optimizada para supervisión visual y térmica en zonas marinas e industriales.
+                    Supervisión visual de infraestructura, costa, embarcaciones y zonas de difícil acceso.
                   </p>
+                  
+                  <div className="sol-variables-box">
+                    <span className="variables-label">Variables que definimos:</span>
+                    <ul className="variables-list">
+                      <li><strong>Entorno:</strong> Marino, costero, fluvial o industrial</li>
+                      <li><strong>Captura:</strong> Sensor 4K / Térmico según requerimiento</li>
+                      <li><strong>Distancia:</strong> Según línea de vista y regulación</li>
+                      <li><strong>Clima:</strong> Alta humedad y resistencia a salitre</li>
+                    </ul>
+                  </div>
+
                   <a 
-                    href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CRTech, deseo consultar sobre la plataforma de Inspección y Monitoreo SwellPro.')}`} 
+                    href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CRTech, deseo solicitar una recomendación para una plataforma de Inspección y Monitoreo.')}`} 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="sol-card-link"
                   >
-                    <span>Consultar por WhatsApp</span>
+                    <span>Solicitar recomendación</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
@@ -545,15 +795,26 @@ export default function DronesLanding() {
                 <div className="sol-card-content">
                   <h3 className="sol-card-name">Pesca y liberación de carga</h3>
                   <p className="sol-card-desc">
-                    Sistemas de alta tracción y soltador de carga útil para pesca costera y logística marítima rápida.
+                    Plataformas preparadas para transportar y liberar cargas según el objetivo operativo.
                   </p>
+
+                  <div className="sol-variables-box">
+                    <span className="variables-label">Variables que definimos:</span>
+                    <ul className="variables-list">
+                      <li><strong>Operación:</strong> Lanzamiento de anzuelos o logística ligera</li>
+                      <li><strong>Mecanismo:</strong> Soltador electromecánico o asistido</li>
+                      <li><strong>Entorno:</strong> Mar abierto, playas o cuerpos de agua</li>
+                      <li><strong>Capacitación:</strong> Operación básica y maniobras acuáticas</li>
+                    </ul>
+                  </div>
+
                   <a 
-                    href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CRTech, deseo consultar sobre la plataforma de Pesca y Liberación de Carga SwellPro.')}`} 
+                    href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CRTech, deseo solicitar una recomendación para una plataforma de Pesca y Liberación de Carga.')}`} 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="sol-card-link"
                   >
-                    <span>Consultar por WhatsApp</span>
+                    <span>Solicitar recomendación</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
@@ -575,15 +836,26 @@ export default function DronesLanding() {
                 <div className="sol-card-content">
                   <h3 className="sol-card-name">Operaciones especializadas</h3>
                   <p className="sol-card-desc">
-                    Equipamiento versátil para rescate acuático, emergencias, investigación ambiental y misiones complejas.
+                    Configuraciones adaptadas para búsqueda, rescate, seguridad y trabajo técnico de campo.
                   </p>
+
+                  <div className="sol-variables-box">
+                    <span className="variables-label">Variables que definimos:</span>
+                    <ul className="variables-list">
+                      <li><strong>Misión:</strong> Rescate acuático, vigilancia o ciencia ambiental</li>
+                      <li><strong>Sensores:</strong> Visión nocturna, altavoz o luces de apoyo</li>
+                      <li><strong>Comunicación:</strong> Enlace extendido y telemetría</li>
+                      <li><strong>Soporte:</strong> Mantenimiento preventivo y repuestos locales</li>
+                    </ul>
+                  </div>
+
                   <a 
-                    href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CRTech, deseo consultar sobre las plataformas de Operaciones Especializadas SwellPro.')}`} 
+                    href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CRTech, deseo solicitar una recomendación para Plataformas Especializadas.')}`} 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="sol-card-link"
                   >
-                    <span>Consultar por WhatsApp</span>
+                    <span>Solicitar recomendación</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
@@ -596,7 +868,91 @@ export default function DronesLanding() {
           </div>
         </section>
 
-        {/* 7. SECCIÓN DE SOPORTE TÉCNICO Y RESPALDO LOCAL */}
+        {/* 8. BLOQUE "CÓMO DEFINIMOS TU CONFIGURACIÓN" (FASE 5B) */}
+        <section className="drones-config-process-section">
+          <div className="section-container">
+            <div className="config-process-header text-center">
+              <span className="section-eyebrow">METODOLOGÍA DE ASESORÍA</span>
+              <h2 className="section-title">
+                Cómo definimos tu configuración
+              </h2>
+              <p className="section-subtitle">
+                No recomendamos desde un catálogo cerrado. Primero entendemos dónde, cómo y para qué necesitas operar.
+              </p>
+            </div>
+
+            <div className="config-steps-band">
+              <div className="config-step-item">
+                <div className="step-num-badge">01</div>
+                <div className="step-content">
+                  <h3 className="step-title">Entorno y objetivo</h3>
+                  <p className="step-desc">Evaluamos la ubicación, las condiciones climáticas y la misión requerida.</p>
+                </div>
+              </div>
+
+              <div className="config-step-arrow" aria-hidden="true">→</div>
+
+              <div className="config-step-item">
+                <div className="step-num-badge">02</div>
+                <div className="step-content">
+                  <h3 className="step-title">Plataforma y accesorios</h3>
+                  <p className="step-desc">Seleccionamos los sensores, soltadores o cámaras de acuerdo con el trabajo.</p>
+                </div>
+              </div>
+
+              <div className="config-step-arrow" aria-hidden="true">→</div>
+
+              <div className="config-step-item">
+                <div className="step-num-badge">03</div>
+                <div className="step-content">
+                  <h3 className="step-title">Capacitación y soporte</h3>
+                  <p className="step-desc">Acompañamos el entrenamiento de los pilotos y garantizamos respaldo técnico.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 9. FAQ BREVE (FASE 5B) */}
+        <section className="drones-faq-section" id="faq">
+          <div className="section-container">
+            <div className="section-header text-center">
+              <span className="section-eyebrow">PREGUNTAS FRECUENTES</span>
+              <h2 className="section-title">
+                Respuestas claras para tu decisión
+              </h2>
+              <p className="section-subtitle">
+                Resolvemos las inquietudes operativas más comunes sobre el despliegue de drones SwellPro en Perú.
+              </p>
+            </div>
+
+            <div className="faq-grid">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaqIndex === index;
+                return (
+                  <div className={`faq-card ${isOpen ? 'open' : ''}`} key={index}>
+                    <button 
+                      type="button" 
+                      className="faq-question-btn"
+                      onClick={() => toggleFaq(index)}
+                      aria-expanded={isOpen}
+                    >
+                      <span className="faq-q-text">{faq.q}</span>
+                      <span className="faq-icon-indicator">{isOpen ? '−' : '+'}</span>
+                    </button>
+                    {isOpen && (
+                      <div className="faq-answer-body">
+                        <p className="faq-a-text">{faq.a}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* 10. SECCIÓN DE SOPORTE TÉCNICO Y RESPALDO LOCAL */}
         <section className="drones-support-section" id="soporte">
           <div className="section-container">
             <div className="support-banner-grid">
@@ -650,7 +1006,7 @@ export default function DronesLanding() {
           </div>
         </section>
 
-        {/* 8. CTA FINAL */}
+        {/* 11. CTA FINAL */}
         <section className="drones-final-cta-section">
           <div className="section-container">
             <div className="drones-final-cta-card">
@@ -682,7 +1038,68 @@ export default function DronesLanding() {
 
       </main>
 
-      {/* 9. FOOTER DEDICADO DRONES */}
+      {/* 12. VISOR DE VIDEO MODAL (FASE 5B) */}
+      {activeModalCase && (
+        <div 
+          className="drones-modal-backdrop"
+          onClick={closeModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-case-title"
+        >
+          <div 
+            className="drones-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              type="button" 
+              className="drones-modal-close-btn"
+              onClick={closeModal}
+              aria-label="Cerrar visor de video"
+              title="Cerrar visor de video (Esc)"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="close-icon">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+
+            <div className="drones-modal-video-wrap">
+              <video
+                className="drones-modal-video"
+                src={activeModalCase.videoUrl}
+                poster={activeModalCase.posterUrl}
+                controls
+                autoPlay
+                playsInline
+                preload="metadata"
+              />
+            </div>
+
+            <div className="drones-modal-info">
+              <span className="modal-category-badge">{activeModalCase.category}</span>
+              <h3 id="modal-case-title" className="modal-case-title">{activeModalCase.title}</h3>
+              <p className="modal-case-desc">{activeModalCase.description}</p>
+              <div className="modal-cta-wrap">
+                <a
+                  href="https://wa.me/51991664146?text=Hola%20CRTech,%20vi%20los%20casos%20reales%20de%20SwellPro%20Per%C3%BA%20y%20quiero%20consultar%20una%20aplicaci%C3%B3n%20similar."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary modal-cta-btn"
+                >
+                  Consultar una aplicación similar
+                  <svg className="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 13. FOOTER DEDICADO DRONES */}
       <footer className="drones-footer">
         <div className="footer-container">
           <div className="drones-footer-main">
@@ -706,8 +1123,9 @@ export default function DronesLanding() {
               <h4 className="footer-col-title">Navegación</h4>
               <ul className="footer-links">
                 <li><a href="#aplicaciones" onClick={(e) => scrollToSection(e, 'aplicaciones')}>Aplicaciones</a></li>
+                <li><a href="#evidencia" onClick={(e) => scrollToSection(e, 'evidencia')}>Evidencia de campo</a></li>
                 <li><a href="#capacidades" onClick={(e) => scrollToSection(e, 'capacidades')}>Capacidades</a></li>
-                <li><a href="#modelos" onClick={(e) => scrollToSection(e, 'modelos')}>Soluciones</a></li>
+                <li><a href="#modelos" onClick={(e) => scrollToSection(e, 'modelos')}>Plataformas</a></li>
                 <li><a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')}>Soporte Técnico</a></li>
                 <li><a href="#/">← Volver a CRTech Home</a></li>
               </ul>
