@@ -75,21 +75,23 @@ export default function CEOSection() {
           
           {/* Photo Side */}
           <div className="ceo-media-side">
-            <div className="ceo-image-wrapper">
-              <img 
-                src={assets.company.ceoCarlosRivera} 
-                alt="Carlos Rivera, CEO de CR Technologies & Services" 
-                className="ceo-photo"
-                loading="lazy"
-                decoding="async"
-                width="500"
-                height="600"
-              />
-              <div className="ceo-caption-overlay">
-                <span className="ceo-name">Carlos Rivera</span>
-                <span className="ceo-role">Gerente General - CR Tech</span>
+            <figure className="ceo-figure">
+              <div className="ceo-image-wrapper">
+                <img 
+                  src={assets.company.ceoCarlosRivera} 
+                  alt="Carlos Rivera, Gerente General de CR Technologies & Services" 
+                  className="ceo-photo"
+                  loading="lazy"
+                  decoding="async"
+                  width="500"
+                  height="600"
+                />
+                <figcaption className="ceo-caption-overlay">
+                  <span className="ceo-name">Carlos Rivera</span>
+                  <span className="ceo-role">Gerente General · CR Technologies & Services</span>
+                </figcaption>
               </div>
-            </div>
+            </figure>
           </div>
 
           {/* Narrative Side */}

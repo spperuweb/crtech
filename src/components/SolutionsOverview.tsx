@@ -371,7 +371,7 @@ export default function SolutionsOverview() {
                   href="#/drones" 
                   className="btn btn-secondary-accent cyan"
                 >
-                  Explorar Drones SwellPro Perú
+                  Explorar Drones Profesionales
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="btn-icon">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -463,14 +463,13 @@ export default function SolutionsOverview() {
 
               <div className="block-cta-row">
                 <a 
-                  href="https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20quiero%20conocer%20las%20soluciones%20de%20energia%20EcoFlow%20para%20mi%20operacion."
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                  href="#/energia"
                   className="btn btn-secondary-accent amber"
                 >
-                  Conocer soluciones de energía
+                  Explorar Energía EcoFlow
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="btn-icon">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
                 </a>
               </div>
@@ -575,14 +574,13 @@ export default function SolutionsOverview() {
 
               <div className="block-cta-row">
                 <a 
-                  href="https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20quiero%20conocer%20los%20servicios%20TI%20y%20redes%20para%20mi%20empresa."
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                  href="#/servicios-ti"
                   className="btn btn-secondary-accent violet"
                 >
-                  Conocer servicios TI
+                  Explorar Servicios TI
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="btn-icon">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
                 </a>
               </div>

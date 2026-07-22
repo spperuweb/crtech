@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { assets } from '../data/assets';
+import SolucionesDropdown from './SolucionesDropdown';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -16,7 +17,7 @@ export default function Header() {
     <header className="site-header" id="main-header">
       <div className="header-container">
         {/* Logo */}
-        <a href="#" className="header-logo" onClick={closeMenu}>
+        <a href="#/" className="header-logo" onClick={closeMenu}>
           <img 
             src={assets.logos.lightBack} 
             alt="CR Technologies & Services" 
@@ -28,11 +29,10 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="desktop-nav" aria-label="Navegación principal">
-          <a href="#soluciones" className="nav-link">Soluciones</a>
-          <a href="#/drones" className="nav-link">Drones</a>
-          <a href="#/energia" className="nav-link">Energía</a>
-          <a href="#/servicios-ti" className="nav-link">Servicios TI</a>
+          <SolucionesDropdown currentRoute="home" />
+          <a href="#soluciones" className="nav-link">Visión General</a>
           <a href="#nosotros" className="nav-link">Nosotros</a>
+          <a href="#metodo" className="nav-link">Método</a>
         </nav>
 
         {/* CTA Button */}
@@ -64,11 +64,22 @@ export default function Header() {
       {/* Mobile Navigation Drawer */}
       <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'active' : ''}`}>
         <nav className="mobile-nav" aria-label="Navegación móvil">
-          <a href="#soluciones" className="mobile-nav-link" onClick={closeMenu}>Soluciones</a>
-          <a href="#/drones" className="mobile-nav-link" onClick={closeMenu}>Drones</a>
-          <a href="#/energia" className="mobile-nav-link" onClick={closeMenu}>Energía</a>
-          <a href="#/servicios-ti" className="mobile-nav-link" onClick={closeMenu}>Servicios TI</a>
+          <div className="mobile-solutions-group">
+            <span className="mobile-solutions-title">Soluciones CRTech</span>
+            <a href="#/drones" className="mobile-solution-link" onClick={closeMenu}>
+              Drones Profesionales
+            </a>
+            <a href="#/energia" className="mobile-solution-link" onClick={closeMenu}>
+              Energía EcoFlow
+            </a>
+            <a href="#/servicios-ti" className="mobile-solution-link" onClick={closeMenu}>
+              Servicios TI
+            </a>
+          </div>
+
+          <a href="#soluciones" className="mobile-nav-link" onClick={closeMenu}>Visión General</a>
           <a href="#nosotros" className="mobile-nav-link" onClick={closeMenu}>Nosotros</a>
+          <a href="#metodo" className="mobile-nav-link" onClick={closeMenu}>Método</a>
           
           <a 
             href={assets.contact.whatsappUrl} 
@@ -84,3 +95,4 @@ export default function Header() {
     </header>
   );
 }
+

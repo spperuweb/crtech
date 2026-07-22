@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
+import SolucionesDropdown from './SolucionesDropdown';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -472,6 +473,7 @@ export default function EcoFlowLanding() {
 
           {/* Desktop Navigation */}
           <nav className="desktop-nav" aria-label="Navegación EcoFlow">
+            <SolucionesDropdown currentRoute="energia" />
             <a href="#aplicaciones-ecoflow" onClick={(e) => scrollToSection(e, 'aplicaciones-ecoflow')} className="nav-link">
               Aplicaciones
             </a>
@@ -486,9 +488,6 @@ export default function EcoFlowLanding() {
             </a>
             <a href="#soporte-ecoflow" onClick={(e) => scrollToSection(e, 'soporte-ecoflow')} className="nav-link">
               Soporte
-            </a>
-            <a href="#/" className="nav-link nav-link-return">
-              ← Volver a CRTech
             </a>
           </nav>
 
@@ -525,6 +524,18 @@ export default function EcoFlowLanding() {
         {mobileMenuOpen && (
           <div className="mobile-nav-drawer">
             <nav className="mobile-nav-links">
+              <div className="mobile-solutions-group">
+                <span className="mobile-solutions-title">Soluciones CRTech</span>
+                <a href="#/drones" className="mobile-solution-link" onClick={closeMenu}>
+                  Drones Profesionales
+                </a>
+                <a href="#/energia" className="mobile-solution-link active" onClick={closeMenu}>
+                  Energía EcoFlow
+                </a>
+                <a href="#/servicios-ti" className="mobile-solution-link" onClick={closeMenu}>
+                  Servicios TI
+                </a>
+              </div>
               <a href="#aplicaciones-ecoflow" onClick={(e) => scrollToSection(e, 'aplicaciones-ecoflow')} className="mobile-nav-link">
                 Aplicaciones
               </a>
@@ -539,9 +550,6 @@ export default function EcoFlowLanding() {
               </a>
               <a href="#soporte-ecoflow" onClick={(e) => scrollToSection(e, 'soporte-ecoflow')} className="mobile-nav-link">
                 Soporte Local
-              </a>
-              <a href="#/" onClick={closeMenu} className="mobile-nav-link text-sky-600 font-bold">
-                ← Volver a CRTech Home
               </a>
             </nav>
             <div className="mobile-drawer-footer">
@@ -1470,11 +1478,15 @@ export default function EcoFlowLanding() {
           <div className="ecoflow-footer-main">
             
             <div className="footer-brand-col">
-              <img 
-                src={assets.logos.lightBack} 
-                alt="CR Technologies & Services" 
-                className="footer-logo"
-              />
+              <a href="#/" aria-label="CR Technologies & Services inicio">
+                <img 
+                  src={assets.logos.darkBack} 
+                  alt="CR Technologies & Services" 
+                  className="footer-logo"
+                  width="220"
+                  height="44"
+                />
+              </a>
               <p className="footer-brand-desc">
                 CR Technologies & Services es representante e integrador oficial de soluciones de energía portátil y solar EcoFlow en Perú.
               </p>
@@ -1492,7 +1504,6 @@ export default function EcoFlowLanding() {
                 <li><a href="#familias-ecoflow" onClick={(e) => scrollToSection(e, 'familias-ecoflow')}>Soluciones</a></li>
                 <li><a href="#tecnologia-ecoflow" onClick={(e) => scrollToSection(e, 'tecnologia-ecoflow')}>Tecnología</a></li>
                 <li><a href="#soporte-ecoflow" onClick={(e) => scrollToSection(e, 'soporte-ecoflow')}>Soporte Local</a></li>
-                <li><a href="#/">← Volver a CRTech Home</a></li>
               </ul>
             </div>
 
@@ -1500,7 +1511,7 @@ export default function EcoFlowLanding() {
               <h4 className="footer-col-title">Otras Divisiones</h4>
               <ul className="footer-links">
                 <li><a href="#/drones">Drones / SwellPro Perú</a></li>
-                <li><a href="#/">Servicios TI e Infraestructura</a></li>
+                <li><a href="#/servicios-ti">Servicios TI e Infraestructura</a></li>
                 <li><a href="#/">CR Tech Principal</a></li>
               </ul>
             </div>

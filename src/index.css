@@ -6916,5 +6916,267 @@ a {
   color: #64748B;
 }
 
+/* ==================================================
+   FASE 8A - GLOBAL NAVIGATION, CONVERSION & BRAND
+   ================================================== */
+
+/* Soluciones Dropdown (Desktop Nav) */
+.soluciones-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.soluciones-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-dark);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  transition: all 180ms ease;
+}
+
+.soluciones-trigger-btn:hover,
+.soluciones-trigger-btn.active {
+  color: var(--color-brand);
+  background-color: var(--color-ice-blue);
+}
+
+.dropdown-chevron-icon {
+  width: 14px;
+  height: 14px;
+  transition: transform 200ms ease;
+  color: currentColor;
+}
+
+.dropdown-chevron-icon.open {
+  transform: rotate(180deg);
+}
+
+.soluciones-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 280px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 32px rgba(7, 21, 44, 0.12);
+  padding: 8px 0;
+  z-index: 1000;
+  animation: fadeInDown 180ms ease-out forwards;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.soluciones-menu-header {
+  padding: 8px 16px 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.soluciones-menu-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: var(--color-dark);
+  transition: background-color 150ms ease;
+}
+
+.soluciones-menu-item:hover {
+  background-color: var(--color-ice-blue);
+}
+
+.soluciones-menu-item.active {
+  background-color: rgba(22, 139, 255, 0.08);
+}
+
+.soluciones-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: var(--color-bg-alt);
+  color: var(--color-brand);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.soluciones-menu-item:hover .soluciones-item-icon {
+  background-color: var(--color-brand);
+  color: #FFFFFF;
+}
+
+.soluciones-item-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.soluciones-item-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-dark);
+  line-height: 1.3;
+}
+
+.soluciones-item-desc {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+/* Mobile Solutions Drawer Group */
+.mobile-solutions-group {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobile-solutions-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+  padding-left: 8px;
+}
+
+.mobile-solution-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-dark);
+  text-decoration: none;
+  transition: background-color 150ms ease;
+}
+
+.mobile-solution-link:hover {
+  background-color: var(--color-ice-blue);
+  color: var(--color-brand);
+}
+
+.mobile-solution-link.active {
+  background-color: rgba(22, 139, 255, 0.1);
+  color: var(--color-brand);
+  font-weight: 700;
+}
+
+/* Floating WhatsApp Button */
+.floating-whatsapp-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+}
+
+.floating-whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #25D366;
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  position: relative;
+}
+
+.floating-whatsapp-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5);
+}
+
+.floating-whatsapp-icon {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+
+.floating-whatsapp-tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  background-color: var(--color-footer-bg);
+  color: #FFFFFF;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(7, 21, 44, 0.18);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.floating-whatsapp-container:hover .floating-whatsapp-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* CEO Figure Refactoring */
+.ceo-figure {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.ceo-caption-overlay {
+  margin-top: 16px;
+}
+
+.ceo-name {
+  display: block;
+  font-family: var(--font-headings);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-dark);
+  line-height: 1.25;
+}
+
+.ceo-role {
+  display: block;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
 
 

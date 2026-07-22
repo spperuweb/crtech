@@ -10,15 +10,17 @@ export default function Footer() {
         
         {/* Company Identity Block */}
         <div className="footer-brand-column">
-          <img 
-            src={assets.logos.alternative} 
-            alt="CR Tech Services Logo" 
-            className="footer-logo-img"
-            loading="lazy"
-            decoding="async"
-            width="180"
-            height="40"
-          />
+          <a href="#/" aria-label="CR Technologies & Services inicio">
+            <img 
+              src={assets.logos.darkBack} 
+              alt="CR Technologies & Services" 
+              className="footer-logo-img"
+              loading="lazy"
+              decoding="async"
+              width="220"
+              height="44"
+            />
+          </a>
           <p className="footer-brand-desc">
             Tecnología aérea profesional, sistemas de energía portátil y servicios de infraestructura TI integrados en el territorio peruano.
           </p>

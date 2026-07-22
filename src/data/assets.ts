@@ -4,6 +4,7 @@
 export const assets = {
   logos: {
     lightBack: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782419695/CRTech_LogoHorizontal_BackLight_leqyyi.png",
+    darkBack: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782420769/CRTech_LogoHorizontal_FondoDark_zcezvt.png",
     alternative: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782426594/CR_Tech_Sevices_Logo_powukx.png",
     favicon: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782419700/favicon_xuwimd.png",
     swellProPeru: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779807248/SwellProPeru_logo-01-01_pub6gp.png",

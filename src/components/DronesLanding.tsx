@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { assets } from '../data/assets';
+import SolucionesDropdown from './SolucionesDropdown';
 
 interface EvidenceCase {
   id: string;
@@ -130,6 +131,7 @@ export default function DronesLanding() {
 
           {/* Nav Desktop */}
           <nav className="desktop-nav" aria-label="Navegación Drones SwellPro">
+            <SolucionesDropdown currentRoute="drones" />
             <a href="#aplicaciones" onClick={(e) => scrollToSection(e, 'aplicaciones')} className="nav-link">
               Aplicaciones
             </a>
@@ -144,9 +146,6 @@ export default function DronesLanding() {
             </a>
             <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="nav-link">
               Soporte
-            </a>
-            <a href="#/" className="nav-link nav-link-return">
-              ← Volver a CRTech
             </a>
           </nav>
 
@@ -179,8 +178,17 @@ export default function DronesLanding() {
         {/* Mobile Navigation Drawer */}
         <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'active' : ''}`}>
           <nav className="mobile-nav" aria-label="Navegación móvil Drones">
-            <div className="mobile-badge-item">
-              <span>Drones profesionales · SwellPro Perú</span>
+            <div className="mobile-solutions-group">
+              <span className="mobile-solutions-title">Soluciones CRTech</span>
+              <a href="#/drones" className="mobile-solution-link active" onClick={closeMenu}>
+                Drones Profesionales
+              </a>
+              <a href="#/energia" className="mobile-solution-link" onClick={closeMenu}>
+                Energía EcoFlow
+              </a>
+              <a href="#/servicios-ti" className="mobile-solution-link" onClick={closeMenu}>
+                Servicios TI
+              </a>
             </div>
             <a href="#aplicaciones" onClick={(e) => scrollToSection(e, 'aplicaciones')} className="mobile-nav-link">
               Aplicaciones
@@ -196,9 +204,6 @@ export default function DronesLanding() {
             </a>
             <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="mobile-nav-link">
               Soporte
-            </a>
-            <a href="#/" className="mobile-nav-link mobile-return-link" onClick={closeMenu}>
-              ← Volver a CRTech Home
             </a>
             <a 
               href={whatsappUrl}
@@ -1104,14 +1109,14 @@ export default function DronesLanding() {
         <div className="footer-container">
           <div className="drones-footer-main">
             <div className="footer-brand-col">
-              <a href="#/" className="footer-logo">
+              <a href="#/" className="footer-logo" aria-label="CR Technologies & Services inicio">
                 <img 
-                  src={assets.logos.lightBack} 
+                  src={assets.logos.darkBack} 
                   alt="CR Technologies & Services" 
                   className="footer-logo-img" 
                   loading="lazy"
-                  width="180"
-                  height="36"
+                  width="220"
+                  height="44"
                 />
               </a>
               <p className="footer-brand-tagline">
@@ -1127,7 +1132,6 @@ export default function DronesLanding() {
                 <li><a href="#capacidades" onClick={(e) => scrollToSection(e, 'capacidades')}>Capacidades</a></li>
                 <li><a href="#modelos" onClick={(e) => scrollToSection(e, 'modelos')}>Plataformas</a></li>
                 <li><a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')}>Soporte Técnico</a></li>
-                <li><a href="#/">← Volver a CRTech Home</a></li>
               </ul>
             </div>
 

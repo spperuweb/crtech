@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import DronesLanding from './components/DronesLanding';
 import EcoFlowLanding from './components/EcoFlowLanding';
 import ServiciosTILanding from './components/ServiciosTILanding';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 
 type RouteType = 'home' | 'drones' | 'energia' | 'servicios-ti';
 
@@ -38,30 +39,27 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  if (currentRoute === 'drones') {
-    return <DronesLanding />;
-  }
-
-  if (currentRoute === 'energia') {
-    return <EcoFlowLanding />;
-  }
-
-  if (currentRoute === 'servicios-ti') {
-    return <ServiciosTILanding />;
-  }
-
   return (
-    <div className="app-wrapper">
-      <Header />
-      <main id="main-content-flow">
-        <Hero />
-        <TrustStrip />
-        <SolutionsOverview />
-        <MethodSection />
-        <CEOSection />
-        <FinalCTA />
-      </main>
-      <Footer />
-    </div>
+    <>
+      {currentRoute === 'drones' && <DronesLanding />}
+      {currentRoute === 'energia' && <EcoFlowLanding />}
+      {currentRoute === 'servicios-ti' && <ServiciosTILanding />}
+      {currentRoute === 'home' && (
+        <div className="app-wrapper">
+          <Header />
+          <main id="main-content-flow">
+            <Hero />
+            <TrustStrip />
+            <SolutionsOverview />
+            <MethodSection />
+            <CEOSection />
+            <FinalCTA />
+          </main>
+          <Footer />
+        </div>
+      )}
+      <FloatingWhatsApp currentRoute={currentRoute} />
+    </>
   );
 }
+

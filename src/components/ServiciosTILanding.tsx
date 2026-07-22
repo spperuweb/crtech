@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
+import SolucionesDropdown from './SolucionesDropdown';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -604,7 +605,7 @@ Quiero validar el alcance con un especialista.`;
       <header className="servicios-ti-header sticky-header">
         <div className="header-container">
           <div className="brand-ident-group">
-            <a href="#" className="header-logo" onClick={closeMenu}>
+            <a href="#/" className="header-logo" onClick={closeMenu}>
               <img 
                 src={assets.logos.lightBack} 
                 alt="CR Technologies & Services" 
@@ -617,12 +618,12 @@ Quiero validar el alcance con un especialista.`;
           </div>
 
           <nav className="desktop-nav" aria-label="Navegación Servicios TI">
+            <SolucionesDropdown currentRoute="servicios-ti" />
             <a href="#diagnostico" onClick={(e) => scrollToSection(e, 'diagnostico')} className="nav-link">Diagnóstico</a>
             <a href="#infraestructura" onClick={(e) => scrollToSection(e, 'infraestructura')} className="nav-link">Infraestructura</a>
             <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="nav-link">Soporte</a>
             <a href="#escenarios" onClick={(e) => scrollToSection(e, 'escenarios')} className="nav-link">Escenarios</a>
             <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="nav-link">FAQ</a>
-            <a href="#" className="nav-link nav-link-return">← Volver a CRTech</a>
           </nav>
 
           <div className="header-cta-wrapper">
@@ -651,12 +652,23 @@ Quiero validar el alcance con un especialista.`;
 
         <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'active' : ''}`}>
           <nav className="mobile-nav" aria-label="Navegación móvil Servicios TI">
+            <div className="mobile-solutions-group">
+              <span className="mobile-solutions-title">Soluciones CRTech</span>
+              <a href="#/drones" className="mobile-solution-link" onClick={closeMenu}>
+                Drones Profesionales
+              </a>
+              <a href="#/energia" className="mobile-solution-link" onClick={closeMenu}>
+                Energía EcoFlow
+              </a>
+              <a href="#/servicios-ti" className="mobile-solution-link active" onClick={closeMenu}>
+                Servicios TI
+              </a>
+            </div>
             <a href="#diagnostico" onClick={(e) => scrollToSection(e, 'diagnostico')} className="mobile-nav-link">Diagnóstico</a>
             <a href="#infraestructura" onClick={(e) => scrollToSection(e, 'infraestructura')} className="mobile-nav-link">Infraestructura</a>
             <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="mobile-nav-link">Soporte</a>
             <a href="#escenarios" onClick={(e) => scrollToSection(e, 'escenarios')} className="mobile-nav-link">Escenarios</a>
             <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="mobile-nav-link">FAQ</a>
-            <a href="#" onClick={closeMenu} className="mobile-nav-link">← Volver a CRTech Principal</a>
             <a 
               href={defaultWhatsappUrl} 
               className="btn btn-primary mobile-cta-btn"
@@ -1519,14 +1531,16 @@ Quiero validar el alcance con un especialista.`;
       <footer className="site-footer" id="main-footer">
         <div className="footer-container">
           <div className="footer-brand-column">
-            <img 
-              src={assets.logos.alternative} 
-              alt="CR Tech Services Logo" 
-              className="footer-logo-img"
-              loading="lazy"
-              width="180"
-              height="40"
-            />
+            <a href="#/" aria-label="CR Technologies & Services inicio">
+              <img 
+                src={assets.logos.darkBack} 
+                alt="CR Technologies & Services" 
+                className="footer-logo-img"
+                loading="lazy"
+                width="220"
+                height="44"
+              />
+            </a>
             <p className="footer-brand-desc">
               Soluciones de infraestructura TI, redes corporativas, soporte técnico, videovigilancia y continuidad para empresas e instituciones en Perú.
             </p>
@@ -1553,7 +1567,7 @@ Quiero validar el alcance con un especialista.`;
               <li><a href="#/drones">Drones Profesionales</a></li>
               <li><a href="#/energia">Energía Portátil EcoFlow</a></li>
               <li><a href="#/servicios-ti">Servicios TI & Redes</a></li>
-              <li><a href="#">CRTech Principal</a></li>
+              <li><a href="#/">CRTech Principal</a></li>
             </ul>
           </div>
 
