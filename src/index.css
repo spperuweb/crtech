@@ -2086,3 +2086,1030 @@ a {
     font-size: 52px;
   }
 }
+
+/* --------------------------------------------------
+   DRONES LANDING (FASE 5A) STYLES
+   -------------------------------------------------- */
+
+.drones-landing-wrapper {
+  min-height: 100vh;
+  background-color: var(--color-bg-light);
+  color: var(--color-dark);
+  overflow-x: hidden;
+}
+
+/* Header Dedicated */
+.drones-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.drones-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.drones-secondary-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(51, 185, 232, 0.1);
+  color: #0284C7;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(51, 185, 232, 0.25);
+  white-space: nowrap;
+}
+
+.drones-secondary-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #0284C7;
+}
+
+.nav-link-return {
+  color: #0284C7 !important;
+  font-weight: 600;
+}
+
+.nav-link-return:hover {
+  color: var(--color-brand) !important;
+}
+
+.drones-cta-btn {
+  background-color: var(--color-brand);
+  color: #ffffff;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.mobile-badge-item {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0284C7;
+  background-color: rgba(51, 185, 232, 0.08);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+}
+
+.mobile-return-link {
+  color: #0284C7 !important;
+  font-weight: 700;
+}
+
+/* Hero Section */
+.drones-hero-section {
+  padding: 48px 20px 64px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F3F8FC 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.drones-hero-container {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+@media (min-width: 900px) {
+  .drones-hero-section {
+    padding: 72px 32px 88px;
+  }
+  .drones-hero-container {
+    display: grid;
+    grid-template-columns: 44% 56%;
+    align-items: center;
+    gap: 48px;
+  }
+}
+
+.drones-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.drones-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #0284C7;
+  text-transform: uppercase;
+}
+
+.eyebrow-accent {
+  width: 16px;
+  height: 2px;
+  background-color: #0284C7;
+  border-radius: 1px;
+}
+
+.drones-hero-title {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--color-dark);
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .drones-hero-title {
+    font-size: 42px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .drones-hero-title {
+    font-size: 48px;
+  }
+}
+
+.drones-hero-subtitle {
+  font-size: 16px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .drones-hero-subtitle {
+    font-size: 18px;
+  }
+}
+
+.drones-hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@media (min-width: 480px) {
+  .drones-hero-actions {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.hero-btn-main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 24px;
+  background-color: var(--color-brand);
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 14px rgba(22, 139, 255, 0.25);
+  transition: all var(--transition-fast);
+}
+
+.hero-btn-main:hover {
+  background-color: var(--color-brand-hover);
+  transform: translateY(-1px);
+}
+
+.hero-btn-sub {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 20px;
+  background-color: rgba(7, 21, 44, 0.05);
+  color: var(--color-dark);
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.hero-btn-sub:hover {
+  background-color: rgba(7, 21, 44, 0.08);
+  border-color: #BACDD2;
+}
+
+.drones-hero-guarantees {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 16px;
+  margin-top: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.guarantee-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.guarantee-check {
+  width: 18px;
+  height: 18px;
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+/* Hero Visual Column */
+.drones-hero-visual {
+  position: relative;
+  width: 100%;
+}
+
+.drones-hero-signature-line {
+  display: none;
+  position: absolute;
+  top: 10%;
+  left: -20%;
+  width: 120%;
+  height: 80%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (min-width: 900px) {
+  .drones-hero-signature-line {
+    display: block;
+  }
+}
+
+.drones-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: #06142D;
+  box-shadow: 0 16px 40px rgba(7, 21, 44, 0.12);
+  border: 1px solid rgba(220, 230, 239, 0.8);
+  z-index: 2;
+}
+
+.drones-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.drones-video-toggle-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(6, 20, 45, 0.82);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+  z-index: 5;
+}
+
+.drones-video-toggle-btn:hover {
+  background-color: rgba(6, 20, 45, 0.95);
+  transform: scale(1.05);
+}
+
+.toggle-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.drones-video-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(6, 20, 45, 0.78);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10B981;
+  box-shadow: 0 0 8px #10B981;
+}
+
+/* Trust Strip */
+.drones-trust-strip {
+  background-color: #F3F8FC;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 24px 20px;
+}
+
+.trust-strip-container {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .trust-strip-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.trust-brand-item {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.trust-swellpro-logo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.trust-divider {
+  display: none;
+  width: 1px;
+  height: 32px;
+  background-color: var(--color-border);
+}
+
+@media (min-width: 900px) {
+  .trust-divider {
+    display: block;
+  }
+}
+
+.trust-features-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px 24px;
+}
+
+.trust-feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.pill-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-brand);
+  flex-shrink: 0;
+}
+
+/* Common Section Header */
+.section-container {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: 64px 20px;
+}
+
+@media (min-width: 768px) {
+  .section-container {
+    padding: 88px 32px;
+  }
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #0284C7;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--color-dark);
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 36px;
+  }
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: var(--color-text-muted);
+  max-width: 680px;
+  margin: 12px auto 0;
+  line-height: 1.6;
+}
+
+/* 4. Operations Section */
+.drones-operations-section {
+  background-color: #FFFFFF;
+}
+
+.operations-editorial-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 48px;
+}
+
+@media (min-width: 992px) {
+  .operations-editorial-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 32px;
+    align-items: stretch;
+  }
+}
+
+.op-card {
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.op-card:hover {
+  box-shadow: 0 12px 28px rgba(7, 21, 44, 0.08);
+}
+
+.op-card-primary {
+  display: flex;
+  flex-direction: column;
+}
+
+.op-card-primary .op-card-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.op-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease;
+}
+
+.op-card:hover .op-img {
+  transform: scale(1.03);
+}
+
+.op-card-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background-color: rgba(6, 20, 45, 0.85);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+
+.op-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.op-card-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.op-card-text {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+.op-secondary-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.op-card-horizontal {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 540px) {
+  .op-card-horizontal {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .op-card-horizontal .op-card-image-wrap {
+    width: 180px;
+    height: 100%;
+    min-height: 140px;
+    flex-shrink: 0;
+    position: relative;
+  }
+}
+
+/* 5. Capabilities Section */
+.drones-capabilities-section {
+  background-color: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 48px;
+}
+
+@media (min-width: 640px) {
+  .capabilities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .capabilities-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.capability-card {
+  background-color: #FFFFFF;
+  padding: 32px 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.capability-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(51, 185, 232, 0.5);
+}
+
+.cap-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: rgba(51, 185, 232, 0.1);
+  color: #0284C7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cap-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.cap-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.cap-desc {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.capabilities-cta-bar {
+  margin-top: 48px;
+  text-align: center;
+}
+
+/* 6. Solutions Preview Section */
+.drones-solutions-preview-section {
+  background-color: #FFFFFF;
+}
+
+.solutions-preview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-top: 48px;
+}
+
+@media (min-width: 768px) {
+  .solutions-preview-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.sol-preview-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-fast);
+}
+
+.sol-preview-card:hover {
+  border-color: var(--color-brand);
+  box-shadow: 0 12px 32px rgba(22, 139, 255, 0.12);
+}
+
+.sol-card-media {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: #F5F9FC;
+}
+
+.sol-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease;
+}
+
+.sol-preview-card:hover .sol-img {
+  transform: scale(1.04);
+}
+
+.sol-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 12px;
+}
+
+.sol-card-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.sol-card-desc {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  flex-grow: 1;
+}
+
+.sol-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-brand);
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+  transition: color var(--transition-fast);
+}
+
+.sol-card-link:hover {
+  color: var(--color-brand-hover);
+}
+
+.link-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
+}
+
+.sol-card-link:hover .link-arrow {
+  transform: translateX(4px);
+}
+
+/* 7. Support Section */
+.drones-support-section {
+  background-color: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+}
+
+.support-banner-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .support-banner-grid {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+}
+
+.support-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.support-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.support-text {
+  font-size: 16px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.support-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.support-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--color-dark);
+}
+
+.support-bullets .bullet-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #0284C7;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.support-card-highlight {
+  background: linear-gradient(135deg, #06142D 0%, #0A224A 100%);
+  color: #ffffff;
+  padding: 36px 28px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 16px 36px rgba(6, 20, 45, 0.15);
+}
+
+.highlight-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background-color: rgba(51, 185, 232, 0.2);
+  color: #38BDF8;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.highlight-heading {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.highlight-desc {
+  font-size: 14px;
+  color: #94A3B8;
+  line-height: 1.5;
+}
+
+.btn-secondary-light {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.btn-secondary-light:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+/* 8. Final CTA Section */
+.drones-final-cta-section {
+  padding: 64px 20px;
+  background-color: #FFFFFF;
+}
+
+.drones-final-cta-card {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  background-color: #06142D;
+  background-image: radial-gradient(circle at 80% 20%, rgba(51, 185, 232, 0.15) 0%, transparent 50%);
+  border-radius: var(--radius-lg);
+  padding: 48px 24px;
+  text-align: center;
+  color: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .drones-final-cta-card {
+    padding: 64px 48px;
+  }
+}
+
+.cta-card-content {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.cta-card-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+@media (min-width: 768px) {
+  .cta-card-title {
+    font-size: 36px;
+  }
+}
+
+.cta-card-text {
+  font-size: 16px;
+  color: #94A3B8;
+  line-height: 1.6;
+}
+
+.cta-card-actions {
+  margin-top: 12px;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .cta-card-actions {
+    width: auto;
+  }
+}
+
+.cta-btn-large {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 700;
+  min-height: 52px;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .cta-btn-large {
+    width: auto;
+  }
+}
+
+/* 9. Dedicated Drones Footer */
+.drones-footer {
+  background-color: #061329;
+  color: #94A3B8;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 56px 20px 32px;
+}
+
+.drones-footer .footer-container {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.drones-footer-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+
+@media (min-width: 768px) {
+  .drones-footer-main {
+    grid-template-columns: 1.5fr 1fr 1fr;
+  }
+}
+
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-brand-tagline {
+  font-size: 14px;
+  color: #64748B;
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+.footer-col-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links a {
+  font-size: 14px;
+  color: #94A3B8;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+}
+
+.footer-contact-text {
+  font-size: 14px;
+  color: #64748B;
+  margin-bottom: 8px;
+}
+
+.footer-wa-link {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #38BDF8;
+  transition: color var(--transition-fast);
+}
+
+.footer-wa-link:hover {
+  color: #ffffff;
+}
+
+.drones-footer-bottom {
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  font-size: 13px;
+  color: #64748B;
+}

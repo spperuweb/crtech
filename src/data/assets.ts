@@ -12,6 +12,19 @@ export const assets = {
   drones: {
     inAction: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1200,c_limit/v1779929015/swellpro-peru-dron_jhkqhb.jpg",
     productHorizontal: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1200,c_limit/v1779933447/fd3-image-17_e1q8iz.jpg",
+    heroVideo: "https://res.cloudinary.com/drvejtepq/video/upload/f_auto,q_auto/v1779941029/swellpro-peru-en-accion-04_tksmyf.mp4",
+    heroPoster: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779929016/swellpro-peru-dron-01_uvvj5z.jpg",
+    operations: {
+      inspection: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779929015/swellpro-peru-dron_jhkqhb.jpg",
+      fishing: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779929016/swellpro-peru-capturas-02_usflmo.jpg",
+      rescue: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779929016/swellpro-peru-capturas-06_dz6kns.jpg",
+      security: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779929016/swellpro-peru-capturas-08_iiawap.jpg",
+    },
+    solutions: {
+      inspection: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779933447/fd3-image-17_e1q8iz.jpg",
+      fishingPayload: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779933439/fd3-image-06_qz20uf.jpg",
+      specialized: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779933439/fd3-image-07_o0ahno.jpg",
+    },
   },
   ecoFlow: {
     deltaPro: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1200,c_limit/v1782422177/Ecoflow_delta_PRO_g9xhmt.png",
@@ -23,6 +36,7 @@ export const assets = {
   contact: {
     whatsappUrl: "https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20quiero%20recibir%20asesor%C3%ADa%20para%20mi%20operaci%C3%B3n.",
     whatsappCtaUrl: "https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20quiero%20evaluar%20una%20soluci%C3%B3n%20tecnol%C3%B3gica%20para%20mi%20operaci%C3%B3n.",
+    swellProWhatsappUrl: "https://wa.me/51991664146?text=Hola%20CRTech,%20quiero%20recibir%20asesor%C3%ADa%20sobre%20drones%20SwellPro%20en%20Per%C3%BA.",
     whatsappNumber: "+51 991 664 146",
     swellProWebsite: "https://swellpro.pe/",
   }
