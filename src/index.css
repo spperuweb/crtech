@@ -862,46 +862,6 @@ a {
     color: var(--color-dark);
   }
 
-  /* Trust Strip Mobile Horizontal Scroll */
-  .trust-strip-section {
-    padding: 24px 16px;
-    overflow: hidden;
-  }
-
-  .trust-logos-grid {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: stretch;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    padding: 4px 16px 12px 16px;
-    margin-left: -16px;
-    margin-right: -16px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .trust-logos-grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  .trust-logo-item {
-    flex: 0 0 78vw;
-    max-width: 290px;
-    scroll-snap-align: start;
-    padding: 14px 16px;
-    background-color: #FFFFFF;
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(7, 21, 44, 0.03);
-  }
-
-  .trust-divider {
-    display: none;
-  }
-
   /* CEO Section Mobile */
   .ceo-section {
     padding: 56px 20px;
@@ -1103,6 +1063,66 @@ a {
   width: 1px;
   height: 32px;
   background-color: var(--color-border);
+}
+
+/* Trust Strip Mobile Horizontal Scroll (Grid Carousel) */
+@media (max-width: 767px) {
+  .trust-strip-section {
+    padding: 24px 0;
+    overflow: hidden;
+  }
+
+  .trust-strip-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .trust-strip-title {
+    padding-inline: 20px;
+    margin-bottom: 20px;
+  }
+
+  .trust-logos-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(240px, 78vw);
+    grid-template-columns: none;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 20px;
+    padding-inline: 20px;
+    padding-bottom: 12px;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    width: 100%;
+    margin: 0;
+  }
+
+  .trust-logos-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trust-logo-item {
+    width: auto;
+    min-width: 0;
+    max-width: 290px;
+    margin: 0;
+    scroll-snap-align: start;
+    padding: 14px 16px;
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(7, 21, 44, 0.03);
+    flex: none;
+  }
+
+  .trust-divider {
+    display: none !important;
+  }
 }
 
 /* --------------------------------------------------
