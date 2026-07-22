@@ -8,19 +8,29 @@ import CEOSection from './components/CEOSection';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
 import DronesLanding from './components/DronesLanding';
+import EcoFlowLanding from './components/EcoFlowLanding';
+
+type RouteType = 'home' | 'drones' | 'energia' | 'servicios-ti';
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState<'home' | 'drones'>(() => {
-    return window.location.hash.startsWith('#/drones') ? 'drones' : 'home';
+  const [currentRoute, setCurrentRoute] = useState<RouteType>(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#/drones')) return 'drones';
+    if (hash.startsWith('#/energia')) return 'energia';
+    if (hash.startsWith('#/servicios-ti')) return 'servicios-ti';
+    return 'home';
   });
 
   useEffect(() => {
     const handleHashChange = () => {
-      const isDrones = window.location.hash.startsWith('#/drones');
-      setCurrentRoute(isDrones ? 'drones' : 'home');
-      if (isDrones) {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-      }
+      const hash = window.location.hash;
+      let route: RouteType = 'home';
+      if (hash.startsWith('#/drones')) route = 'drones';
+      else if (hash.startsWith('#/energia')) route = 'energia';
+      else if (hash.startsWith('#/servicios-ti')) route = 'servicios-ti';
+      
+      setCurrentRoute(route);
+      window.scrollTo({ top: 0, behavior: 'instant' });
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -29,6 +39,10 @@ export default function App() {
 
   if (currentRoute === 'drones') {
     return <DronesLanding />;
+  }
+
+  if (currentRoute === 'energia') {
+    return <EcoFlowLanding />;
   }
 
   return (
