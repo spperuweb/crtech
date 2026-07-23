@@ -1,6 +1,5 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { assets } from '../data/assets';
 
 type BranchKey = 'drones' | 'energia' | 'it';
 
@@ -9,6 +8,8 @@ interface BranchData {
   tag: string;
   name: string;
   phrase: string;
+  link: string;
+  linkText: string;
   color: string;
   bgColor: string;
   accentClass: string;
@@ -37,8 +38,10 @@ export default function Hero() {
       id: 'drones',
       tag: 'Aire',
       name: 'Drones Profesionales',
-      phrase: 'Sistemas aéreos no tripulados para inspección y logística.',
-      color: '#48BFEA', // Cian
+      phrase: 'Sistemas aéreos impermeables SwellPro para inspección, monitoreo y pesca en Perú.',
+      link: '#/drones',
+      linkText: 'Explorar Drones',
+      color: '#48BFEA',
       bgColor: 'rgba(72, 191, 234, 0.08)',
       accentClass: 'accent-cyan'
     },
@@ -46,8 +49,10 @@ export default function Hero() {
       id: 'energia',
       tag: 'Campo',
       name: 'Energía Portátil',
-      phrase: 'Soluciones de carga autónoma y respaldo crítico.',
-      color: '#F4A825', // Ámbar
+      phrase: 'Estaciones EcoFlow y paneles solares para trabajo continuo y respaldo en campo.',
+      link: '#/energia',
+      linkText: 'Explorar Energía',
+      color: '#F4A825',
       bgColor: 'rgba(244, 168, 37, 0.08)',
       accentClass: 'accent-amber'
     },
@@ -55,15 +60,16 @@ export default function Hero() {
       id: 'it',
       tag: 'Empresa',
       name: 'Servicios TI',
-      phrase: 'Infraestructura digital y soporte para despliegues.',
-      color: '#7067E8', // Violeta
+      phrase: 'Redes corporativas, videovigilancia y soporte técnico con acompañamiento local.',
+      link: '#/servicios-ti',
+      linkText: 'Explorar Servicios TI',
+      color: '#7067E8',
       bgColor: 'rgba(112, 103, 232, 0.08)',
       accentClass: 'accent-violet'
     }
   };
 
   const branchKeys: BranchKey[] = ['drones', 'energia', 'it'];
-  const selectedData = branches[selectedBranch];
 
   const getCardRef = (key: BranchKey) => {
     if (key === 'energia') return cardEnergiaRef;
@@ -136,7 +142,7 @@ export default function Hero() {
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], { opacity: 1, y: 0 });
+        gsap.set([".hero-eyebrow", ".hero-title-line-1", ".hero-title-line-2", ".hero-description", ".hero-actions", ".hero-trust-microcopy"], { opacity: 1, y: 0 });
         gsap.set(".hero-fan-container", { opacity: 1, y: 0 });
         
         branchKeys.forEach((key) => {
@@ -163,8 +169,8 @@ export default function Hero() {
         });
         initialTimelineRef.current = tl;
 
-        gsap.set([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], { opacity: 0, y: 16 });
-        gsap.set(".hero-fan-container", { opacity: 0, y: 14 });
+        gsap.set([".hero-eyebrow", ".hero-title-line-1", ".hero-title-line-2", ".hero-description", ".hero-actions", ".hero-trust-microcopy"], { opacity: 0, y: 18 });
+        gsap.set(".hero-fan-container", { opacity: 0, y: 16 });
 
         // Initial GSAP card setup prior to timeline animation
         branchKeys.forEach((key) => {
@@ -187,19 +193,19 @@ export default function Hero() {
           });
         });
 
-        tl.to([".hero-badge", ".hero-title", ".hero-description", ".hero-actions"], {
+        tl.to([".hero-eyebrow", ".hero-title-line-1", ".hero-title-line-2", ".hero-description", ".hero-actions", ".hero-trust-microcopy"], {
           opacity: 1,
           y: 0,
-          duration: 0.5,
+          duration: 0.6,
           stagger: 0.08,
           ease: 'power3.out'
         })
         .to(".hero-fan-container", {
           opacity: 1,
           y: 0,
-          duration: 0.55,
+          duration: 0.6,
           ease: 'power2.out'
-        }, "-=0.3")
+        }, "-=0.4")
         .to(branchKeys.map(key => getCardRef(key).current), {
           x: 0,
           xPercent: (i) => getCardTransforms(branchKeys[i], branchKeys[i] === selectedBranch).xPercent,
@@ -212,7 +218,7 @@ export default function Hero() {
           duration: 0.65,
           stagger: 0.08,
           ease: 'power3.out'
-        }, "-=0.4");
+        }, "-=0.45");
       });
     }, heroRef);
 
@@ -262,7 +268,7 @@ export default function Hero() {
           scale: transforms.scale,
           opacity: transforms.opacity,
           zIndex: transforms.zIndex,
-          duration: 0.32,
+          duration: 0.24,
           ease: 'power2.inOut'
         });
       }
@@ -276,17 +282,17 @@ export default function Hero() {
 
       if (isReduced) {
         gsap.set(captionEl, {
-          display: isCurrent ? 'grid' : 'none',
+          display: isCurrent ? 'flex' : 'none',
           opacity: isCurrent ? 1 : 0,
           y: 0
         });
       } else {
         if (isCurrent) {
-          gsap.set(captionEl, { display: 'grid', opacity: 0, y: 8 });
+          gsap.set(captionEl, { display: 'flex', opacity: 0, y: 8 });
           gsap.to(captionEl, {
             opacity: 1,
             y: 0,
-            duration: 0.3,
+            duration: 0.28,
             ease: 'power2.out'
           });
         } else {
@@ -304,41 +310,67 @@ export default function Hero() {
     });
   }, [selectedBranch]);
 
+  const whatsappUrl = `https://wa.me/51991664146?text=${encodeURIComponent(
+    'Hola, quisiera recibir asesoría para identificar la solución tecnológica adecuada para mi operación.'
+  )}`;
+
   return (
-    <section className="hero-section" id="hero" ref={heroRef}>
+    <section className="hero-section hero-dark-atmosphere" id="hero" ref={heroRef}>
+      {/* Background Image Layer */}
+      <div className="hero-bg-media" aria-hidden="true">
+        <img 
+          src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1783573198/CRtech_Background_Hero_vv59xw.png" 
+          alt="" 
+          className="hero-bg-img"
+        />
+        <div className="hero-navy-overlay"></div>
+        <div className="hero-text-gradient"></div>
+        <div className="hero-vignette"></div>
+      </div>
+
       <div className="hero-grid">
         
-        {/* Left Side: Copy and CTAs */}
+        {/* Left Side: Editorial Copy & CTAs */}
         <div className="hero-copy">
-          <span className="hero-badge">
-            Soluciones tecnológicas para operaciones reales
+          <span className="hero-eyebrow">
+            TECNOLOGÍA PARA OPERACIONES QUE NO PUEDEN DETENERSE
           </span>
           <h1 className="hero-title">
-            Elige la tecnología que tu operación necesita.
+            <span className="hero-title-line-1">Tu operación no puede detenerse.</span>
+            <span className="hero-title-line-2 highlight-cyan">La tecnología correcta tampoco.</span>
           </h1>
           <p className="hero-description">
-            Drones profesionales, energía autónoma y servicios TI integrados con asesoría, implementación y soporte local en Perú.
+            Drones profesionales, energía autónoma y servicios TI, seleccionados, implementados y respaldados por especialistas en Perú.
           </p>
           
           <div className="hero-actions">
             <a 
-              href={assets.contact.whatsappUrl} 
+              href={whatsappUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="btn btn-primary"
+              className="btn btn-primary hero-btn-main"
             >
-              Solicitar asesoría
+              Hablar con un especialista
             </a>
             <a 
               href="#soluciones" 
-              className="btn btn-secondary"
+              className="btn btn-secondary hero-btn-sub"
             >
               Explorar soluciones
             </a>
           </div>
+
+          <div className="hero-trust-microcopy">
+            <span className="trust-dot">●</span>
+            <span>Representación oficial</span>
+            <span className="trust-sep">·</span>
+            <span>Implementación técnica</span>
+            <span className="trust-sep">·</span>
+            <span>Soporte local</span>
+          </div>
         </div>
 
-        {/* Right Side: 3-Card Image Fan Composition */}
+        {/* Right Side: 3-Card Fan Composition */}
         <div className="hero-editorial-right" id="hero-interactive-zone">
           
           <div 
@@ -364,7 +396,7 @@ export default function Hero() {
             >
               <div className="fan-card-image-wrapper">
                 <img 
-                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422204/Ecoflow_paneles_solares_e4mpcp.png" 
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1784819108/Ecoflow_Panelsolar_wutdy1.jpg" 
                   alt="Paneles Solares y Energía Portátil EcoFlow" 
                   className="fan-card-img"
                 />
@@ -395,7 +427,7 @@ export default function Hero() {
             >
               <div className="fan-card-image-wrapper">
                 <img 
-                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779933447/fd3-image-17_e1q8iz.jpg" 
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779929015/swellpro-peru-dron_jhkqhb.jpg" 
                   alt="Dron profesional SwellPro para inspección y logística" 
                   className="fan-card-img"
                 />
@@ -425,26 +457,11 @@ export default function Hero() {
               }}
             >
               <div className="fan-card-image-wrapper">
-                <div className="editorial-it-display w-full h-full flex items-center justify-center bg-slate-950 p-3">
-                  <svg viewBox="0 0 240 240" fill="none" className="it-minimal-svg w-4/5 h-4/5" aria-hidden="true">
-                    <rect x="20" y="30" width="200" height="42" rx="8" fill="#1E293B" stroke="#7067E8" strokeWidth="2" />
-                    <circle cx="44" cy="51" r="5" fill="#7067E8" />
-                    <circle cx="62" cy="51" r="5" fill="#48BFEA" />
-                    <line x1="88" y1="51" x2="190" y2="51" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-
-                    <rect x="20" y="94" width="200" height="42" rx="8" fill="#1E293B" stroke="#48BFEA" strokeWidth="2" />
-                    <circle cx="44" cy="115" r="5" fill="#48BFEA" />
-                    <circle cx="62" cy="115" r="5" fill="#10B981" />
-                    <line x1="88" y1="115" x2="190" y2="115" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-
-                    <rect x="20" y="158" width="200" height="42" rx="8" fill="#1E293B" stroke="#7067E8" strokeWidth="2" />
-                    <circle cx="44" cy="179" r="5" fill="#7067E8" />
-                    <circle cx="62" cy="179" r="5" fill="#F4A825" />
-                    <line x1="88" y1="179" x2="190" y2="179" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-
-                    <path d="M120 72 V 94 M120 136 V 158" stroke="#7067E8" strokeWidth="2" strokeDasharray="2 2" opacity="0.8" />
-                  </svg>
-                </div>
+                <img 
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1784819329/pexels-tima-miroshnichenko-5717235_kggduv.jpg" 
+                  alt="Servicios TI e Infraestructura Corporativa" 
+                  className="fan-card-img"
+                />
                 <div className="fan-card-overlay">
                   <div className="fan-card-badge">
                     <span className="fan-card-dot" style={{ backgroundColor: '#7067E8' }}></span>
@@ -456,21 +473,35 @@ export default function Hero() {
             </button>
           </div>
 
-          {/* Underlay Info Caption */}
-          <div className="hero-editorial-caption overflow-hidden">
+          {/* Caption & Contextual CTA for active branch */}
+          <div className="hero-editorial-caption">
             {branchKeys.map(key => (
               <div 
                 key={key}
                 ref={getCaptionRef(key)}
-                className={`caption-block-${key} hero-caption absolute inset-0 w-full`}
-                style={{ display: key === selectedBranch ? 'grid' : 'none', opacity: key === selectedBranch ? 1 : 0 }}
+                className={`caption-block-${key} hero-caption`}
+                style={{ display: key === selectedBranch ? 'flex' : 'none', opacity: key === selectedBranch ? 1 : 0 }}
               >
-                <span className="hero-caption-label" style={{ color: branches[key].color }}>
-                  {branches[key].tag.toUpperCase()} — {branches[key].name.toUpperCase()}
-                </span>
-                <span className="hero-caption-description">
-                  {branches[key].phrase}
-                </span>
+                <div className="hero-caption-left">
+                  <div className="hero-caption-header">
+                    <span className="hero-caption-dot" style={{ backgroundColor: branches[key].color }}></span>
+                    <span className="hero-caption-label" style={{ color: branches[key].color }}>
+                      {branches[key].tag.toUpperCase()} · {branches[key].name}
+                    </span>
+                  </div>
+                  <p className="hero-caption-description">
+                    {branches[key].phrase}
+                  </p>
+                </div>
+                <div className="hero-caption-right">
+                  <a href={branches[key].link} className="hero-caption-btn" style={{ borderColor: branches[key].color }}>
+                    <span>{branches[key].linkText}</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="btn-arrow-icon">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                </div>
               </div>
             ))}
           </div>

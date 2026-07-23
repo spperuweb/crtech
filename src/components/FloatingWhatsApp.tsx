@@ -7,7 +7,7 @@ interface FloatingWhatsAppProps {
 const PHONE_NUMBER = '51991664146';
 
 const ROUTE_MESSAGES: Record<FloatingWhatsAppProps['currentRoute'], string> = {
-  home: 'Hola, quisiera recibir asesoría sobre las soluciones de CR Technologies & Services.',
+  home: 'Hola, quisiera recibir asesoría para identificar la solución tecnológica adecuada para mi operación.',
   drones: 'Hola, quisiera recibir asesoría sobre drones profesionales.',
   energia: 'Hola, quisiera dimensionar una solución EcoFlow para mi operación.',
   'servicios-ti': 'Hola, quisiera solicitar una evaluación de infraestructura y servicios TI.',

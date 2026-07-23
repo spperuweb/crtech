@@ -1,6 +1,6 @@
 {
   "name": "CR Technologies & Services",
-  "description": "Fase técnica inicial para la nueva plataforma web de CR Technologies & Services.",
+  "description": "Plataforma corporativa de CR Technologies & Services: Drones profesionales, energía autónoma EcoFlow y servicios TI en Perú.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -57,7 +57,7 @@ export default function TrustStrip() {
   return (
     <section className="trust-strip-section" ref={sectionRef}>
       <div className="trust-strip-container">
-        <h3 className="trust-strip-title">Representación oficial y respaldo local</h3>
+        <h3 className="trust-strip-title">REPRESENTACIONES Y RESPALDO INSTITUCIONAL</h3>
         
         <div className="trust-logos-grid">
           {/* Logo 1: SwellPro Perú */}
@@ -75,7 +75,7 @@ export default function TrustStrip() {
             </div>
             <div className="trust-logo-meta">
               <span className="trust-badge-label">SwellPro Perú</span>
-              <span className="trust-badge-status">Representante oficial en Perú</span>
+              <span className="trust-badge-status">Representación oficial en Perú</span>
             </div>
           </div>
 
@@ -88,7 +88,7 @@ export default function TrustStrip() {
             </div>
             <div className="trust-logo-meta">
               <span className="trust-badge-label">EcoFlow</span>
-              <span className="trust-badge-status">Representante oficial en Perú</span>
+              <span className="trust-badge-status">Representación oficial en Perú</span>
             </div>
           </div>
 
@@ -108,7 +108,7 @@ export default function TrustStrip() {
               />
             </div>
             <div className="trust-logo-meta">
-              <span className="trust-badge-label">Cámara de Comercio Chancay</span>
+              <span className="trust-badge-label">Cámara de Comercio de Chancay</span>
               <span className="trust-badge-status">Aliado institucional</span>
             </div>
           </div>

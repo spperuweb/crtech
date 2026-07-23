@@ -10,23 +10,27 @@ export default function MethodSection() {
   const steps = [
     {
       num: '01',
-      title: 'Diagnóstico',
-      desc: 'Analizamos los requerimientos del entorno real, las condiciones del terreno y los objetivos operativos de tu equipo.'
+      title: 'Diagnóstico operativo',
+      desc: 'Escuchamos el objetivo, revisamos el entorno y detectamos las variables que pueden afectar la continuidad.',
+      deliverable: 'Necesidad y riesgo definidos.'
     },
     {
       num: '02',
-      title: 'Selección',
-      desc: 'Filtramos la tecnología óptima: drones idóneos, potencia energética necesaria o arquitectura de red correcta.'
+      title: 'Selección y arquitectura',
+      desc: 'Comparamos capacidades, autonomía, infraestructura y condiciones de uso para diseñar la configuración correcta.',
+      deliverable: 'Solución técnica recomendada.'
     },
     {
       num: '03',
       title: 'Implementación',
-      desc: 'Realizamos pruebas de campo, configuraciones personalizadas y capacitación técnica para asegurar la operatividad.'
+      desc: 'Configuramos, probamos, documentamos y capacitamos al equipo responsable.',
+      deliverable: 'Sistema preparado para operar.'
     },
     {
       num: '04',
-      title: 'Soporte',
-      desc: 'Acompañamiento continuo con mantenimiento local rápido, stock de repuestos y criterio técnico especializado.'
+      title: 'Soporte local',
+      desc: 'Acompañamos la operación con mantenimiento, repuestos, diagnóstico y criterio técnico.',
+      deliverable: 'Continuidad y respuesta.'
     }
   ];
 
@@ -117,9 +121,10 @@ export default function MethodSection() {
       <div className="section-container">
         
         <div className="section-header-centered">
-          <span className="section-subtitle">Nuestro Proceso</span>
+          <span className="section-subtitle">MÉTODO CRTECH</span>
           <h2 className="method-section-title">
-            Tecnología bien elegida.<br className="hidden md:inline" /> <span className="highlight-text">Correctamente implementada.</span>
+            Del diagnóstico al soporte,<br className="hidden md:inline" />{' '}
+            <span className="highlight-text">sin dejar la operación a la improvisación.</span>
           </h2>
         </div>
 
@@ -136,6 +141,9 @@ export default function MethodSection() {
                 <div className="step-content">
                   <h3 className="step-title">{step.title}</h3>
                   <p className="step-description">{step.desc}</p>
+                  <div className="step-deliverable-badge">
+                    <span className="deliverable-label">Entregable:</span> {step.deliverable}
+                  </div>
                 </div>
                 {index < steps.length - 1 && (
                   <div className="mobile-step-arrow" aria-hidden="true">

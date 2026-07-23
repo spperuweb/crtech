@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { assets } from '../data/assets';
 import SolucionesDropdown from './SolucionesDropdown';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -13,11 +27,15 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
 
+  const whatsappUrl = `https://wa.me/51991664146?text=${encodeURIComponent(
+    'Hola, quisiera recibir asesoría para identificar la solución tecnológica adecuada para mi operación.'
+  )}`;
+
   return (
-    <header className="site-header" id="main-header">
+    <header className={`site-header ${isScrolled ? 'scrolled' : ''}`} id="main-header">
       <div className="header-container">
         {/* Logo */}
-        <a href="#/" className="header-logo" onClick={closeMenu}>
+        <a href="#/" className="header-logo" onClick={closeMenu} aria-label="CR Technologies & Services Inicio">
           <img 
             src={assets.logos.lightBack} 
             alt="CR Technologies & Services" 
@@ -30,20 +48,20 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="desktop-nav" aria-label="Navegación principal">
           <SolucionesDropdown currentRoute="home" />
-          <a href="#soluciones" className="nav-link">Visión General</a>
+          <a href="#metodo" className="nav-link">Cómo trabajamos</a>
+          <a href="#evidencia" className="nav-link">Operaciones reales</a>
           <a href="#nosotros" className="nav-link">Nosotros</a>
-          <a href="#metodo" className="nav-link">Método</a>
         </nav>
 
         {/* CTA Button */}
         <div className="header-cta-wrapper">
           <a 
-            href={assets.contact.whatsappUrl} 
+            href={whatsappUrl} 
             className="btn btn-primary header-cta-btn"
             target="_blank" 
             rel="noopener noreferrer"
           >
-            Solicitar asesoría
+            Hablar con un especialista
           </a>
         </div>
 
@@ -77,18 +95,18 @@ export default function Header() {
             </a>
           </div>
 
-          <a href="#soluciones" className="mobile-nav-link" onClick={closeMenu}>Visión General</a>
+          <a href="#metodo" className="mobile-nav-link" onClick={closeMenu}>Cómo trabajamos</a>
+          <a href="#evidencia" className="mobile-nav-link" onClick={closeMenu}>Operaciones reales</a>
           <a href="#nosotros" className="mobile-nav-link" onClick={closeMenu}>Nosotros</a>
-          <a href="#metodo" className="mobile-nav-link" onClick={closeMenu}>Método</a>
           
           <a 
-            href={assets.contact.whatsappUrl} 
+            href={whatsappUrl} 
             className="btn btn-primary mobile-cta-btn"
             target="_blank" 
             rel="noopener noreferrer"
             onClick={closeMenu}
           >
-            Solicitar asesoría
+            Hablar con un especialista
           </a>
         </nav>
       </div>

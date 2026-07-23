@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { assets } from '../data/assets';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,7 +44,7 @@ export default function FinalCTA() {
         { opacity: 1, scale: 1, duration: 0.65, ease: 'power3.out' }
       )
         .fromTo(
-          ['.final-cta-title', '.final-cta-text'],
+          ['.final-cta-eyebrow', '.final-cta-title', '.final-cta-text'],
           { opacity: 0, y: 16 },
           { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08 },
           '-=0.3'
@@ -61,8 +60,12 @@ export default function FinalCTA() {
     return () => ctx.revert();
   }, []);
 
+  const whatsappUrl = `https://wa.me/51991664146?text=${encodeURIComponent(
+    'Hola, quisiera recibir asesoría para identificar la solución tecnológica adecuada para mi operación.'
+  )}`;
+
   return (
-    <section className="final-cta-section" ref={sectionRef}>
+    <section className="final-cta-section dark-navy-cta" id="contacto" ref={sectionRef}>
       <div className="final-cta-card">
         {/* Abstract subtle background layout */}
         <div className="cta-shapes" aria-hidden="true">
@@ -71,16 +74,17 @@ export default function FinalCTA() {
         </div>
 
         <div className="final-cta-content">
+          <span className="final-cta-eyebrow">CONVERSEMOS SOBRE TU OPERACIÓN</span>
           <h2 className="final-cta-title">
-            ¿Qué necesita mantener activa tu operación?
+            Cuéntanos qué debe seguir funcionando.
           </h2>
           <p className="final-cta-text">
-            Cuéntanos el entorno, los equipos y el objetivo. Te ayudaremos a definir una solución adecuada con criterio técnico y respaldo local.
+            Evaluaremos el entorno, el objetivo y las condiciones de trabajo para orientarte hacia una solución con criterio técnico y respaldo local.
           </p>
           
           <div className="final-cta-action-row">
             <a 
-              href={assets.contact.whatsappCtaUrl}
+              href={whatsappUrl}
               target="_blank" 
               rel="noopener noreferrer" 
               className="btn btn-cta-highlight"
@@ -90,6 +94,10 @@ export default function FinalCTA() {
               </svg>
               Hablar con un especialista
             </a>
+          </div>
+
+          <div className="final-cta-microcopy">
+            <span>Consulta directa por WhatsApp.</span>
           </div>
         </div>
       </div>

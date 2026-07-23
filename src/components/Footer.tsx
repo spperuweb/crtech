@@ -4,6 +4,10 @@ import { assets } from '../data/assets';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const whatsappUrl = `https://wa.me/51991664146?text=${encodeURIComponent(
+    'Hola, quisiera recibir asesoría para identificar la solución tecnológica adecuada para mi operación.'
+  )}`;
+
   return (
     <footer className="site-footer" id="main-footer">
       <div className="footer-container">
@@ -22,11 +26,12 @@ export default function Footer() {
             />
           </a>
           <p className="footer-brand-desc">
-            Tecnología aérea profesional, sistemas de energía portátil y servicios de infraestructura TI integrados en el territorio peruano.
+            Drones profesionales, energía autónoma y servicios TI integrados con diagnóstico, implementación y soporte local en Perú.
           </p>
           
           <div className="footer-legal-details">
             <span className="legal-item"><strong>Razón Social:</strong> CR Technologies & Services E.I.R.L.</span>
+            <span className="legal-item"><strong>RUC:</strong> 20615939791</span>
             <span className="legal-item"><strong>Sede:</strong> Lima, Perú</span>
           </div>
         </div>
@@ -36,8 +41,8 @@ export default function Footer() {
           <h4 className="footer-title">Soluciones</h4>
           <ul className="footer-links-list">
             <li><a href="#/drones">Drones Profesionales</a></li>
-            <li><a href="#/energia">Energía Portátil</a></li>
-            <li><a href="#/servicios-ti">Infraestructura TI</a></li>
+            <li><a href="#/energia">Energía EcoFlow</a></li>
+            <li><a href="#/servicios-ti">Servicios TI</a></li>
           </ul>
         </div>
 
@@ -46,7 +51,9 @@ export default function Footer() {
           <h4 className="footer-title">Compañía</h4>
           <ul className="footer-links-list">
             <li><a href="#nosotros">Nosotros</a></li>
-            <li><a href="#metodo">Método de Trabajo</a></li>
+            <li><a href="#metodo">Cómo trabajamos</a></li>
+            <li><a href="#evidencia">Operaciones reales</a></li>
+            <li><a href="#faq">Preguntas frecuentes</a></li>
             <li>
               <a 
                 href={assets.contact.swellProWebsite} 
@@ -65,7 +72,7 @@ export default function Footer() {
           <ul className="footer-links-list contact-list">
             <li>
               <a 
-                href={assets.contact.whatsappUrl} 
+                href={whatsappUrl} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="footer-contact-link"
@@ -78,7 +85,7 @@ export default function Footer() {
             </li>
             <li>
               <span className="footer-schedule">
-                Atención especializada para operaciones en todo el país.
+                Atención especializada para operaciones en todo el territorio peruano.
               </span>
             </li>
           </ul>
@@ -93,7 +100,7 @@ export default function Footer() {
             © {currentYear} CR Technologies & Services E.I.R.L. Todos los derechos reservados.
           </p>
           <div className="tech-meta-row">
-            <span>Distribución Oficial SwellPro & EcoFlow • Soluciones Tecnológicas Aplicadas en el Perú</span>
+            <span>Representación Oficial SwellPro & EcoFlow • Soluciones Tecnológicas en Perú</span>
           </div>
         </div>
       </div>

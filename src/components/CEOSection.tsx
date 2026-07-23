@@ -8,6 +8,10 @@ gsap.registerPlugin(ScrollTrigger);
 export default function CEOSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
+  const whatsappUrl = `https://wa.me/51991664146?text=${encodeURIComponent(
+    'Hola, quisiera recibir asesoría para identificar la solución tecnológica adecuada para mi operación.'
+  )}`;
+
   useLayoutEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -62,6 +66,12 @@ export default function CEOSection() {
           { opacity: 0, y: 18 },
           { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out', stagger: 0.07 },
           '-=0.2'
+        )
+        .fromTo(
+          '.ceo-cta-row',
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' },
+          '-=0.15'
         );
     }, sectionRef);
 
@@ -78,7 +88,7 @@ export default function CEOSection() {
             <figure className="ceo-figure">
               <div className="ceo-image-wrapper">
                 <img 
-                  src={assets.company.ceoCarlosRivera} 
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782397237/CarlosRivera_CRTech_FotoCEO_is07qk.png" 
                   alt="Carlos Rivera, Gerente General de CR Technologies & Services" 
                   className="ceo-photo"
                   loading="lazy"
@@ -96,12 +106,13 @@ export default function CEOSection() {
 
           {/* Narrative Side */}
           <div className="ceo-content-side">
-            <span className="ceo-tag">Sobre Nosotros</span>
+            <span className="ceo-tag">CRITERIO TÉCNICO Y ACOMPAÑAMIENTO LOCAL</span>
             <h2 className="ceo-section-title">
-              Un aliado tecnológico, <span className="highlight-text">no solo un proveedor.</span>
+              Antes de recomendar un equipo,<br />
+              <span className="highlight-text">entendemos qué debe seguir funcionando.</span>
             </h2>
             <p className="ceo-paragraph">
-              CR Tech acompaña a empresas, instituciones y equipos operativos desde la selección de la solución hasta su implementación y soporte técnico especializado.
+              CRTech acompaña a empresas, instituciones y equipos operativos desde la evaluación de la necesidad hasta la puesta en marcha y el soporte. Cada recomendación considera el entorno, la geografía, el nivel de riesgo y la realidad de la operación.
             </p>
 
             <div className="ceo-pillars-grid">
@@ -109,33 +120,44 @@ export default function CEOSection() {
               <div className="pillar-item">
                 <div className="pillar-header">
                   <div className="pillar-icon-dot"></div>
-                  <h4 className="pillar-title">Cercanía y Acompañamiento</h4>
+                  <h4 className="pillar-title">Escucha y diagnóstico</h4>
                 </div>
                 <p className="pillar-desc">
-                  Trabajamos al lado de tu equipo en el campo o la oficina, asegurando que cada sistema funcione exactamente como se requiere.
+                  Escucha activa y diagnóstico previo a la cotización formal.
                 </p>
               </div>
 
               <div className="pillar-item">
                 <div className="pillar-header">
                   <div className="pillar-icon-dot"></div>
-                  <h4 className="pillar-title">Criterio Técnico Aplicado</h4>
+                  <h4 className="pillar-title">Selección contextual</h4>
                 </div>
                 <p className="pillar-desc">
-                  No vendemos catálogos cerrados; evaluamos variables operacionales, geografía, clima y presupuesto para proponer soluciones viables.
+                  Selección técnica según el entorno real de trabajo.
                 </p>
               </div>
 
               <div className="pillar-item">
                 <div className="pillar-header">
                   <div className="pillar-icon-dot"></div>
-                  <h4 className="pillar-title">Ejecución Profesional</h4>
+                  <h4 className="pillar-title">Respaldo continuo</h4>
                 </div>
                 <p className="pillar-desc">
-                  Garantizamos rigurosidad técnica en la instalación, capacitación del personal y provisión continua de repuestos y soporte técnico local.
+                  Implementación, capacitación y respaldo local en Perú.
                 </p>
               </div>
 
+            </div>
+
+            <div className="ceo-cta-row">
+              <a 
+                href={whatsappUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-secondary ceo-discrete-btn"
+              >
+                Conversar con el equipo CRTech
+              </a>
             </div>
 
           </div>

@@ -3,8 +3,10 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import TrustStrip from './components/TrustStrip';
 import SolutionsOverview from './components/SolutionsOverview';
+import RealEvidenceSection from './components/RealEvidenceSection';
 import MethodSection from './components/MethodSection';
 import CEOSection from './components/CEOSection';
+import FAQSection from './components/FAQSection';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
 import DronesLanding from './components/DronesLanding';
@@ -51,8 +53,10 @@ export default function App() {
             <Hero />
             <TrustStrip />
             <SolutionsOverview />
+            <RealEvidenceSection />
             <MethodSection />
             <CEOSection />
+            <FAQSection />
             <FinalCTA />
           </main>
           <Footer />
@@ -62,4 +66,3 @@ export default function App() {
     </>
   );
 }
-

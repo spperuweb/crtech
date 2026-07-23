@@ -320,12 +320,34 @@ export default function SolutionsOverview() {
 
   return (
     <section className="solutions-section" id="soluciones" ref={sectionRef}>
-      <div className="section-header">
-        <h2 className="section-title">
-          Una operación no necesita más tecnología. <span className="highlight-text">Necesita la tecnología correcta.</span>
+      {/* SECTION 6: Commercial Transition Editorial Header */}
+      <div className="commercial-transition-header">
+        <span className="transition-eyebrow">UN SOLO CRITERIO. TRES CAPACIDADES.</span>
+        <h2 className="transition-title">
+          No necesitas acumular tecnología.<br />
+          <span className="highlight-text">Necesitas una operación que responda.</span>
         </h2>
+        <p className="transition-description">
+          CRTech analiza el entorno, identifica el riesgo operativo y articula la tecnología adecuada para mantener personas, equipos e información en movimiento.
+        </p>
+        
+        <div className="transition-signals-grid">
+          <div className="signal-pill">
+            <span className="signal-icon">👁</span>
+            <span className="signal-text">Mayor visibilidad para decidir</span>
+          </div>
+          <div className="signal-pill">
+            <span className="signal-icon">⚡</span>
+            <span className="signal-text">Autonomía para continuar</span>
+          </div>
+          <div className="signal-pill">
+            <span className="signal-icon">🛡</span>
+            <span className="signal-text">Infraestructura para responder</span>
+          </div>
+        </div>
       </div>
 
+      {/* SECTION 7: Reconstructed 3 Verticals */}
       <div className="solutions-blocks-container">
         
         {/* BLOCK 1: Drones Profesionales (Aire) */}
@@ -333,35 +355,29 @@ export default function SolutionsOverview() {
           <div className="solution-block-grid">
             
             <div className="solution-block-info">
-              <span className="block-tag tag-cyan">Aire</span>
-              <h3 className="block-title">Drones Profesionales</h3>
+              <span className="block-eyebrow cyan">AIRE · DRONES PROFESIONALES</span>
+              <h3 className="block-title">Observa, alcanza y responde donde la operación lo exige.</h3>
               <p className="block-description">
-                Tecnología aérea robusta para inspección, seguridad, pesca, rescate y operaciones exigentes en mar y tierra peruana.
+                Tecnología aérea impermeable para inspección, monitoreo, pesca, rescate y trabajo de campo, con capacitación, repuestos y soporte especializado en Perú.
               </p>
               
               <ul className="block-features-list">
                 <li>
                   <span className="feature-icon cian">✓</span>
                   <div>
-                    <strong>Representación oficial:</strong> Acceso directo a equipos originales con garantía de fábrica SwellPro.
+                    <strong>Visibilidad extendida:</strong> Amplía la visibilidad sin exponer innecesariamente al equipo.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon cian">✓</span>
                   <div>
-                    <strong>Capacitación especializada:</strong> Entrenamiento práctico y técnico para pilotos y equipos de campo.
+                    <strong>Resistencia extrema:</strong> Opera sobre agua, costa y entornos exigentes.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon cian">✓</span>
                   <div>
-                    <strong>Soporte técnico local:</strong> Servicio local para diagnósticos rápidos, mantenimiento y calibraciones.
-                  </div>
-                </li>
-                <li>
-                  <span className="feature-icon cian">✓</span>
-                  <div>
-                    <strong>Repuestos críticos:</strong> Stock local de partes y accesorios para garantizar continuidad de vuelos.
+                    <strong>Respaldo en Perú:</strong> Cuenta con capacitación y soporte técnico local.
                   </div>
                 </li>
               </ul>
@@ -384,7 +400,7 @@ export default function SolutionsOverview() {
               <div className="media-card-frame">
                 <img 
                   src={assets.drones.inAction} 
-                  alt="Dron profesional SwellPro en acción sobrevolando el mar" 
+                  alt="Dron profesional SwellPro en operación sobre agua" 
                   className="block-media-img"
                   loading="lazy"
                   decoding="async"
@@ -415,7 +431,7 @@ export default function SolutionsOverview() {
                   <circle className="drone-path-dot" cx="530" cy="90" r="4.5" fill="#38BDF8" />
                 </svg>
                 <div className="media-caption">
-                  <span>Dron SwellPro FD3 en operación de monitoreo real</span>
+                  <span>Dron SwellPro FD3 en operación sobre agua marina</span>
                 </div>
               </div>
             </div>
@@ -423,40 +439,34 @@ export default function SolutionsOverview() {
           </div>
         </div>
 
-        {/* BLOCK 2: Energía Portátil (Campo) */}
+        {/* BLOCK 2: Energía Autónoma (Campo) */}
         <div className="solution-block-item alt-bg" id="energia">
           <div className="solution-block-grid reverse">
             
             <div className="solution-block-info">
-              <span className="block-tag tag-amber">Campo</span>
-              <h3 className="block-title">Energía Portátil</h3>
+              <span className="block-eyebrow amber">CAMPO · ENERGÍA AUTÓNOMA</span>
+              <h3 className="block-title">Mantén equipos y procesos activos incluso fuera de la red.</h3>
               <p className="block-description">
-                Sistemas de energía autónoma EcoFlow y paneles solares para mantener operaciones críticas activas en cualquier ubicación.
+                Estaciones EcoFlow y generación solar dimensionadas para trabajo de campo, respaldo, movilidad y continuidad operativa.
               </p>
               
               <ul className="block-features-list">
                 <li>
                   <span className="feature-icon amber">✓</span>
                   <div>
-                    <strong>Trabajo de campo autónomo:</strong> Energía limpia, silenciosa y constante para laboratorios remotos y herramientas.
+                    <strong>Movilidad limpia:</strong> Energía silenciosa y transportable.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon amber">✓</span>
                   <div>
-                    <strong>Respaldo crítico inmediato:</strong> Sistemas inteligentes que reaccionan instantáneamente ante cortes de suministro.
+                    <strong>Respaldo instantáneo:</strong> Respaldo ante interrupciones o ubicaciones remotas.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon amber">✓</span>
                   <div>
-                    <strong>Hub de carga de campo:</strong> Estación centralizada de alta velocidad para drones, radios y ordenadores de campo.
-                  </div>
-                </li>
-                <li>
-                  <span className="feature-icon amber">✓</span>
-                  <div>
-                    <strong>Despliegue ágil:</strong> Soluciones compactas adaptables a vehículos todoterreno y campamentos móviles.
+                    <strong>Dimensionamiento técnico:</strong> Configuración según consumo, autonomía y condiciones de uso.
                   </div>
                 </li>
               </ul>
@@ -526,7 +536,7 @@ export default function SolutionsOverview() {
                   />
                 </div>
                 <div className="ecoflow-caption">
-                  Estación EcoFlow Delta Pro integrada con paneles solares de alta eficiencia
+                  Estación EcoFlow Delta Pro integrada con captura solar de alta velocidad
                 </div>
               </div>
             </div>
@@ -539,35 +549,29 @@ export default function SolutionsOverview() {
           <div className="solution-block-grid">
             
             <div className="solution-block-info">
-              <span className="block-tag tag-violet">Empresa</span>
-              <h3 className="block-title">Servicios TI</h3>
+              <span className="block-eyebrow violet">EMPRESA · SERVICIOS TI</span>
+              <h3 className="block-title">Conecta, protege y sostiene la infraestructura que mueve tu empresa.</h3>
               <p className="block-description">
-                Infraestructura de red, conectividad segura y soporte tecnológico continuo para blindar las operaciones de tu negocio.
+                Redes, soporte tecnológico, videovigilancia y continuidad implementados con documentación y acompañamiento técnico local.
               </p>
               
               <ul className="block-features-list">
                 <li>
                   <span className="feature-icon violet">✓</span>
                   <div>
-                    <strong>Redes e Infraestructura:</strong> Cableado estructurado, enlaces inalámbricos estables y fibra óptica.
+                    <strong>Control de red:</strong> Visibilidad sobre la infraestructura crítica.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon violet">✓</span>
                   <div>
-                    <strong>Soporte operativo continuo:</strong> Asistencia especializada y mantenimiento de sistemas para evitar caídas.
+                    <strong>Soporte oportuno:</strong> Respuesta técnica ante fallas e incidencias.
                   </div>
                 </li>
                 <li>
                   <span className="feature-icon violet">✓</span>
                   <div>
-                    <strong>Seguridad perimetral:</strong> Firewalls, routers de nivel empresarial y protección de datos críticos.
-                  </div>
-                </li>
-                <li>
-                  <span className="feature-icon violet">✓</span>
-                  <div>
-                    <strong>Videovigilancia inteligente:</strong> Sistemas CCTV con almacenamiento seguro y monitoreo centralizado.
+                    <strong>Protección integral:</strong> Seguridad y continuidad para equipos e información.
                   </div>
                 </li>
               </ul>
@@ -598,23 +602,23 @@ export default function SolutionsOverview() {
                       </linearGradient>
                     </defs>
 
-                    {/* Secondary/Subtle backup & continuity lines (Continuidad y Respaldo) */}
+                    {/* Secondary/Subtle backup & continuity lines */}
                     <path 
                       className="ti-path-subtle-1"
                       d="M 50 130 C 120 70, 180 50, 250 60" 
                       stroke="#7067E8" 
-                      strokeWidth="1.5" 
-                      strokeDasharray="3 4"
-                      opacity="0.3"
+                      strokeWidth="2" 
+                      strokeDasharray="4 4"
+                      opacity="0.5"
                       pathLength="1"
                     />
                     <path 
                       className="ti-path-subtle-2"
                       d="M 250 60 C 310 130, 390 230, 450 200" 
                       stroke="#10B981" 
-                      strokeWidth="1.5" 
-                      strokeDasharray="3 4"
-                      opacity="0.3"
+                      strokeWidth="2" 
+                      strokeDasharray="4 4"
+                      opacity="0.5"
                       pathLength="1"
                     />
 
@@ -629,28 +633,25 @@ export default function SolutionsOverview() {
                     />
 
                     {/* Nodes */}
-                    {/* Node 1: Infraestructura */}
                     <g className="ti-node-group">
-                      <circle cx="50" cy="130" r="7" fill="#168BFF" />
-                      <circle cx="50" cy="130" r="18" stroke="#168BFF" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
+                      <circle cx="50" cy="130" r="8" fill="#168BFF" />
+                      <circle cx="50" cy="130" r="20" stroke="#168BFF" strokeWidth="2" strokeOpacity="0.5" fill="none" />
                       <text x="50" y="172" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
-                      <text x="50" y="192" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Redes y Conectividad</text>
+                      <text x="50" y="192" fill="#475569" fontSize="12" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Redes y Conectividad</text>
                     </g>
 
-                    {/* Node 2: Soporte */}
                     <g className="ti-node-group">
-                      <circle cx="250" cy="60" r="7" fill="#7067E8" />
-                      <circle cx="250" cy="60" r="18" stroke="#7067E8" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
+                      <circle cx="250" cy="60" r="8" fill="#7067E8" />
+                      <circle cx="250" cy="60" r="20" stroke="#7067E8" strokeWidth="2" strokeOpacity="0.5" fill="none" />
                       <text x="250" y="102" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
-                      <text x="250" y="122" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Continuidad</text>
+                      <text x="250" y="122" fill="#475569" fontSize="12" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Continuidad</text>
                     </g>
 
-                    {/* Node 3: Seguridad */}
                     <g className="ti-node-group">
-                      <circle cx="450" cy="200" r="7" fill="#10B981" />
-                      <circle cx="450" cy="200" r="18" stroke="#10B981" strokeWidth="1.5" strokeOpacity="0.4" fill="none" />
+                      <circle cx="450" cy="200" r="8" fill="#10B981" />
+                      <circle cx="450" cy="200" r="20" stroke="#10B981" strokeWidth="2" strokeOpacity="0.5" fill="none" />
                       <text x="450" y="242" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
-                      <text x="450" y="262" fill="#5F6D80" fontSize="12" fontWeight="500" textAnchor="middle" fontFamily="var(--font-headings)">Videovigilancia</text>
+                      <text x="450" y="262" fill="#475569" fontSize="12" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Videovigilancia</text>
                     </g>
                   </svg>
                 </div>
