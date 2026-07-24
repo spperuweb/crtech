@@ -11,7 +11,7 @@ export const assets = {
     camaraChancay: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782397588/CamaradeComercioChancay_logo_t8pz0n.png",
   },
   drones: {
-    inAction: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1200,c_limit/v1779929015/swellpro-peru-dron_jhkqhb.jpg",
+    inAction: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1783573198/CRtech_Background_Hero_vv59xw.png",
     productHorizontal: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1200,c_limit/v1779933447/fd3-image-17_e1q8iz.jpg",
     heroVideo: "https://res.cloudinary.com/drvejtepq/video/upload/f_auto,q_auto/v1779941029/swellpro-peru-en-accion-04_tksmyf.mp4",
     heroPoster: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1600,c_fill,g_auto/v1779929016/swellpro-peru-dron-01_uvvj5z.jpg",
@@ -81,6 +81,9 @@ export const assets = {
     powerBankMagnetic: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422192/Ecoflow_PowerBankMagnetic_pucvzv.png",
     airConditioner: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422174/Ecoflow_aire_acondicionado_portatil_ltjrpz.png",
     solarHat: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422173/Ecoflow_sombrero_solarpng_hobdm2.png",
+  },
+  serviciosTI: {
+    mainInfrastructure: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1784917692/pexels-kindelmedia-8982662_lsubce.jpg",
   },
   company: {
     ceoCarlosRivera: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1000,c_limit/v1782397237/CarlosRivera_CRTech_FotoCEO_is07qk.png",

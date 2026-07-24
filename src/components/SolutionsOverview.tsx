@@ -28,8 +28,8 @@ export default function SolutionsOverview() {
             },
           }
         );
-        gsap.set(['.drone-flight-path', '.energy-flow-path', '.ti-main-path', '.ti-path-subtle-1', '.ti-path-subtle-2'], { strokeDashoffset: 0, opacity: 1 });
-        gsap.set(['.drone-path-dot', '.energy-node-solar', '.energy-node-delta', '.ti-node-group'], { opacity: 1, scale: 1 });
+        gsap.set(['.drone-flight-path'], { strokeDashoffset: 0, opacity: 1 });
+        gsap.set(['.drone-path-dot'], { opacity: 1, scale: 1 });
         return;
       }
 
@@ -84,18 +84,6 @@ export default function SolutionsOverview() {
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.06 },
             '-=0.3'
-          )
-          .fromTo(
-            '#drones .drone-flight-path',
-            { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0.3 },
-            { strokeDashoffset: 0, opacity: 1, duration: 0.85, ease: 'power2.out' },
-            '-=0.4'
-          )
-          .fromTo(
-            '#drones .drone-path-dot',
-            { opacity: 0, scale: 0 },
-            { opacity: 1, scale: 1, duration: 0.3, ease: 'power3.out', transformOrigin: 'center center' },
-            '-=0.2'
           );
 
         // Energía Block
@@ -124,18 +112,6 @@ export default function SolutionsOverview() {
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.06 },
             '-=0.3'
-          )
-          .fromTo(
-            '#energia .energy-flow-path',
-            { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0.2 },
-            { strokeDashoffset: 0, opacity: 0.95, duration: 0.85, ease: 'power2.out' },
-            '-=0.4'
-          )
-          .fromTo(
-            '#energia .energy-node-solar, #energia .energy-node-delta',
-            { opacity: 0, scale: 0.8 },
-            { opacity: 1, scale: 1, duration: 0.35, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center center' },
-            '-=0.2'
           );
 
         // Servicios TI Block
@@ -163,24 +139,6 @@ export default function SolutionsOverview() {
             '#servicios-ti .block-features-list li',
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.06 },
-            '-=0.3'
-          )
-          .fromTo(
-            '#servicios-ti .ti-main-path',
-            { strokeDasharray: 1, strokeDashoffset: 1 },
-            { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' },
-            '-=0.4'
-          )
-          .fromTo(
-            ['#servicios-ti .ti-path-subtle-1', '#servicios-ti .ti-path-subtle-2'],
-            { strokeDasharray: 1, strokeDashoffset: 1 },
-            { strokeDashoffset: 0, duration: 0.6, ease: 'power2.out', stagger: 0.1 },
-            '<0.1'
-          )
-          .fromTo(
-            '#servicios-ti .ti-node-group',
-            { opacity: 0, scale: 0.85 },
-            { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out', stagger: 0.08, transformOrigin: 'center center' },
             '-=0.3'
           );
       });
@@ -213,18 +171,6 @@ export default function SolutionsOverview() {
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.05 },
             '-=0.2'
-          )
-          .fromTo(
-            '#drones .drone-flight-path',
-            { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0.2 },
-            { strokeDashoffset: 0, opacity: 0.85, duration: 0.8, ease: 'power2.out' },
-            '-=0.3'
-          )
-          .fromTo(
-            '#drones .drone-path-dot',
-            { opacity: 0, scale: 0 },
-            { opacity: 1, scale: 1, duration: 0.3, ease: 'power3.out', transformOrigin: 'center center' },
-            '-=0.2'
           );
 
         // Energía Mobile
@@ -252,18 +198,6 @@ export default function SolutionsOverview() {
             '#energia .block-features-list li',
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.05 },
-            '-=0.2'
-          )
-          .fromTo(
-            '#energia .energy-flow-path',
-            { strokeDasharray: 1, strokeDashoffset: 1, opacity: 0.2 },
-            { strokeDashoffset: 0, opacity: 0.85, duration: 0.8, ease: 'power2.out' },
-            '-=0.3'
-          )
-          .fromTo(
-            '#energia .energy-node-solar, #energia .energy-node-delta',
-            { opacity: 0, scale: 0.8 },
-            { opacity: 1, scale: 1, duration: 0.35, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center center' },
             '-=0.2'
           );
 
@@ -293,24 +227,6 @@ export default function SolutionsOverview() {
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.05 },
             '-=0.2'
-          )
-          .fromTo(
-            '#servicios-ti .ti-main-path',
-            { strokeDasharray: 1, strokeDashoffset: 1 },
-            { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' },
-            '-=0.3'
-          )
-          .fromTo(
-            ['#servicios-ti .ti-path-subtle-1', '#servicios-ti .ti-path-subtle-2'],
-            { strokeDasharray: 1, strokeDashoffset: 1 },
-            { strokeDashoffset: 0, duration: 0.6, ease: 'power2.out', stagger: 0.1 },
-            '<0.1'
-          )
-          .fromTo(
-            '#servicios-ti .ti-node-group',
-            { opacity: 0, scale: 0.85 },
-            { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out', stagger: 0.08, transformOrigin: 'center center' },
-            '-=0.3'
           );
       });
     }, sectionRef);
@@ -399,8 +315,8 @@ export default function SolutionsOverview() {
             <div className="solution-block-media">
               <div className="media-card-frame">
                 <img 
-                  src={assets.drones.inAction} 
-                  alt="Dron profesional SwellPro en operación sobre agua" 
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1783573198/CRtech_Background_Hero_vv59xw.png" 
+                  alt="Drones Profesionales SwellPro CRTech" 
                   className="block-media-img"
                   loading="lazy"
                   decoding="async"
@@ -431,7 +347,7 @@ export default function SolutionsOverview() {
                   <circle className="drone-path-dot" cx="530" cy="90" r="4.5" fill="#38BDF8" />
                 </svg>
                 <div className="media-caption">
-                  <span>Dron SwellPro FD3 en operación sobre agua marina</span>
+                  <span>Operación de Drones SwellPro para inspección, rescate y pesca profesional</span>
                 </div>
               </div>
             </div>
@@ -486,57 +402,18 @@ export default function SolutionsOverview() {
             </div>
 
             <div className="solution-block-media">
-              <div className="ecoflow-composition-wrapper">
-                <div className="ecoflow-glow-bg" aria-hidden="true"></div>
-                <svg 
-                  viewBox="0 0 500 400" 
-                  fill="none" 
-                  className="ecoflow-overlay-svg" 
-                  aria-hidden="true" 
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <defs>
-                    <linearGradient id="amberFlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="#D97706" stopOpacity="0.95" />
-                    </linearGradient>
-                  </defs>
-                  <path 
-                    className="energy-flow-path"
-                    d="M 120 110 C 200 85, 250 150, 310 230" 
-                    stroke="url(#amberFlowGrad)" 
-                    strokeWidth="2" 
-                    strokeDasharray="4 3"
-                    strokeLinecap="round"
-                    pathLength="1"
-                  />
-                  <circle className="energy-node-solar" cx="120" cy="110" r="4.5" fill="#F59E0B" />
-                  <circle className="energy-node-delta" cx="310" cy="230" r="5" fill="#D97706" />
-                </svg>
-                <div className="ecoflow-support-product">
-                  <img 
-                    src={assets.ecoFlow.solarPanel} 
-                    alt="EcoFlow paneles solares plegables" 
-                    className="ecoflow-img-solar"
-                    loading="lazy"
-                    decoding="async"
-                    width="450"
-                    height="300"
-                  />
-                </div>
-                <div className="ecoflow-main-product">
-                  <img 
-                    src={assets.ecoFlow.deltaPro} 
-                    alt="EcoFlow Delta Pro estación de energía portátil" 
-                    className="ecoflow-img-delta"
-                    loading="lazy"
-                    decoding="async"
-                    width="500"
-                    height="400"
-                  />
-                </div>
-                <div className="ecoflow-caption">
-                  Estación EcoFlow Delta Pro integrada con captura solar de alta velocidad
+              <div className="media-card-frame energy-showcase-frame">
+                <img 
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422192/Ecoflow_PowerBankMagnetic_pucvzv.png" 
+                  alt="Soluciones de Energía y Almacenamiento EcoFlow" 
+                  className="block-media-img contain-img"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="400"
+                />
+                <div className="media-caption">
+                  <span>Soluciones EcoFlow para autonomía energética en campo y emergencias</span>
                 </div>
               </div>
             </div>
@@ -591,72 +468,18 @@ export default function SolutionsOverview() {
             </div>
 
             <div className="solution-block-media">
-              <div className="media-card-frame abstract-media-card">
-                <div className="it-connectivity-diagram">
-                  <svg viewBox="0 0 500 280" fill="none" className="connectivity-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#168BFF" stopOpacity="0.95" />
-                        <stop offset="50%" stopColor="#7067E8" stopOpacity="0.95" />
-                        <stop offset="100%" stopColor="#10B981" stopOpacity="0.95" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Secondary/Subtle backup & continuity lines */}
-                    <path 
-                      className="ti-path-subtle-1"
-                      d="M 50 130 C 120 70, 180 50, 250 60" 
-                      stroke="#7067E8" 
-                      strokeWidth="2" 
-                      strokeDasharray="4 4"
-                      opacity="0.5"
-                      pathLength="1"
-                    />
-                    <path 
-                      className="ti-path-subtle-2"
-                      d="M 250 60 C 310 130, 390 230, 450 200" 
-                      stroke="#10B981" 
-                      strokeWidth="2" 
-                      strokeDasharray="4 4"
-                      opacity="0.5"
-                      pathLength="1"
-                    />
-
-                    {/* Connecting main path */}
-                    <path 
-                      className="ti-main-path"
-                      d="M 50 130 C 150 130, 150 60, 250 60 C 350 60, 350 200, 450 200" 
-                      stroke="url(#lineGrad)" 
-                      strokeWidth="3.5" 
-                      strokeLinecap="round"
-                      pathLength="1"
-                    />
-
-                    {/* Nodes */}
-                    <g className="ti-node-group">
-                      <circle cx="50" cy="130" r="8" fill="#168BFF" />
-                      <circle cx="50" cy="130" r="20" stroke="#168BFF" strokeWidth="2" strokeOpacity="0.5" fill="none" />
-                      <text x="50" y="172" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Infraestructura</text>
-                      <text x="50" y="192" fill="#475569" fontSize="12" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Redes y Conectividad</text>
-                    </g>
-
-                    <g className="ti-node-group">
-                      <circle cx="250" cy="60" r="8" fill="#7067E8" />
-                      <circle cx="250" cy="60" r="20" stroke="#7067E8" strokeWidth="2" strokeOpacity="0.5" fill="none" />
-                      <text x="250" y="102" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Soporte TI</text>
-                      <text x="250" y="122" fill="#475569" fontSize="12" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Continuidad</text>
-                    </g>
-
-                    <g className="ti-node-group">
-                      <circle cx="450" cy="200" r="8" fill="#10B981" />
-                      <circle cx="450" cy="200" r="20" stroke="#10B981" strokeWidth="2" strokeOpacity="0.5" fill="none" />
-                      <text x="450" y="242" fill="#07152C" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="var(--font-headings)">Seguridad</text>
-                      <text x="450" y="262" fill="#475569" fontSize="12" fontWeight="600" textAnchor="middle" fontFamily="var(--font-headings)">Videovigilancia</text>
-                    </g>
-                  </svg>
-                </div>
+              <div className="media-card-frame ti-showcase-frame">
+                <img 
+                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1784917692/pexels-kindelmedia-8982662_lsubce.jpg" 
+                  alt="Infraestructura de Servicios TI Corporativos" 
+                  className="block-media-img"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="400"
+                />
                 <div className="media-caption">
-                  <span>Plataforma operativa de red integrada de alta disponibilidad</span>
+                  <span>Infraestructura de red, servidores y seguridad de alta disponibilidad</span>
                 </div>
               </div>
             </div>
