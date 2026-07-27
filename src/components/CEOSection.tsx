@@ -17,7 +17,7 @@ export default function CEOSection() {
     const ctx = gsap.context(() => {
       if (prefersReducedMotion) {
         gsap.fromTo(
-          ['.ceo-photo', '.ceo-executive-badge', '.ceo-content-side'],
+          ['.ceo-photo-916', '.ceo-executive-badge-below', '.ceo-content-side'],
           { opacity: 0 },
           {
             opacity: 1,
@@ -49,7 +49,7 @@ export default function CEOSection() {
         { opacity: 1, scale: 1, duration: 0.65, ease: 'power3.out' }
       )
         .fromTo(
-          '.ceo-executive-badge-916',
+          '.ceo-executive-badge-below',
           { opacity: 0, y: 16 },
           { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
           '-=0.3'
@@ -82,12 +82,12 @@ export default function CEOSection() {
       <div className="ceo-container">
         <div className="ceo-grid">
           
-          {/* Executive Photo & Framed Badge (9:16 Light Background) */}
+          {/* Executive Photo & Framed Badge Below */}
           <div className="ceo-media-side">
             <figure className="ceo-figure-premium">
+              
+              {/* Photo Frame */}
               <div className="ceo-image-wrapper-framed-916">
-                
-                {/* Photo 9:16 */}
                 <img 
                   src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782397237/CarlosRivera_CRTech_FotoCEO_is07qk.png" 
                   alt="Carlos Rivera, CEO y Gerente General de CR Technologies & Services" 
@@ -97,28 +97,28 @@ export default function CEOSection() {
                   width="450"
                   height="800"
                 />
-
-                {/* High Contrast Executive Overlay Card */}
-                <figcaption className="ceo-executive-badge-916">
-                  <div className="badge-header-row">
-                    <span className="badge-role-tag">
-                      <span className="badge-live-dot"></span>
-                      CEO & FOUNDER
-                    </span>
-                    <span className="badge-exp-tag">+15 AÑOS DE EXPERIENCIA</span>
-                  </div>
-
-                  <div className="badge-main-info">
-                    <h3 className="ceo-name-headline">Carlos Rivera</h3>
-                    <p className="ceo-title-sub">Gerente General · CR Technologies & Services</p>
-                  </div>
-
-                  <p className="ceo-quote-text">
-                    "Garantizar continuidad operativa exige entender la realidad del terreno antes de recomendar cualquier tecnología."
-                  </p>
-                </figcaption>
-
               </div>
+
+              {/* Executive Badge Card (Positioned BELOW the photo) */}
+              <figcaption className="ceo-executive-badge-below">
+                <div className="badge-header-row">
+                  <span className="badge-role-tag">
+                    <span className="badge-live-dot"></span>
+                    CEO & FOUNDER
+                  </span>
+                  <span className="badge-exp-tag">+15 AÑOS DE EXPERIENCIA</span>
+                </div>
+
+                <div className="badge-main-info">
+                  <h3 className="ceo-name-headline">Carlos Rivera</h3>
+                  <p className="ceo-title-sub">Gerente General · CR Technologies & Services</p>
+                </div>
+
+                <p className="ceo-quote-text">
+                  "Garantizar continuidad operativa exige entender la realidad del terreno antes de recomendar cualquier tecnología."
+                </p>
+              </figcaption>
+
             </figure>
           </div>
 

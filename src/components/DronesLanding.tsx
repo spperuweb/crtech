@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { assets } from '../data/assets';
-import SolucionesDropdown from './SolucionesDropdown';
+import Header from './Header';
 
 interface EvidenceCase {
   id: string;
@@ -109,114 +109,8 @@ export default function DronesLanding() {
 
   return (
     <div className="drones-landing-wrapper">
-      {/* 1. HEADER DEDICADO DRONES */}
-      <header className="site-header drones-header" id="drones-header">
-        <div className="header-container">
-          {/* Logo + ID Secundaria */}
-          <div className="drones-brand-group">
-            <a href="#/" className="header-logo" title="Volver a CR Technologies">
-              <img 
-                src={assets.logos.lightBack} 
-                alt="CR Technologies & Services" 
-                className="header-logo-img"
-                width="200"
-                height="40"
-              />
-            </a>
-            <div className="drones-secondary-badge" aria-label="Identificación secundaria">
-              <span className="badge-dot"></span>
-              <span className="badge-text">Drones profesionales · SwellPro Perú</span>
-            </div>
-          </div>
-
-          {/* Nav Desktop */}
-          <nav className="desktop-nav" aria-label="Navegación Drones SwellPro">
-            <SolucionesDropdown currentRoute="drones" />
-            <a href="#aplicaciones" onClick={(e) => scrollToSection(e, 'aplicaciones')} className="nav-link">
-              Aplicaciones
-            </a>
-            <a href="#evidencia" onClick={(e) => scrollToSection(e, 'evidencia')} className="nav-link">
-              Evidencia
-            </a>
-            <a href="#capacidades" onClick={(e) => scrollToSection(e, 'capacidades')} className="nav-link">
-              Capacidades
-            </a>
-            <a href="#modelos" onClick={(e) => scrollToSection(e, 'modelos')} className="nav-link">
-              Plataformas
-            </a>
-            <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="nav-link">
-              Soporte
-            </a>
-          </nav>
-
-          {/* CTA Header */}
-          <div className="header-cta-wrapper">
-            <a 
-              href={whatsappUrl}
-              className="btn btn-primary drones-cta-btn"
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              Cotizar por WhatsApp
-            </a>
-          </div>
-
-          {/* Mobile Hamburger Toggle */}
-          <button 
-            className="mobile-menu-toggle" 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-expanded={mobileMenuOpen}
-            aria-label="Abrir menú de navegación"
-            type="button"
-          >
-            <span className={`hamburger-bar ${mobileMenuOpen ? 'open' : ''}`}></span>
-            <span className={`hamburger-bar ${mobileMenuOpen ? 'open' : ''}`}></span>
-            <span className={`hamburger-bar ${mobileMenuOpen ? 'open' : ''}`}></span>
-          </button>
-        </div>
-
-        {/* Mobile Navigation Drawer */}
-        <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'active' : ''}`}>
-          <nav className="mobile-nav" aria-label="Navegación móvil Drones">
-            <div className="mobile-solutions-group">
-              <span className="mobile-solutions-title">Soluciones CRTech</span>
-              <a href="#/drones" className="mobile-solution-link active" onClick={closeMenu}>
-                Drones Profesionales
-              </a>
-              <a href="#/energia" className="mobile-solution-link" onClick={closeMenu}>
-                Energía EcoFlow
-              </a>
-              <a href="#/servicios-ti" className="mobile-solution-link" onClick={closeMenu}>
-                Servicios TI
-              </a>
-            </div>
-            <a href="#aplicaciones" onClick={(e) => scrollToSection(e, 'aplicaciones')} className="mobile-nav-link">
-              Aplicaciones
-            </a>
-            <a href="#evidencia" onClick={(e) => scrollToSection(e, 'evidencia')} className="mobile-nav-link">
-              Evidencia de campo
-            </a>
-            <a href="#capacidades" onClick={(e) => scrollToSection(e, 'capacidades')} className="mobile-nav-link">
-              Capacidades
-            </a>
-            <a href="#modelos" onClick={(e) => scrollToSection(e, 'modelos')} className="mobile-nav-link">
-              Plataformas
-            </a>
-            <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="mobile-nav-link">
-              Soporte
-            </a>
-            <a 
-              href={whatsappUrl}
-              className="btn btn-primary mobile-cta-btn"
-              target="_blank" 
-              rel="noopener noreferrer"
-              onClick={closeMenu}
-            >
-              Cotizar por WhatsApp
-            </a>
-          </nav>
-        </div>
-      </header>
+      {/* 1. HEADER UNIFICADO VERCEL STYLE */}
+      <Header currentRoute="drones" />
 
       {/* MAIN CONTENT */}
       <main id="drones-main-content">

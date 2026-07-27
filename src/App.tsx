@@ -48,7 +48,7 @@ export default function App() {
       {currentRoute === 'servicios-ti' && <ServiciosTILanding />}
       {currentRoute === 'home' && (
         <div className="app-wrapper">
-          <Header />
+          <Header currentRoute="home" />
           <main id="main-content-flow">
             <Hero />
             <TrustStrip />

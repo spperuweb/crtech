@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
-import SolucionesDropdown from './SolucionesDropdown';
+import Header from './Header';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -455,116 +455,8 @@ export default function EcoFlowLanding() {
 
   return (
     <div ref={pageRef} className="ecoflow-landing-wrapper">
-      {/* 1. HEADER DEDICADO ECOFLOW / CR TECH */}
-      <header className="ecoflow-header sticky-header">
-        <div className="header-container">
-          <a href="#/" className="header-logo-group" aria-label="CR Tech - Inicio">
-            <img 
-              src={assets.logos.lightBack} 
-              alt="CR Technologies & Services" 
-              className="crtech-header-logo"
-            />
-            <span className="logo-divider">|</span>
-            <div className="ecoflow-official-tag">
-              <span className="ecoflow-brand-name">EcoFlow</span>
-              <span className="ecoflow-badge">Representante Oficial</span>
-            </div>
-          </a>
-
-          {/* Desktop Navigation */}
-          <nav className="desktop-nav" aria-label="Navegación EcoFlow">
-            <SolucionesDropdown currentRoute="energia" />
-            <a href="#aplicaciones-ecoflow" onClick={(e) => scrollToSection(e, 'aplicaciones-ecoflow')} className="nav-link">
-              Aplicaciones
-            </a>
-            <a href="#selector-ecoflow" onClick={(e) => scrollToSection(e, 'selector-ecoflow')} className="nav-link">
-              Selector
-            </a>
-            <a href="#familias-ecoflow" onClick={(e) => scrollToSection(e, 'familias-ecoflow')} className="nav-link">
-              Soluciones
-            </a>
-            <a href="#tecnologia-ecoflow" onClick={(e) => scrollToSection(e, 'tecnologia-ecoflow')} className="nav-link">
-              Tecnología
-            </a>
-            <a href="#soporte-ecoflow" onClick={(e) => scrollToSection(e, 'soporte-ecoflow')} className="nav-link">
-              Soporte
-            </a>
-          </nav>
-
-          <div className="header-actions">
-            <a 
-              href={whatsappQuoteUrl}
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="btn btn-primary header-cta-btn"
-            >
-              <span>Cotizar por WhatsApp</span>
-            </a>
-
-            {/* Mobile Menu Button */}
-            <button 
-              type="button" 
-              className="mobile-menu-toggle"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-expanded={mobileMenuOpen}
-              aria-label="Toggle navigation menu"
-            >
-              <svg className="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                {mobileMenuOpen ? (
-                  <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" strokeLinejoin="round" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="mobile-nav-drawer">
-            <nav className="mobile-nav-links">
-              <div className="mobile-solutions-group">
-                <span className="mobile-solutions-title">Soluciones CRTech</span>
-                <a href="#/drones" className="mobile-solution-link" onClick={closeMenu}>
-                  Drones Profesionales
-                </a>
-                <a href="#/energia" className="mobile-solution-link active" onClick={closeMenu}>
-                  Energía EcoFlow
-                </a>
-                <a href="#/servicios-ti" className="mobile-solution-link" onClick={closeMenu}>
-                  Servicios TI
-                </a>
-              </div>
-              <a href="#aplicaciones-ecoflow" onClick={(e) => scrollToSection(e, 'aplicaciones-ecoflow')} className="mobile-nav-link">
-                Aplicaciones
-              </a>
-              <a href="#selector-ecoflow" onClick={(e) => scrollToSection(e, 'selector-ecoflow')} className="mobile-nav-link">
-                Selector Orientativo
-              </a>
-              <a href="#familias-ecoflow" onClick={(e) => scrollToSection(e, 'familias-ecoflow')} className="mobile-nav-link">
-                Soluciones
-              </a>
-              <a href="#tecnologia-ecoflow" onClick={(e) => scrollToSection(e, 'tecnologia-ecoflow')} className="mobile-nav-link">
-                Tecnología
-              </a>
-              <a href="#soporte-ecoflow" onClick={(e) => scrollToSection(e, 'soporte-ecoflow')} className="mobile-nav-link">
-                Soporte Local
-              </a>
-            </nav>
-            <div className="mobile-drawer-footer">
-              <a 
-                href={whatsappQuoteUrl}
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn btn-primary w-full text-center"
-              >
-                Cotizar por WhatsApp
-              </a>
-            </div>
-          </div>
-        )}
-      </header>
+      {/* 1. HEADER UNIFICADO VERCEL STYLE */}
+      <Header currentRoute="energia" />
 
       <main>
         {/* 2. HERO EDITORIAL ECOFLOW */}

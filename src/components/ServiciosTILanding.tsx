@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
-import SolucionesDropdown from './SolucionesDropdown';
+import Header from './Header';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -601,86 +601,8 @@ Quiero validar el alcance con un especialista.`;
 
   return (
     <div className="servicios-ti-wrapper" ref={containerRef}>
-      {/* 1. HEADER SUBLANDING SERVICIOS TI */}
-      <header className="servicios-ti-header sticky-header">
-        <div className="header-container">
-          <div className="brand-ident-group">
-            <a href="#/" className="header-logo" onClick={closeMenu}>
-              <img 
-                src={assets.logos.lightBack} 
-                alt="CR Technologies & Services" 
-                className="header-logo-img"
-                width="200"
-                height="40"
-              />
-            </a>
-            <span className="sublanding-badge">SERVICIOS TI E INFRAESTRUCTURA</span>
-          </div>
-
-          <nav className="desktop-nav" aria-label="Navegación Servicios TI">
-            <SolucionesDropdown currentRoute="servicios-ti" />
-            <a href="#diagnostico" onClick={(e) => scrollToSection(e, 'diagnostico')} className="nav-link">Diagnóstico</a>
-            <a href="#infraestructura" onClick={(e) => scrollToSection(e, 'infraestructura')} className="nav-link">Infraestructura</a>
-            <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="nav-link">Soporte</a>
-            <a href="#escenarios" onClick={(e) => scrollToSection(e, 'escenarios')} className="nav-link">Escenarios</a>
-            <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="nav-link">FAQ</a>
-          </nav>
-
-          <div className="header-cta-wrapper">
-            <a 
-              href={defaultWhatsappUrl} 
-              className="btn btn-primary header-cta-btn"
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              Solicitar evaluación
-            </a>
-          </div>
-
-          <button 
-            className="mobile-menu-toggle" 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-expanded={mobileMenuOpen}
-            aria-label="Abrir menú de navegación"
-            type="button"
-          >
-            <span className={`hamburger-bar ${mobileMenuOpen ? 'open' : ''}`}></span>
-            <span className={`hamburger-bar ${mobileMenuOpen ? 'open' : ''}`}></span>
-            <span className={`hamburger-bar ${mobileMenuOpen ? 'open' : ''}`}></span>
-          </button>
-        </div>
-
-        <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'active' : ''}`}>
-          <nav className="mobile-nav" aria-label="Navegación móvil Servicios TI">
-            <div className="mobile-solutions-group">
-              <span className="mobile-solutions-title">Soluciones CRTech</span>
-              <a href="#/drones" className="mobile-solution-link" onClick={closeMenu}>
-                Drones Profesionales
-              </a>
-              <a href="#/energia" className="mobile-solution-link" onClick={closeMenu}>
-                Energía EcoFlow
-              </a>
-              <a href="#/servicios-ti" className="mobile-solution-link active" onClick={closeMenu}>
-                Servicios TI
-              </a>
-            </div>
-            <a href="#diagnostico" onClick={(e) => scrollToSection(e, 'diagnostico')} className="mobile-nav-link">Diagnóstico</a>
-            <a href="#infraestructura" onClick={(e) => scrollToSection(e, 'infraestructura')} className="mobile-nav-link">Infraestructura</a>
-            <a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')} className="mobile-nav-link">Soporte</a>
-            <a href="#escenarios" onClick={(e) => scrollToSection(e, 'escenarios')} className="mobile-nav-link">Escenarios</a>
-            <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="mobile-nav-link">FAQ</a>
-            <a 
-              href={defaultWhatsappUrl} 
-              className="btn btn-primary mobile-cta-btn"
-              target="_blank" 
-              rel="noopener noreferrer"
-              onClick={closeMenu}
-            >
-              Solicitar evaluación
-            </a>
-          </nav>
-        </div>
-      </header>
+      {/* 1. HEADER UNIFICADO VERCEL STYLE */}
+      <Header currentRoute="servicios-ti" />
 
       <main id="servicios-ti-main">
         {/* 2. HERO SECTION */}
