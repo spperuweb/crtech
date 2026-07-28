@@ -23,6 +23,21 @@ export default function EcoFlowLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeConfigStep, setActiveConfigStep] = useState<number>(0);
   const [activeAccordionIndex, setActiveAccordionIndex] = useState<number>(0);
+  const [cardTilt, setCardTilt] = useState({ rotX: 4, rotY: -8 });
+
+  const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setCardTilt({
+      rotX: y * -16,
+      rotY: x * 16,
+    });
+  };
+
+  const handleCardMouseLeave = () => {
+    setCardTilt({ rotX: 4, rotY: -8 });
+  };
 
   const ecoFlowEvidenceCases: EcoFlowEvidenceCase[] = [
     {
@@ -278,139 +293,116 @@ export default function EcoFlowLanding() {
       <Header currentRoute="energia" />
 
       <main>
-        {/* 1. HERO SECTION (Dark Premium Authority con Imagen de Fondo) */}
-        <section className="ecoflow-hero-section">
-          <div className="section-container">
-            <div className="ecoflow-hero-grid">
-              
-              {/* Text & Primary Value Proposition */}
-              <div className="ecoflow-hero-text-col">
-                <div className="ecoflow-hero-eyebrow">
-                  <span className="cyan-dot"></span>
-                  <span>ECOFLOW PERÚ · BATERÍAS PORTÁTILES Y PANELES SOLARES</span>
-                </div>
-
-                <h1 className="ecoflow-hero-title">
-                  Energía donde la necesites, <span className="hero-highlight">sin ruidos, humo ni apagones.</span>
-                </h1>
-
-                <p className="ecoflow-hero-desc">
-                  Lleva tus baterías EcoFlow a tus viajes, al campo o úsalas en casa cuando se corte la luz. Enchufas tus electrodomésticos o herramientas y listo: recárgalas en menos de 1 hora o con el sol.
-                </p>
-
-                <div className="ecoflow-hero-ctas">
-                  <a 
-                    href={whatsappHeroUrl}
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="btn btn-cyan hero-primary-btn"
-                  >
-                    <span>Asesorarme por WhatsApp</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="btn-icon">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </a>
-
-                  <a 
-                    href="#aplicaciones-ecoflow" 
-                    onClick={(e) => scrollToSection(e, 'aplicaciones-ecoflow')}
-                    className="btn btn-secondary hero-secondary-btn"
-                  >
-                    <span>Ver dónde usarla</span>
-                  </a>
-                </div>
-
-                <div className="hero-trust-highlights">
-                  <div className="highlight-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="check-svg"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Garantía Oficial EcoFlow</span>
-                  </div>
-                  <div className="highlight-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="check-svg"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Te ayudamos a elegir</span>
-                  </div>
-                  <div className="highlight-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="check-svg"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Soporte local en Perú</span>
-                  </div>
-                </div>
+        {/* 1. HERO SECTION (Matching Drones Sublanding Hero Reference Layout with Custom Background) */}
+        <section className="drones-hero-section ecoflow-hero-custom-bg" id="ecoflow-hero">
+          <div className="drones-hero-container">
+            
+            {/* Copy (Left Column: Eyebrow, Title, Subtitle, Actions & 4 Guarantees) */}
+            <div className="drones-hero-copy">
+              <div className="drones-eyebrow">
+                <span className="eyebrow-accent"></span>
+                <span>ECOFLOW PERÚ · DISTRIBUIDOR OFICIAL</span>
               </div>
 
-              {/* Visual Composition Column: Hero Featured Asset Card */}
-              <div className="ecoflow-hero-visual-col">
-                <div className="energy-flow-visual-card">
-                  
-                  {/* Subtle connecting curve vector */}
-                  <svg className="energy-flow-line-svg" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path 
-                      id="hero-energy-base-path"
-                      d="M 40 170 Q 250 40 460 170" 
-                      stroke="url(#solar-cyan-gradient)" 
-                      strokeWidth="2.5" 
-                      strokeDasharray="6 6" 
-                    />
-                    <defs>
-                      <linearGradient id="solar-cyan-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#0284C7" />
-                        <stop offset="50%" stopColor="#06B6D4" />
-                        <stop offset="100%" stopColor="#38BDF8" />
-                      </linearGradient>
-                    </defs>
+              <h1 className="drones-hero-title">
+                Energía portátil e inteligente para operaciones que no se detienen.
+              </h1>
+
+              <p className="drones-hero-subtitle">
+                Baterías portátiles y paneles solares EcoFlow para trabajo de campo, viajes, comercios, emergencias y respaldo en casa sin ruidos, humo ni apagones.
+              </p>
+
+              <div className="drones-hero-actions">
+                <a 
+                  href={whatsappHeroUrl}
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn btn-primary hero-btn-main"
+                >
+                  Cotizar mi EcoFlow
+                  <svg className="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
+                </a>
 
-                  {/* Top Badge Overlay */}
-                  <div className="hero-card-top-badge">
-                    <span className="live-cyan-dot"></span>
-                    <span>RESPALDO INTELIGENTE ANTE APAGONES</span>
-                  </div>
-
-                  {/* Hero Featured Station Image */}
-                  <div className="hero-featured-image-box">
-                    <img 
-                      src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1785200086/EcoFlow-Delta-2-Max-1_HEroCrTech_fran0j.png" 
-                      alt="EcoFlow Delta 2 Max Batería Portátil" 
-                      className="hero-featured-station-img"
-                      loading="eager"
-                    />
-                  </div>
-
-                  {/* Bottom Specs Multi-Pill Bar */}
-                  <div className="hero-card-specs-bar">
-                    <div className="hero-spec-pill">
-                      <span className="spec-val">43 min</span>
-                      <span className="spec-lbl">Carga 0-80%</span>
-                    </div>
-                    <div className="hero-spec-pill border-x">
-                      <span className="spec-val">3000+</span>
-                      <span className="spec-lbl">Ciclos LFP</span>
-                    </div>
-                    <div className="hero-spec-pill">
-                      <span className="spec-val">2400W</span>
-                      <span className="spec-lbl">Potencia AC</span>
-                    </div>
-                  </div>
-
-                  {/* Secondary Node Badges (Sol -> Batería -> Aparatos) */}
-                  <div className="hero-card-nodes-row">
-                    <div className="hero-node-chip">
-                      <img src={assets.ecoFlow.solarPanels} alt="Sol" className="node-mini-icon" />
-                      <span>Panel Solar</span>
-                    </div>
-                    <div className="hero-node-chip active">
-                      <img src={assets.ecoFlow.deltaPro} alt="Batería" className="node-mini-icon" />
-                      <span>EcoFlow Station</span>
-                    </div>
-                    <div className="hero-node-chip">
-                      <img src={assets.ecoFlow.airConditioner} alt="Aparatos" className="node-mini-icon" />
-                      <span>Tus Equipos</span>
-                    </div>
-                  </div>
-
-                </div>
+                <a 
+                  href="#evidencia" 
+                  onClick={(e) => scrollToSection(e, 'evidencia')}
+                  className="btn btn-secondary hero-btn-sub"
+                >
+                  Ver evidencia de campo
+                </a>
               </div>
 
+              {/* 4 Guarantees matching reference layout */}
+              <div className="drones-hero-guarantees">
+                <div className="guarantee-item">
+                  <svg className="guarantee-check" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span>Garantía Oficial EcoFlow</span>
+                </div>
+                <div className="guarantee-item">
+                  <svg className="guarantee-check" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span>Asesoría técnica especializada</span>
+                </div>
+                <div className="guarantee-item">
+                  <svg className="guarantee-check" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span>Soporte técnico local en Perú</span>
+                </div>
+                <div className="guarantee-item">
+                  <svg className="guarantee-check" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span>Repuestos y postventa</span>
+                </div>
+              </div>
             </div>
+
+            {/* Visual Column (Right Column: Dynamic 3D Tilted Vertical 9:16 Image Card - No Frame, No Text, No Extra Data) */}
+            <div className="drones-hero-visual">
+              {/* Signature curved line behind card */}
+              <svg 
+                className="drones-hero-signature-line" 
+                viewBox="0 0 500 300" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path 
+                  d="M -30 180 C 80 120, 160 220, 320 140 C 400 100, 460 120, 520 80" 
+                  stroke="#38BDF8" 
+                  strokeWidth="1" 
+                  strokeOpacity="0.45"
+                  strokeDasharray="4 3"
+                />
+              </svg>
+
+              {/* Dynamic 3D Vertical 9:16 Card - Pure Image, No Frame, No Text */}
+              <div className="ecoflow-tilt-card-wrapper">
+                <div 
+                  className="ecoflow-tilt-card-pure"
+                  onMouseMove={handleCardMouseMove}
+                  onMouseLeave={handleCardMouseLeave}
+                  style={{
+                    transform: `perspective(1000px) rotateX(${cardTilt.rotX}deg) rotateY(${cardTilt.rotY}deg) scale3d(1, 1, 1)`
+                  }}
+                >
+                  <img 
+                    src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1785200086/EcoFlow-Delta-2-Max-1_HEroCrTech_fran0j.png" 
+                    alt="Estación de energía EcoFlow" 
+                    className="ecoflow-pure-hero-img"
+                    loading="eager"
+                  />
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
 
