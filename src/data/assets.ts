@@ -13,7 +13,7 @@ export const assets = {
   drones: {
     inAction: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1783573198/CRtech_Background_Hero_vv59xw.png",
     productHorizontal: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1200,c_limit/v1779933447/fd3-image-17_e1q8iz.jpg",
-    heroVideo: "https://res.cloudinary.com/drvejtepq/video/upload/f_auto,q_auto/v1779941029/swellpro-peru-en-accion-04_tksmyf.mp4",
+    heroVideo: "https://res.cloudinary.com/drvejtepq/video/upload/f_auto,q_auto/v1779929017/swellpro-peru-en-accion-01_j7e8zn.mp4",
     heroPoster: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto,w_1600,c_fill,g_auto/v1779929016/swellpro-peru-dron-01_uvvj5z.jpg",
     evidenceCases: [
       {

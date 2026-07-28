@@ -35,120 +35,28 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
     'Hola, quisiera recibir asesoría para identificar la solución tecnológica adecuada para mi operación.'
   )}`;
 
-  // Sublanding badge rendering
-  const renderSublandingBadge = () => {
-    if (currentRoute === 'drones') {
-      return (
-        <a href="#/drones" className="header-sub-badge badge-cyan" title="SwellPro Perú">
-          <span className="badge-dot"></span>
-          <span>Drones Marinos · SwellPro</span>
-        </a>
-      );
-    }
-    if (currentRoute === 'energia') {
-      return (
-        <a href="#/energia" className="header-sub-badge badge-amber" title="EcoFlow Perú">
-          <span className="badge-dot"></span>
-          <span>EcoFlow · Representante Oficial</span>
-        </a>
-      );
-    }
-    if (currentRoute === 'servicios-ti') {
-      return (
-        <a href="#/servicios-ti" className="header-sub-badge badge-blue" title="Servicios TI & Infraestructura">
-          <span className="badge-dot"></span>
-          <span>Servicios TI & Infraestructura</span>
-        </a>
-      );
-    }
-    return null;
-  };
+  // Sublanding badge rendering removed as requested
+  const renderSublandingBadge = () => null;
 
-  // Route-specific nav links
-  const renderNavLinks = () => {
-    if (currentRoute === 'drones') {
-      return (
-        <>
-          <a href="#modelos-drones" className="nav-pill-link">Modelos</a>
-          <a href="#aplicaciones-drones" className="nav-pill-link">Casos de Uso</a>
-          <a href="#soporte-drones" className="nav-pill-link">Soporte & Repuestos</a>
-          <a href="#faq-drones" className="nav-pill-link">FAQ</a>
-        </>
-      );
-    }
-    if (currentRoute === 'energia') {
-      return (
-        <>
-          <a href="#aplicaciones-ecoflow" className="nav-pill-link">Aplicaciones</a>
-          <a href="#selector-ecoflow" className="nav-pill-link">Calculador</a>
-          <a href="#familias-ecoflow" className="nav-pill-link">Líneas EcoFlow</a>
-          <a href="#tecnologia-ecoflow" className="nav-pill-link">Soporte</a>
-        </>
-      );
-    }
-    if (currentRoute === 'servicios-ti') {
-      return (
-        <>
-          <a href="#diagnostico" className="nav-pill-link">Diagnóstico</a>
-          <a href="#infraestructura" className="nav-pill-link">Infraestructura</a>
-          <a href="#soporte" className="nav-pill-link">Soporte TI</a>
-          <a href="#escenarios" className="nav-pill-link">Escenarios</a>
-        </>
-      );
-    }
-    // Default Home
-    return (
-      <>
-        <a href="#metodo" className="nav-pill-link">Cómo trabajamos</a>
-        <a href="#evidencia" className="nav-pill-link">Operaciones reales</a>
-        <a href="#nosotros" className="nav-pill-link">Nosotros</a>
-        <a href="#faq" className="nav-pill-link">FAQ</a>
-      </>
-    );
-  };
+  // Standard main nav links across all routes
+  const renderNavLinks = () => (
+    <>
+      <a href="#metodo" className="nav-pill-link">Cómo trabajamos</a>
+      <a href="#evidencia" className="nav-pill-link">Operaciones reales</a>
+      <a href="#nosotros" className="nav-pill-link">Nosotros</a>
+      <a href="#faq" className="nav-pill-link">FAQ</a>
+    </>
+  );
 
-  // Route-specific mobile nav links
-  const renderMobileNavLinks = () => {
-    if (currentRoute === 'drones') {
-      return (
-        <div className="mobile-nav-links-list">
-          <a href="#modelos-drones" className="mobile-nav-link" onClick={closeMenu}>Modelos SwellPro</a>
-          <a href="#aplicaciones-drones" className="mobile-nav-link" onClick={closeMenu}>Casos de Uso</a>
-          <a href="#soporte-drones" className="mobile-nav-link" onClick={closeMenu}>Soporte & Repuestos</a>
-          <a href="#faq-drones" className="mobile-nav-link" onClick={closeMenu}>FAQ Drones</a>
-        </div>
-      );
-    }
-    if (currentRoute === 'energia') {
-      return (
-        <div className="mobile-nav-links-list">
-          <a href="#aplicaciones-ecoflow" className="mobile-nav-link" onClick={closeMenu}>Aplicaciones</a>
-          <a href="#selector-ecoflow" className="mobile-nav-link" onClick={closeMenu}>Calculador de Carga</a>
-          <a href="#familias-ecoflow" className="mobile-nav-link" onClick={closeMenu}>Líneas EcoFlow</a>
-          <a href="#tecnologia-ecoflow" className="mobile-nav-link" onClick={closeMenu}>Soporte Oficial</a>
-        </div>
-      );
-    }
-    if (currentRoute === 'servicios-ti') {
-      return (
-        <div className="mobile-nav-links-list">
-          <a href="#diagnostico" className="mobile-nav-link" onClick={closeMenu}>Diagnóstico</a>
-          <a href="#infraestructura" className="mobile-nav-link" onClick={closeMenu}>Infraestructura & Redes</a>
-          <a href="#soporte" className="mobile-nav-link" onClick={closeMenu}>Soporte TI</a>
-          <a href="#escenarios" className="mobile-nav-link" onClick={closeMenu}>Escenarios</a>
-        </div>
-      );
-    }
-    // Default Home
-    return (
-      <div className="mobile-nav-links-list">
-        <a href="#metodo" className="mobile-nav-link" onClick={closeMenu}>Cómo trabajamos</a>
-        <a href="#evidencia" className="mobile-nav-link" onClick={closeMenu}>Operaciones reales</a>
-        <a href="#nosotros" className="mobile-nav-link" onClick={closeMenu}>Nosotros</a>
-        <a href="#faq" className="mobile-nav-link" onClick={closeMenu}>FAQ</a>
-      </div>
-    );
-  };
+  // Standard mobile nav links across all routes
+  const renderMobileNavLinks = () => (
+    <div className="mobile-nav-links-list">
+      <a href="#metodo" className="mobile-nav-link" onClick={closeMenu}>Cómo trabajamos</a>
+      <a href="#evidencia" className="mobile-nav-link" onClick={closeMenu}>Operaciones reales</a>
+      <a href="#nosotros" className="mobile-nav-link" onClick={closeMenu}>Nosotros</a>
+      <a href="#faq" className="mobile-nav-link" onClick={closeMenu}>FAQ</a>
+    </div>
+  );
 
   return (
     <header className={`site-header vercel-header ${isScrolled ? 'scrolled' : ''}`} id="main-header">
@@ -182,7 +90,7 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
             target="_blank" 
             rel="noopener noreferrer"
           >
-            Hablar con un especialista
+            Contáctanos
           </a>
         </div>
 
@@ -228,7 +136,7 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
             rel="noopener noreferrer"
             onClick={closeMenu}
           >
-            Hablar con un especialista
+            Contáctanos
           </a>
         </nav>
       </div>

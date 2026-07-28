@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { assets } from '../data/assets';
 import Header from './Header';
+import Footer from './Footer';
 
 interface EvidenceCase {
   id: string;
@@ -17,6 +18,7 @@ export default function DronesLanding() {
   const [heroVideoLoaded, setHeroVideoLoaded] = useState(false);
   const [activeModalCase, setActiveModalCase] = useState<EvidenceCase | null>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [activeConfigStep, setActiveConfigStep] = useState<number>(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
@@ -148,11 +150,11 @@ export default function DronesLanding() {
                   </svg>
                 </a>
                 <a 
-                  href="#aplicaciones" 
-                  onClick={(e) => scrollToSection(e, 'aplicaciones')}
+                  href="#evidencia" 
+                  onClick={(e) => scrollToSection(e, 'evidencia')}
                   className="btn btn-secondary hero-btn-sub"
                 >
-                  Explorar aplicaciones
+                  Ver evidencia de campo
                 </a>
               </div>
 
@@ -261,17 +263,6 @@ export default function DronesLanding() {
         {/* 3. BLOQUE DE CONFIANZA INMEDIATO */}
         <section className="drones-trust-strip" aria-label="Respaldo Oficial SwellPro">
           <div className="trust-strip-container">
-            <div className="trust-brand-item">
-              <img 
-                src={assets.logos.swellProPeru} 
-                alt="SwellPro Perú Logo" 
-                className="trust-swellpro-logo" 
-                loading="lazy"
-                width="160"
-                height="32"
-              />
-            </div>
-            <div className="trust-divider" aria-hidden="true"></div>
             <div className="trust-features-row">
               <div className="trust-feature-pill">
                 <svg className="pill-icon" viewBox="0 0 20 20" fill="currentColor">
@@ -295,315 +286,266 @@ export default function DronesLanding() {
           </div>
         </section>
 
-        {/* 4. SECCIÓN "OPERACIONES REALES" */}
-        <section className="drones-operations-section" id="aplicaciones">
+        {/* 3.5 BANNER TIENDA OFICIAL SWELLPRO PERÚ */}
+        <section className="swellpro-official-store-banner">
           <div className="section-container">
-            <div className="section-header text-center">
-              <span className="section-eyebrow">APLICACIONES OPERATIVAS</span>
-              <h2 className="section-title">
-                Diseñados para entrar donde la operación lo exige.
-              </h2>
-              <p className="section-subtitle">
-                Aplicamos tecnología aérea impermeable en escenarios donde el agua, la distancia y las condiciones del terreno requieren continuidad operativa.
-              </p>
-            </div>
-
-            {/* Composición editorial no repetitiva */}
-            <div className="operations-editorial-grid">
-              
-              {/* Card Principal Destacada */}
-              <div className="op-card op-card-primary">
-                <div className="op-card-image-wrap">
-                  <img 
-                    src={assets.drones.operations.inspection} 
-                    alt="Dron impermeabilizado en monitoreo e inspección costera" 
-                    className="op-img"
-                    loading="lazy"
-                  />
-                  <div className="op-card-badge">01 · Inspección Principal</div>
-                </div>
-                <div className="op-card-body">
-                  <h3 className="op-card-title">Inspección y monitoreo</h3>
-                  <p className="op-card-text">
-                    Supervisión de infraestructura costera, puertos, plataformas e instalaciones industriales expuestas al salitre, humedad y viento severo.
-                  </p>
-                </div>
+            <div className="store-banner-layout">
+              <div className="store-banner-logo-col">
+                <img 
+                  src={assets.logos.swellProPeru} 
+                  alt="SwellPro Perú Logo Oficial" 
+                  className="store-banner-logo-clean" 
+                  loading="lazy"
+                />
+                <span className="store-official-badge">REPRESENTACIÓN OFICIAL EN PERÚ</span>
               </div>
-
-              {/* Columna Secundaria (3 Cards) */}
-              <div className="op-secondary-column">
-                
-                <div className="op-card op-card-horizontal">
-                  <div className="op-card-image-wrap">
-                    <img 
-                      src={assets.drones.operations.fishing} 
-                      alt="Operaciones de pesca y liberación de carga útil" 
-                      className="op-img"
-                      loading="lazy"
-                    />
-                    <div className="op-card-badge">02</div>
-                  </div>
-                  <div className="op-card-body">
-                    <h3 className="op-card-title">Pesca y operaciones marítimas</h3>
-                    <p className="op-card-text">
-                      Lanzamiento de líneas de pesca, transporte de cargas ligeras en mar abierto y despliegue directamente desde embarcaciones.
-                    </p>
-                  </div>
+              <div className="store-banner-content-col">
+                <div className="store-badge-row">
+                  <span className="live-dot-green"></span>
+                  <span className="store-badge-text">PORTAL TÉCNICO & TIENDA VIRTUAL SWELLPRO.PE</span>
                 </div>
-
-                <div className="op-card op-card-horizontal">
-                  <div className="op-card-image-wrap">
-                    <img 
-                      src={assets.drones.operations.rescue} 
-                      alt="Búsqueda y rescate en entornos acuáticos" 
-                      className="op-img"
-                      loading="lazy"
-                    />
-                    <div className="op-card-badge">03</div>
-                  </div>
-                  <div className="op-card-body">
-                    <h3 className="op-card-title">Búsqueda y rescate</h3>
-                    <p className="op-card-text">
-                      Respuesta rápida en situaciones de emergencia sobre el mar, ríos o lagunas con capacidad de entrega inmediata de insumos o salvavidas.
-                    </p>
-                  </div>
+                <h2 className="store-banner-title">
+                  ¿Buscas fotos, videos, fichas técnicas y repuestos en stock?
+                </h2>
+                <p className="store-banner-desc">
+                  Visita nuestro portal exclusivo <strong>SwellPro Perú (swellpro.pe)</strong> para explorar el catálogo completo en stock (Fisherman Max, SplashDrone 4, FD2), repuestos originales, hélices, baterías y manuales de usuario.
+                </p>
+                <div className="store-banner-action">
+                  <a 
+                    href="https://swellpro.pe/" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="store-direct-btn"
+                  >
+                    <span>Visitar Tienda swellpro.pe</span>
+                    <svg className="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </a>
                 </div>
-
-                <div className="op-card op-card-horizontal">
-                  <div className="op-card-image-wrap">
-                    <img 
-                      src={assets.drones.operations.security} 
-                      alt="Seguridad y vigilancia en trabajo de campo" 
-                      className="op-img"
-                      loading="lazy"
-                    />
-                    <div className="op-card-badge">04</div>
-                  </div>
-                  <div className="op-card-body">
-                    <h3 className="op-card-title">Seguridad y trabajo de campo</h3>
-                    <p className="op-card-text">
-                      Patrullaje perimetral y monitoreo ambiental en áreas de difícil acceso con precipitaciones o alta humedad constante.
-                    </p>
-                  </div>
-                </div>
-
               </div>
             </div>
           </div>
         </section>
 
-        {/* 5. NUEVA SECCIÓN DE EVIDENCIA DE CAMPO (FASE 5B) */}
+        {/* 5. SECCIÓN DE EVIDENCIA DE CAMPO - PREMIUM STORIES GALLERY 9:16 */}
         <section className="drones-evidence-section" id="evidencia">
           <div className="section-container">
             <div className="section-header text-center">
-              <span className="section-eyebrow">EVIDENCIA DE CAMPO</span>
-              <h2 className="section-title">
-                En operación, no en exhibición.
+              <span className="section-eyebrow">REGISTROS Y PRUEBAS EN VIVO 9:16</span>
+              <h2 className="stories-main-heading">
+                En Operación, <span className="stories-heading-highlight">no en exhibición.</span>
               </h2>
               <p className="section-subtitle">
-                Registros reales de vuelos, capturas, liberación de carga y aplicaciones desarrolladas por SwellPro Perú.
+                Explora los videos verticales en acción real: resistencia al agua y salitre, despegue marino, maniobras de rescate y liberación de carga útil.
               </p>
             </div>
 
-            {/* Layout Audiovisual Editorial (Desktop Layout & Mobile Carril) */}
-            <div className="evidence-layout-wrapper">
-              
-              {/* Top Block: Main Video Card (60%) + 2 Secondary Cards Stacked (40%) */}
-              <div className="evidence-top-grid">
-                
-                {/* Main Featured Case Card */}
-                {mainEvidenceCase && (
-                  <div className="evidence-card evidence-card-main">
-                    <div className="evidence-media-wrap">
-                      <img 
-                        src={mainEvidenceCase.posterUrl} 
-                        alt={mainEvidenceCase.title} 
-                        className="evidence-poster-img"
-                        loading="lazy"
+            {/* Stories Vertical Video Gallery */}
+            <div className="stories-gallery-wrapper">
+              <div className="stories-cards-container">
+                {evidenceCases.map((caseItem, idx) => (
+                  <div 
+                    key={caseItem.id} 
+                    className={`story-card story-card-${idx + 1}`}
+                    onClick={(e) => openModal(caseItem, e as unknown as React.MouseEvent<HTMLButtonElement>)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openModal(caseItem, e as unknown as React.MouseEvent<HTMLButtonElement>);
+                      }
+                    }}
+                  >
+                    <div className="story-card-inner">
+                      {/* Background Muted Video */}
+                      <video
+                        className="story-bg-video"
+                        src={caseItem.videoUrl}
+                        poster={caseItem.posterUrl}
+                        muted
+                        playsInline
+                        loop
+                        autoPlay
                       />
-                      <button 
-                        type="button" 
-                        className="evidence-play-btn"
-                        onClick={(e) => openModal(mainEvidenceCase, e)}
-                        aria-label={`Ver registro de video: ${mainEvidenceCase.title}`}
-                      >
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="play-svg">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </button>
-                      <span className="evidence-tag">{mainEvidenceCase.category}</span>
-                    </div>
-                    <div className="evidence-card-info">
-                      <h3 className="evidence-card-title">{mainEvidenceCase.title}</h3>
-                      <p className="evidence-card-desc">{mainEvidenceCase.description}</p>
-                      <button 
-                        type="button" 
-                        className="evidence-trigger-link"
-                        onClick={(e) => openModal(mainEvidenceCase, e)}
-                      >
-                        <span>Ver video de operación</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                          <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                )}
+                      
+                      {/* Top Category Badge */}
+                      <div className="story-top-badge">
+                        <span className="story-live-dot"></span>
+                        <span className="story-category-name">{caseItem.category}</span>
+                      </div>
 
-                {/* Secondary Cases Stacked (Desktop) / Carril item (Mobile) */}
-                <div className="evidence-secondary-stack">
-                  {secondaryCasesTop.map((item) => (
-                    <div className="evidence-card evidence-card-secondary" key={item.id}>
-                      <div className="evidence-media-wrap">
-                        <img 
-                          src={item.posterUrl} 
-                          alt={item.title} 
-                          className="evidence-poster-img"
-                          loading="lazy"
-                        />
-                        <button 
-                          type="button" 
-                          className="evidence-play-btn"
-                          onClick={(e) => openModal(item, e)}
-                          aria-label={`Ver registro: ${item.title}`}
-                        >
-                          <svg viewBox="0 0 24 24" fill="currentColor" className="play-svg">
+                      {/* Center Play Button Overlay */}
+                      <div className="story-play-overlay">
+                        <div className="story-play-btn" title="Reproducir video en HD">
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="play-icon">
                             <path d="M8 5v14l11-7z" />
                           </svg>
-                        </button>
-                        <span className="evidence-tag">{item.category}</span>
+                        </div>
                       </div>
-                      <div className="evidence-card-info">
-                        <h3 className="evidence-card-title">{item.title}</h3>
-                        <p className="evidence-card-desc">{item.description}</p>
-                        <button 
-                          type="button" 
-                          className="evidence-trigger-link"
-                          onClick={(e) => openModal(item, e)}
-                        >
-                          <span>Ver registro</span>
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
+
+                      {/* Bottom Info Overlay */}
+                      <div className="story-bottom-info">
+                        <h3 className="story-title">{caseItem.title}</h3>
+                        <p className="story-desc">{caseItem.description}</p>
+                        <div className="story-action-link">
+                          <span>Ver en pantalla completa</span>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="arrow-icon">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
                           </svg>
-                        </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-
-              {/* Bottom Row Grid (Cases 4 and 5) */}
-              <div className="evidence-bottom-row">
-                {secondaryCasesBottom.map((item) => (
-                  <div className="evidence-card evidence-card-horizontal" key={item.id}>
-                    <div className="evidence-media-wrap">
-                      <img 
-                        src={item.posterUrl} 
-                        alt={item.title} 
-                        className="evidence-poster-img"
-                        loading="lazy"
-                      />
-                      <button 
-                        type="button" 
-                        className="evidence-play-btn"
-                        onClick={(e) => openModal(item, e)}
-                        aria-label={`Ver registro: ${item.title}`}
-                      >
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="play-svg">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </button>
-                      <span className="evidence-tag">{item.category}</span>
-                    </div>
-                    <div className="evidence-card-info">
-                      <h3 className="evidence-card-title">{item.title}</h3>
-                      <p className="evidence-card-desc">{item.description}</p>
-                      <button 
-                        type="button" 
-                        className="evidence-trigger-link"
-                        onClick={(e) => openModal(item, e)}
-                      >
-                        <span>Ver registro</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                          <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                      </button>
                     </div>
                   </div>
                 ))}
               </div>
-
             </div>
           </div>
         </section>
 
-        {/* 6. SECCIÓN "CAPACIDADES QUE SOSTIENEN LA OPERACIÓN" */}
+        {/* 6. SECCIÓN "LO QUE TE OFRECEMOS EN NUESTRA LÍNEA DE DRONES" */}
         <section className="drones-capabilities-section" id="capacidades">
           <div className="section-container">
             <div className="section-header text-center">
-              <span className="section-eyebrow">TECNOLOGÍA RESISTENTE</span>
+              <span className="section-eyebrow">RESPALDO Y SERVICIO</span>
               <h2 className="section-title">
-                Capacidades que sostienen la operación
+                Todo lo que necesitas para volar con tranquilidad
               </h2>
               <p className="section-subtitle">
-                Plataformas diseñadas con ingeniería náutica y aeronáutica para responder con fiabilidad en el campo.
+                Te acompañamos antes, durante y después de tu compra con atención cercana y servicio técnico directo en Perú.
               </p>
             </div>
 
-            <div className="capabilities-grid">
+            <div className="capabilities-grid-ref">
               
-              <div className="capability-card">
-                <div className="cap-icon-wrap">
-                  <svg className="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14" />
-                  </svg>
+              {/* Card 1: Marca Confiable / SwellPro */}
+              <div className="cap-card-ref cap-card-marine">
+                <div className="cap-card-top">
+                  <div className="cap-badge-pill">
+                    <span className="cap-badge-dot"></span>
+                    <span>Representación Oficial</span>
+                  </div>
+                  <h3 className="cap-ref-title">Respaldado por SwellPro</h3>
+                  <p className="cap-ref-desc">
+                    Trabajamos con la marca líder mundial en drones 100% impermeables, diseñados para resistir el agua, la sal y condiciones exigentes sin riesgo.
+                  </p>
                 </div>
-                <h3 className="cap-title">Operación sobre agua</h3>
-                <p className="cap-desc">
-                  Sellado impermeabilizado y flotabilidad nativa para operar, amarizar y despegar sobre agua dulce o salada sin riesgo de daños.
-                </p>
+                <div className="cap-card-bottom">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="cap-ref-link">
+                    <span>Conocer la marca</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                </div>
+                {/* 3D Floating Visual Badge */}
+                <div className="cap-visual-float">
+                  <div className="cap-3d-object">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="cap-3d-svg">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      <path d="m9 12 2 2 4-4" />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
-              <div className="capability-card">
-                <div className="cap-icon-wrap">
-                  <svg className="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="M23 7l-7 5 7 5V7z" />
-                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-                  </svg>
+              {/* Card 2: Asesoría Personalizada */}
+              <div className="cap-card-ref cap-card-tech">
+                <div className="cap-card-top">
+                  <div className="cap-badge-pill">
+                    <span className="cap-badge-dot"></span>
+                    <span>Atención Personalizada</span>
+                  </div>
+                  <h3 className="cap-ref-title">Recomendaciones a tu medida</h3>
+                  <p className="cap-ref-desc">
+                    Te escuchamos y te guiamos para elegir la versión y configuración que mejor se ajuste a tu uso, tu presupuesto y lo que realmente necesitas.
+                  </p>
                 </div>
-                <h3 className="cap-title">Transmisión y monitoreo</h3>
-                <p className="cap-desc">
-                  Enlaces de video digital de baja latencia para visualización en tiempo real desde estaciones de control en tierra o embarcaciones.
-                </p>
+                <div className="cap-card-bottom">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="cap-ref-link">
+                    <span>Pedir recomendación</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                </div>
+                {/* 3D Floating Visual Badge */}
+                <div className="cap-visual-float">
+                  <div className="cap-3d-object">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="cap-3d-svg">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
-              <div className="capability-card">
-                <div className="cap-icon-wrap">
-                  <svg className="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
-                    <circle cx="12" cy="13" r="4" />
-                  </svg>
+              {/* Card 3: Accesorios y Repuestos */}
+              <div className="cap-card-ref cap-card-orange">
+                <div className="cap-card-top">
+                  <div className="cap-badge-pill">
+                    <span className="cap-badge-dot"></span>
+                    <span>Stock y Disponibilidad</span>
+                  </div>
+                  <h3 className="cap-ref-title">Accesorios y repuestos</h3>
+                  <p className="cap-ref-desc">
+                    Contamos con baterías extras, hélices, soltadores de carga y cámaras intercambiables para que tu drone siempre esté completo y listo.
+                  </p>
                 </div>
-                <h3 className="cap-title">Cámaras y cargas especializadas</h3>
-                <p className="cap-desc">
-                  Módulos intercambiables con sensores 4K, visores térmicos nocturnos y sistemas mecánicos de soltador de carga útil.
-                </p>
+                <div className="cap-card-bottom">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="cap-ref-link">
+                    <span>Ver accesorios</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                </div>
+                {/* 3D Floating Visual Badge */}
+                <div className="cap-visual-float">
+                  <div className="cap-3d-object">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="cap-3d-svg">
+                      <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+                      <circle cx="12" cy="13" r="3" />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
-              <div className="capability-card">
-                <div className="cap-icon-wrap">
-                  <svg className="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
-                  </svg>
+              {/* Card 4: Soporte Local y Post-venta */}
+              <div className="cap-card-ref cap-card-emerald">
+                <div className="cap-card-top">
+                  <div className="cap-badge-pill">
+                    <span className="cap-badge-dot"></span>
+                    <span>Atención Local en Perú</span>
+                  </div>
+                  <h3 className="cap-ref-title">Soporte y seguimiento continuo</h3>
+                  <p className="cap-ref-desc">
+                    No te dejamos solo después de la compra. Te brindamos acompañamiento, mantenimiento técnico y atención directa para cualquier consulta.
+                  </p>
                 </div>
-                <h3 className="cap-title">Configuración para el entorno real</h3>
-                <p className="cap-desc">
-                  Ajuste de parámetros, calibración especializada y equipamiento adaptado a las condiciones ambientales de la costa, sierra o selva peruana.
-                </p>
+                <div className="cap-card-bottom">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="cap-ref-link">
+                    <span>Consultar soporte</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                </div>
+                {/* 3D Floating Visual Badge */}
+                <div className="cap-visual-float">
+                  <div className="cap-3d-object">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="cap-3d-svg">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -625,189 +567,61 @@ export default function DronesLanding() {
           </div>
         </section>
 
-        {/* 7. CATÁLOGO GENERAL / VISTA PREVIA DE SOLUCIONES (MEJORADA FASE 5B) */}
-        <section className="drones-solutions-preview-section" id="modelos">
-          <div className="section-container">
-            <div className="section-header text-center">
-              <span className="section-eyebrow">ARQUITECTURAS DE PLATAFORMA</span>
-              <h2 className="section-title">
-                No necesitas cualquier drone. Necesitas la plataforma correcta.
-              </h2>
-              <p className="section-subtitle">
-                Tres enfoques de plataforma adaptables a la misión operativa de tu organización.
-              </p>
-            </div>
-
-            <div className="solutions-preview-grid">
-              
-              {/* Category 1 */}
-              <div className="sol-preview-card">
-                <div className="sol-card-media">
-                  <img 
-                    src={assets.drones.solutions.inspection} 
-                    alt="Plataforma de Inspección y Monitoreo SwellPro" 
-                    className="sol-img"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="sol-card-content">
-                  <h3 className="sol-card-name">Inspección y monitoreo</h3>
-                  <p className="sol-card-desc">
-                    Supervisión visual de infraestructura, costa, embarcaciones y zonas de difícil acceso.
-                  </p>
-                  
-                  <div className="sol-variables-box">
-                    <span className="variables-label">Variables que definimos:</span>
-                    <ul className="variables-list">
-                      <li><strong>Entorno:</strong> Marino, costero, fluvial o industrial</li>
-                      <li><strong>Captura:</strong> Sensor 4K / Térmico según requerimiento</li>
-                      <li><strong>Distancia:</strong> Según línea de vista y regulación</li>
-                      <li><strong>Clima:</strong> Alta humedad y resistencia a salitre</li>
-                    </ul>
-                  </div>
-
-                  <a 
-                    href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CRTech, deseo solicitar una recomendación para una plataforma de Inspección y Monitoreo.')}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="sol-card-link"
-                  >
-                    <span>Solicitar recomendación</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              {/* Category 2 */}
-              <div className="sol-preview-card">
-                <div className="sol-card-media">
-                  <img 
-                    src={assets.drones.solutions.fishingPayload} 
-                    alt="Plataforma de Pesca y Liberación de Carga SwellPro" 
-                    className="sol-img"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="sol-card-content">
-                  <h3 className="sol-card-name">Pesca y liberación de carga</h3>
-                  <p className="sol-card-desc">
-                    Plataformas preparadas para transportar y liberar cargas según el objetivo operativo.
-                  </p>
-
-                  <div className="sol-variables-box">
-                    <span className="variables-label">Variables que definimos:</span>
-                    <ul className="variables-list">
-                      <li><strong>Operación:</strong> Lanzamiento de anzuelos o logística ligera</li>
-                      <li><strong>Mecanismo:</strong> Soltador electromecánico o asistido</li>
-                      <li><strong>Entorno:</strong> Mar abierto, playas o cuerpos de agua</li>
-                      <li><strong>Capacitación:</strong> Operación básica y maniobras acuáticas</li>
-                    </ul>
-                  </div>
-
-                  <a 
-                    href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CRTech, deseo solicitar una recomendación para una plataforma de Pesca y Liberación de Carga.')}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="sol-card-link"
-                  >
-                    <span>Solicitar recomendación</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              {/* Category 3 */}
-              <div className="sol-preview-card">
-                <div className="sol-card-media">
-                  <img 
-                    src={assets.drones.solutions.specialized} 
-                    alt="Plataforma de Operaciones Especializadas SwellPro" 
-                    className="sol-img"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="sol-card-content">
-                  <h3 className="sol-card-name">Operaciones especializadas</h3>
-                  <p className="sol-card-desc">
-                    Configuraciones adaptadas para búsqueda, rescate, seguridad y trabajo técnico de campo.
-                  </p>
-
-                  <div className="sol-variables-box">
-                    <span className="variables-label">Variables que definimos:</span>
-                    <ul className="variables-list">
-                      <li><strong>Misión:</strong> Rescate acuático, vigilancia o ciencia ambiental</li>
-                      <li><strong>Sensores:</strong> Visión nocturna, altavoz o luces de apoyo</li>
-                      <li><strong>Comunicación:</strong> Enlace extendido y telemetría</li>
-                      <li><strong>Soporte:</strong> Mantenimiento preventivo y repuestos locales</li>
-                    </ul>
-                  </div>
-
-                  <a 
-                    href={`https://wa.me/51991664146?text=${encodeURIComponent('Hola CRTech, deseo solicitar una recomendación para Plataformas Especializadas.')}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="sol-card-link"
-                  >
-                    <span>Solicitar recomendación</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="link-arrow">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* 8. BLOQUE "CÓMO DEFINIMOS TU CONFIGURACIÓN" (FASE 5B) */}
+        {/* 8. BLOQUE "CÓMO DEFINIMOS TU CONFIGURACIÓN" (TIMELINE INTERACTIVO SIMPLE) */}
         <section className="drones-config-process-section">
           <div className="section-container">
             <div className="config-process-header text-center">
-              <span className="section-eyebrow">METODOLOGÍA DE ASESORÍA</span>
+              <span className="section-eyebrow">NUESTRA METODOLOGÍA</span>
               <h2 className="section-title">
-                Cómo definimos tu configuración
+                Cómo definimos tu equipo
               </h2>
               <p className="section-subtitle">
-                No recomendamos desde un catálogo cerrado. Primero entendemos dónde, cómo y para qué necesitas operar.
+                Tres pasos sencillos para asegurarnos de que tengas exactamente lo que necesitas.
               </p>
             </div>
 
-            <div className="config-steps-band">
-              <div className="config-step-item">
-                <div className="step-num-badge">01</div>
-                <div className="step-content">
-                  <h3 className="step-title">Entorno y objetivo</h3>
-                  <p className="step-desc">Evaluamos la ubicación, las condiciones climáticas y la misión requerida.</p>
-                </div>
-              </div>
-
-              <div className="config-step-arrow" aria-hidden="true">→</div>
-
-              <div className="config-step-item">
-                <div className="step-num-badge">02</div>
-                <div className="step-content">
-                  <h3 className="step-title">Plataforma y accesorios</h3>
-                  <p className="step-desc">Seleccionamos los sensores, soltadores o cámaras de acuerdo con el trabajo.</p>
-                </div>
-              </div>
-
-              <div className="config-step-arrow" aria-hidden="true">→</div>
-
-              <div className="config-step-item">
-                <div className="step-num-badge">03</div>
-                <div className="step-content">
-                  <h3 className="step-title">Capacitación y soporte</h3>
-                  <p className="step-desc">Acompañamos el entrenamiento de los pilotos y garantizamos respaldo técnico.</p>
-                </div>
-              </div>
+            <div className="config-hover-timeline">
+              {[
+                {
+                  num: "01",
+                  title: "Evaluación",
+                  desc: "Escuchamos lo que necesitas hacer, dónde vas a volar (mar, río, playa o campo) y qué deseas lograr."
+                },
+                {
+                  num: "02",
+                  title: "Recomendación",
+                  desc: "Te mostramos el drone y los accesorios ideales para tu trabajo, de forma clara y sin complicaciones."
+                },
+                {
+                  num: "03",
+                  title: "Capacitación y soporte local",
+                  desc: "Te enseñamos a usar tu equipo paso a paso y te brindamos respaldo continuo con repuestos y atención directa en Perú."
+                }
+              ].map((step, idx) => {
+                const isActive = activeConfigStep === idx;
+                return (
+                  <div 
+                    key={idx}
+                    className={`timeline-step-row ${isActive ? 'active' : ''}`}
+                    onMouseEnter={() => setActiveConfigStep(idx)}
+                    onClick={() => setActiveConfigStep(idx)}
+                    role="button"
+                    tabIndex={0}
+                    aria-selected={isActive}
+                  >
+                    <div className="timeline-num-col">
+                      <span className="timeline-step-num">{step.num}</span>
+                    </div>
+                    <div className="timeline-indicator-col">
+                      <div className="timeline-vertical-line"></div>
+                    </div>
+                    <div className="timeline-content-col">
+                      <h3 className="timeline-step-title">{step.title}</h3>
+                      <p className="timeline-step-desc">{step.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -998,58 +812,8 @@ export default function DronesLanding() {
         </div>
       )}
 
-      {/* 13. FOOTER DEDICADO DRONES */}
-      <footer className="drones-footer">
-        <div className="footer-container">
-          <div className="drones-footer-main">
-            <div className="footer-brand-col">
-              <a href="#/" className="footer-logo" aria-label="CR Technologies & Services inicio">
-                <img 
-                  src={assets.logos.darkBack} 
-                  alt="CR Technologies & Services" 
-                  className="footer-logo-img" 
-                  loading="lazy"
-                  width="220"
-                  height="44"
-                />
-              </a>
-              <p className="footer-brand-tagline">
-                Representación Oficial de SwellPro en Perú · Soluciones aéreas impermeables para misiones críticas.
-              </p>
-            </div>
-
-            <div className="footer-nav-col">
-              <h4 className="footer-col-title">Navegación</h4>
-              <ul className="footer-links">
-                <li><a href="#aplicaciones" onClick={(e) => scrollToSection(e, 'aplicaciones')}>Aplicaciones</a></li>
-                <li><a href="#evidencia" onClick={(e) => scrollToSection(e, 'evidencia')}>Evidencia de campo</a></li>
-                <li><a href="#capacidades" onClick={(e) => scrollToSection(e, 'capacidades')}>Capacidades</a></li>
-                <li><a href="#modelos" onClick={(e) => scrollToSection(e, 'modelos')}>Plataformas</a></li>
-                <li><a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')}>Soporte Técnico</a></li>
-              </ul>
-            </div>
-
-            <div className="footer-contact-col">
-              <h4 className="footer-col-title">Contacto Perú</h4>
-              <p className="footer-contact-text">
-                Atención directa para cotizaciones y asesoría en campo.
-              </p>
-              <a 
-                href={whatsappUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="footer-wa-link"
-              >
-                <span>WhatsApp: {assets.contact.whatsappNumber}</span>
-              </a>
-            </div>
-          </div>
-
-          <div className="drones-footer-bottom">
-            <p>© {new Date().getFullYear()} CR Technologies & Services. Representante oficial de SwellPro en Perú.</p>
-          </div>
-        </div>
-      </footer>
+      {/* 13. FOOTER UNIFICADO */}
+      <Footer />
     </div>
   );
 }
