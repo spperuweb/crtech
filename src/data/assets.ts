@@ -70,17 +70,46 @@ export const assets = {
     },
   },
   ecoFlow: {
-    deltaPro: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422177/Ecoflow_delta_PRO_g9xhmt.png",
-    delta: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422172/Ecoflow_delta_e9avxh.png",
-    river: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422175/Ecoflow_river_oybgke.png",
-    river2: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422174/Ecoflow_river2_scdu1t.png",
+    // 1. Imagen destacada de generación solar
+    solarPanelOperation: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422204/Ecoflow_paneles_solares_e4mpcp.png",
     solarPanel: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422204/Ecoflow_paneles_solares_e4mpcp.png",
     solarPanels: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422204/Ecoflow_paneles_solares_e4mpcp.png",
-    solarPanels2: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422176/Ecoflow_paneles_solares-2_nzvchw.png",
-    powerStream: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422178/Ecoflow_POWERSTREAM_Kit_solar_para_balcones__mihh2z.png",
+    // 2. Power Bank magnético
     powerBankMagnetic: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422192/Ecoflow_PowerBankMagnetic_pucvzv.png",
+    // 3. PowerStream para balcones
+    powerStream: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422178/Ecoflow_POWERSTREAM_Kit_solar_para_balcones__mihh2z.png",
+    // 4. EcoFlow Delta Pro
+    deltaPro: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422177/Ecoflow_delta_PRO_g9xhmt.png",
+    // 5. Familia de paneles solares
+    solarPanelsFamily: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422176/Ecoflow_paneles_solares-2_nzvchw.png",
+    solarPanels2: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422176/Ecoflow_paneles_solares-2_nzvchw.png",
+    // 6. EcoFlow River
+    river: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422175/Ecoflow_river_oybgke.png",
+    // 7. EcoFlow River 2
+    river2: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422174/Ecoflow_river2_scdu1t.png",
+    // 8. Aire acondicionado portátil Wave
+    airConditionerWave: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422174/Ecoflow_aire_acondicionado_portatil_ltjrpz.png",
     airConditioner: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422174/Ecoflow_aire_acondicionado_portatil_ltjrpz.png",
+    // 9. Sombrero solar EcoFlow
     solarHat: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422173/Ecoflow_sombrero_solarpng_hobdm2.png",
+    // 10. EcoFlow Delta
+    delta: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422172/Ecoflow_delta_e9avxh.png",
+    // 11. Estaciones de energía EcoFlow (Portada Almacenamiento)
+    categoryStorageCover: "https://ecoflowstore.pe/wp-content/uploads/2026/07/estacion.webp",
+    // 12. Paneles solares EcoFlow (Portada Generación solar)
+    categoryGenerationCover: "https://ecoflowstore.pe/wp-content/uploads/2026/07/aneles-solares.webp",
+    // 13. Combos EcoFlow (Sistemas completos: panel + estación)
+    categoryCombosCover: "https://ecoflowstore.pe/wp-content/uploads/2026/07/combos2.webp",
+    // 14. EcoFlow para drones empresariales
+    b2bDrones: "https://ecoflowstore.pe/wp-content/uploads/2026/07/EcoFlow-Landing-B2B_Drones-Empresariales-1.webp",
+    // 15. EcoFlow para construcción y minería
+    b2bMiningConstruction: "https://ecoflowstore.pe/wp-content/uploads/2026/07/EcoFlow-Landing-B2B_Construccion-y-Mineria-1.webp",
+    // 16. EcoFlow para producción audiovisual
+    b2bAudiovisual: "https://ecoflowstore.pe/wp-content/uploads/2026/07/EcoFlow-Landing-B2B_Audiovisual-1.webp",
+    // 17. EcoFlow para foodtrucks y gastronomía
+    b2bGastronomy: "https://ecoflowstore.pe/wp-content/uploads/2026/07/EcoFlow-Landing-B2B_Gastronomia-1.webp",
+    // 18. EcoFlow para entretenimiento y eventos
+    b2bEvents: "https://ecoflowstore.pe/wp-content/uploads/2026/07/EcoFlow-Landing-B2B_Industria-entretenimiento-1.webp",
   },
   serviciosTI: {
     mainInfrastructure: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1784917692/pexels-kindelmedia-8982662_lsubce.jpg",

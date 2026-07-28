@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
 import Header from './Header';
+import EcoFlowPremiumGallery from './EcoFlowPremiumGallery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -464,6 +465,9 @@ export default function EcoFlowLanding() {
             </div>
           </div>
         </section>
+
+        {/* 2.5 GALERÍA PREMIUM Y CATÁLOGO DE ENERGÍA */}
+        <EcoFlowPremiumGallery />
 
         {/* 3. GALERÍA DE VIDEOS (Basado exactamente en la referencia visual dada) */}
         <section className="ecoflow-video-ref-section" id="evidencia">
