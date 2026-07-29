@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
 import Header from './Header';
+import EcoFlowEditorialGallery from './EcoFlowEditorialGallery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -778,6 +779,9 @@ export default function EcoFlowLanding() {
             </div>
           </div>
         </section>
+
+        {/* GALERÍA EDITORIAL ECOFLOW: ENERGÍA EN MOVIMIENTO */}
+        <EcoFlowEditorialGallery />
 
         {/* 5.2 METODOLOGÍA SIMPLE */}
         <section className="drones-config-process-section" id="metodologia">
