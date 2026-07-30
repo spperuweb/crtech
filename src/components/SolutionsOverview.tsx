@@ -300,7 +300,7 @@ export default function SolutionsOverview() {
 
               <div className="block-cta-row">
                 <a 
-                  href="#/drones" 
+                  href="/crtech/drones" 
                   className="btn btn-secondary-accent cyan"
                 >
                   Explorar Drones Profesionales
@@ -389,7 +389,7 @@ export default function SolutionsOverview() {
 
               <div className="block-cta-row">
                 <a 
-                  href="#/energia"
+                  href="/crtech/energia"
                   className="btn btn-secondary-accent amber"
                 >
                   Explorar Energía EcoFlow
@@ -455,7 +455,7 @@ export default function SolutionsOverview() {
 
               <div className="block-cta-row">
                 <a 
-                  href="#/servicios-ti"
+                  href="/crtech/serviciosti"
                   className="btn btn-secondary-accent violet"
                 >
                   Explorar Servicios TI

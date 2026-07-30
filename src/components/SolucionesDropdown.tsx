@@ -105,7 +105,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
               </div>
               <div className="mega-col-items">
                 <a 
-                  href="#/drones" 
+                  href="/crtech/drones" 
                   className={`mega-item-card ${currentRoute === 'drones' ? 'active-page' : ''}`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -122,7 +122,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="#/drones" 
+                  href="/crtech/drones" 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -136,7 +136,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="#/drones" 
+                  href="/crtech/drones" 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -159,7 +159,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
               </div>
               <div className="mega-col-items">
                 <a 
-                  href="#/energia" 
+                  href="/crtech/energia" 
                   className={`mega-item-card ${currentRoute === 'energia' ? 'active-page' : ''}`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -176,7 +176,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="#/energia" 
+                  href="/crtech/energia" 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -190,7 +190,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="#/energia#selector-ecoflow" 
+                  href="/crtech/energia#selector-ecoflow" 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -213,7 +213,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
               </div>
               <div className="mega-col-items">
                 <a 
-                  href="#/servicios-ti" 
+                  href="/crtech/serviciosti" 
                   className={`mega-item-card ${currentRoute === 'servicios-ti' ? 'active-page' : ''}`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -230,7 +230,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="#/servicios-ti" 
+                  href="/crtech/serviciosti" 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -244,7 +244,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="#/servicios-ti#diagnostico" 
+                  href="/crtech/serviciosti#diagnostico" 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >

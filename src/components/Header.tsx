@@ -39,24 +39,30 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
   const renderSublandingBadge = () => null;
 
   // Standard main nav links across all routes
-  const renderNavLinks = () => (
-    <>
-      <a href="#metodo" className="nav-pill-link">Cómo trabajamos</a>
-      <a href="#evidencia" className="nav-pill-link">Operaciones reales</a>
-      <a href="#nosotros" className="nav-pill-link">Nosotros</a>
-      <a href="#faq" className="nav-pill-link">FAQ</a>
-    </>
-  );
+  const renderNavLinks = () => {
+    const prefix = currentRoute === 'home' ? '' : '/crtech';
+    return (
+      <>
+        <a href={`${prefix}#metodo`} className="nav-pill-link">Cómo trabajamos</a>
+        <a href={`${prefix}#evidencia`} className="nav-pill-link">Operaciones reales</a>
+        <a href={`${prefix}#nosotros`} className="nav-pill-link">Nosotros</a>
+        <a href={`${prefix}#faq`} className="nav-pill-link">FAQ</a>
+      </>
+    );
+  };
 
   // Standard mobile nav links across all routes
-  const renderMobileNavLinks = () => (
-    <div className="mobile-nav-links-list">
-      <a href="#metodo" className="mobile-nav-link" onClick={closeMenu}>Cómo trabajamos</a>
-      <a href="#evidencia" className="mobile-nav-link" onClick={closeMenu}>Operaciones reales</a>
-      <a href="#nosotros" className="mobile-nav-link" onClick={closeMenu}>Nosotros</a>
-      <a href="#faq" className="mobile-nav-link" onClick={closeMenu}>FAQ</a>
-    </div>
-  );
+  const renderMobileNavLinks = () => {
+    const prefix = currentRoute === 'home' ? '' : '/crtech';
+    return (
+      <div className="mobile-nav-links-list">
+        <a href={`${prefix}#metodo`} className="mobile-nav-link" onClick={closeMenu}>Cómo trabajamos</a>
+        <a href={`${prefix}#evidencia`} className="mobile-nav-link" onClick={closeMenu}>Operaciones reales</a>
+        <a href={`${prefix}#nosotros`} className="mobile-nav-link" onClick={closeMenu}>Nosotros</a>
+        <a href={`${prefix}#faq`} className="mobile-nav-link" onClick={closeMenu}>FAQ</a>
+      </div>
+    );
+  };
 
   return (
     <header className={`site-header vercel-header ${isScrolled ? 'scrolled' : ''}`} id="main-header">
@@ -64,7 +70,7 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
         
         {/* Brand Group (Logo + Sub-line badge) */}
         <div className="header-brand-group">
-          <a href="#/" className="header-logo" onClick={closeMenu} aria-label="CR Technologies & Services Inicio">
+          <a href="/crtech" className="header-logo" onClick={closeMenu} aria-label="CR Technologies & Services Inicio">
             <img 
               src={assets.logos.lightBack} 
               alt="CR Technologies & Services" 
@@ -113,15 +119,15 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
         <nav className="mobile-nav" aria-label="Navegación móvil">
           <div className="mobile-solutions-group">
             <span className="mobile-solutions-title">Soluciones CRTech</span>
-            <a href="#/drones" className={`mobile-solution-link ${currentRoute === 'drones' ? 'active' : ''}`} onClick={closeMenu}>
+            <a href="/crtech/drones" className={`mobile-solution-link ${currentRoute === 'drones' ? 'active' : ''}`} onClick={closeMenu}>
               <span className="mob-dot cyan"></span>
               <span>Drones Profesionales (SwellPro)</span>
             </a>
-            <a href="#/energia" className={`mobile-solution-link ${currentRoute === 'energia' ? 'active' : ''}`} onClick={closeMenu}>
+            <a href="/crtech/energia" className={`mobile-solution-link ${currentRoute === 'energia' ? 'active' : ''}`} onClick={closeMenu}>
               <span className="mob-dot amber"></span>
               <span>Energía EcoFlow (LFP & Solar)</span>
             </a>
-            <a href="#/servicios-ti" className={`mobile-solution-link ${currentRoute === 'servicios-ti' ? 'active' : ''}`} onClick={closeMenu}>
+            <a href="/crtech/serviciosti" className={`mobile-solution-link ${currentRoute === 'servicios-ti' ? 'active' : ''}`} onClick={closeMenu}>
               <span className="mob-dot blue"></span>
               <span>Servicios TI & Redes</span>
             </a>

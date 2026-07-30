@@ -14,7 +14,7 @@ export default function Footer() {
         
         {/* Company Identity Block */}
         <div className="footer-brand-column">
-          <a href="#/" aria-label="CR Technologies & Services inicio">
+          <a href="/crtech" aria-label="CR Technologies & Services inicio">
             <img 
               src={assets.logos.darkBack} 
               alt="CR Technologies & Services" 
@@ -40,9 +40,9 @@ export default function Footer() {
         <div className="footer-nav-column">
           <h4 className="footer-title">Soluciones</h4>
           <ul className="footer-links-list">
-            <li><a href="#/drones">Drones Profesionales</a></li>
-            <li><a href="#/energia">Energía EcoFlow</a></li>
-            <li><a href="#/servicios-ti">Servicios TI</a></li>
+            <li><a href="/crtech/drones">Drones Profesionales</a></li>
+            <li><a href="/crtech/energia">Energía EcoFlow</a></li>
+            <li><a href="/crtech/serviciosti">Servicios TI</a></li>
           </ul>
         </div>
 
@@ -50,10 +50,10 @@ export default function Footer() {
         <div className="footer-nav-column">
           <h4 className="footer-title">Compañía</h4>
           <ul className="footer-links-list">
-            <li><a href="#nosotros">Nosotros</a></li>
-            <li><a href="#metodo">Cómo trabajamos</a></li>
-            <li><a href="#evidencia">Operaciones reales</a></li>
-            <li><a href="#faq">Preguntas frecuentes</a></li>
+            <li><a href="/crtech#nosotros">Nosotros</a></li>
+            <li><a href="/crtech#metodo">Cómo trabajamos</a></li>
+            <li><a href="/crtech#evidencia">Operaciones reales</a></li>
+            <li><a href="/crtech#faq">Preguntas frecuentes</a></li>
             <li>
               <a 
                 href={assets.contact.swellProWebsite} 

@@ -16,29 +16,76 @@ import FloatingWhatsApp from './components/FloatingWhatsApp';
 
 type RouteType = 'home' | 'drones' | 'energia' | 'servicios-ti';
 
+function getRouteFromLocation(): RouteType {
+  const path = window.location.pathname.toLowerCase();
+  const hash = window.location.hash.toLowerCase();
+
+  if (path.includes('/drones') || hash.includes('drones')) {
+    return 'drones';
+  }
+  if (path.includes('/energia') || hash.includes('energia')) {
+    return 'energia';
+  }
+  if (path.includes('servicio') || hash.includes('servicio')) {
+    return 'servicios-ti';
+  }
+  return 'home';
+}
+
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState<RouteType>(() => {
-    const hash = window.location.hash;
-    if (hash.startsWith('#/drones') || hash === '#drones') return 'drones';
-    if (hash.startsWith('#/energia') || hash === '#energia') return 'energia';
-    if (hash.startsWith('#/servicios-ti') || hash === '#servicios-ti') return 'servicios-ti';
-    return 'home';
-  });
+  const [currentRoute, setCurrentRoute] = useState<RouteType>(getRouteFromLocation);
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      let route: RouteType = 'home';
-      if (hash.startsWith('#/drones') || hash === '#drones') route = 'drones';
-      else if (hash.startsWith('#/energia') || hash === '#energia') route = 'energia';
-      else if (hash.startsWith('#/servicios-ti') || hash === '#servicios-ti') route = 'servicios-ti';
-      
+    const handleLocationChange = () => {
+      const route = getRouteFromLocation();
       setCurrentRoute(route);
-      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // Handle anchor scrolling if hash is present
+      if (window.location.hash && window.location.hash.length > 1) {
+        const targetId = window.location.hash.substring(1);
+        setTimeout(() => {
+          const el = document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
+  }, []);
+
+  // Global click interceptor for internal routing links without page reload
+  useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest('a');
+      if (!anchor) return;
+      const href = anchor.getAttribute('href');
+      if (!href) return;
+
+      // Only intercept internal application routes
+      if (
+        href.startsWith('/crtech') ||
+        href.startsWith('/drones') ||
+        href.startsWith('/energia') ||
+        href.startsWith('/serviciosti') ||
+        href.startsWith('/servicios-ti')
+      ) {
+        e.preventDefault();
+        window.history.pushState({}, '', href);
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      }
+    };
+
+    document.addEventListener('click', handleGlobalClick);
+    return () => document.removeEventListener('click', handleGlobalClick);
   }, []);
 
   return (
@@ -66,3 +113,4 @@ export default function App() {
     </>
   );
 }
+

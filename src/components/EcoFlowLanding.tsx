@@ -1217,7 +1217,7 @@ export default function EcoFlowLanding() {
           <div className="ecoflow-footer-main">
             
             <div className="footer-brand-col">
-              <a href="#/" aria-label="CR Technologies & Services inicio">
+              <a href="/crtech" aria-label="CR Technologies & Services inicio">
                 <img 
                   src={assets.logos.darkBack} 
                   alt="CR Technologies & Services" 
@@ -1249,9 +1249,9 @@ export default function EcoFlowLanding() {
             <div className="footer-links-col">
               <h4 className="footer-col-title">Otras Divisiones</h4>
               <ul className="footer-links">
-                <li><a href="#/drones">Drones / SwellPro Perú</a></li>
-                <li><a href="#/servicios-ti">Servicios TI e Infraestructura</a></li>
-                <li><a href="#/">CR Tech Principal</a></li>
+                <li><a href="/crtech/drones">Drones / SwellPro Perú</a></li>
+                <li><a href="/crtech/serviciosti">Servicios TI e Infraestructura</a></li>
+                <li><a href="/crtech">CR Tech Principal</a></li>
               </ul>
             </div>
 
