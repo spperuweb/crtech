@@ -6,81 +6,14 @@ import Header from './Header';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Types for Diagnostic Data
-interface QuestionOption {
-  id: string;
-  label: string;
-}
-
-interface Question {
-  id: 'necesidad' | 'entorno' | 'estado';
-  title: string;
-  options: QuestionOption[];
-}
-
-const DIAGNOSTIC_QUESTIONS: Question[] = [
-  {
-    id: 'necesidad',
-    title: '¿Qué situación necesitas revisar?',
-    options: [
-      { id: 'red_inestable', label: 'La red o conexión es inestable.' },
-      { id: 'equipos_fallas', label: 'Los equipos presentan fallas recurrentes.' },
-      { id: 'videovigilancia', label: 'Necesito implementar o mejorar videovigilancia.' },
-      { id: 'respaldos', label: 'Me preocupan respaldos y continuidad.' },
-      { id: 'toda_infra', label: 'Necesito evaluar toda la infraestructura.' },
-      { id: 'sin_identificar', label: 'Todavía no identifico la causa.' }
-    ]
-  },
-  {
-    id: 'entorno',
-    title: '¿En qué entorno se encuentra la infraestructura?',
-    options: [
-      { id: 'oficina', label: 'Oficina o pequeño negocio.' },
-      { id: 'local_comercial', label: 'Local comercial.' },
-      { id: 'almacen_taller', label: 'Almacén, taller o instalación operativa.' },
-      { id: 'institucion', label: 'Institución educativa o administrativa.' },
-      { id: 'varias_sedes', label: 'Varias sedes.' },
-      { id: 'otro_entorno', label: 'Otro entorno.' }
-    ]
-  },
-  {
-    id: 'estado',
-    title: '¿Cuál describe mejor la situación?',
-    options: [
-      { id: 'planificando', label: 'Estoy planificando un proyecto.' },
-      { id: 'problemas_recurrentes', label: 'Existen problemas recurrentes.' },
-      { id: 'actualizar', label: 'Necesito actualizar una instalación existente.' },
-      { id: 'incidencia_activa', label: 'Hay una incidencia activa.' },
-      { id: 'mantenimiento_prev', label: 'Necesito mantenimiento preventivo.' },
-      { id: 'definiendo_alcance', label: 'Todavía estoy definiendo el alcance.' }
-    ]
-  }
-];
-
-interface DiagnosticResult {
-  areaSugerida: string;
-  motivo: string;
-  preparar: string[];
-}
-
 export default function ServiciosTILanding() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const stepCardRef = useRef<HTMLDivElement>(null);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedArea, setSelectedArea] = useState<string>('Redes e infraestructura');
 
-  // Diagnostic state
-  const [diagStep, setDiagStep] = useState<number>(1); // 1, 2, 3 or 4 (result)
-  const [diagAnswers, setDiagAnswers] = useState<{
-    necesidad: string;
-    entorno: string;
-    estado: string;
-  }>({
-    necesidad: '',
-    entorno: '',
-    estado: ''
-  });
+  // Hero interactive 4-services vertical accordion state
+  const [activeHeroCard, setActiveHeroCard] = useState<number>(0);
 
   // FAQ state (accordion)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -104,7 +37,7 @@ export default function ServiciosTILanding() {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        // 1. HERO TIMELINE & KINETIC TOPOLOGY SIGNATURE ("EL SISTEMA ENTRA EN OPERACIÓN")
+        // 1. HERO TIMELINE
         const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
         heroTl
@@ -114,14 +47,8 @@ export default function ServiciosTILanding() {
           .fromTo('.ti-hero-ctas', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45 }, '-=0.3')
           .fromTo('.ti-hero-trust-highlights .highlight-item', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06 }, '-=0.25')
           .fromTo('.topology-card-wrapper', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
-          // Topology Kinetic Sequence: Central node -> Connections -> Subnodes -> Status Active
           .fromTo('.topo-node-central', { opacity: 0 }, { opacity: 1, duration: 0.35 }, '-=0.2')
           .fromTo('.topo-path', { opacity: 0 }, { opacity: 1, duration: 0.35, stagger: 0.06 }, '-=0.15')
-          .fromTo('.topo-node-red', { opacity: 0 }, { opacity: 1, duration: 0.25 }, '-=0.1')
-          .fromTo('.topo-node-equipos', { opacity: 0 }, { opacity: 1, duration: 0.25 }, '-=0.1')
-          .fromTo('.topo-node-soporte', { opacity: 0 }, { opacity: 1, duration: 0.25 }, '-=0.1')
-          .fromTo('.topo-node-seguridad', { opacity: 0 }, { opacity: 1, duration: 0.25 }, '-=0.1')
-          .fromTo('.topo-node-backup, .topo-path-backup', { opacity: 0 }, { opacity: 1, duration: 0.3 }, '-=0.1')
           .fromTo('.topology-status-pill', { opacity: 0 }, { opacity: 1, duration: 0.3 }, '-=0.1');
 
         // 2. FRANJA DE CONFIANZA
@@ -142,167 +69,77 @@ export default function ServiciosTILanding() {
           }
         );
 
-        // 3. CADENA DE DEPENDENCIAS (UNA FALLA AISLADA)
-        const probTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '.ti-problem-section',
-            start: 'top 80%',
-            once: true
-          }
-        });
-        probTl
-          .fromTo('.ti-problem-section .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('.operativa-item, .operativa-arrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' }, '-=0.2');
-
-        // 4. DIAGNÓSTICO
+        // 3. STACKED CARDS SECCIÓN SERVICIOS
         gsap.fromTo(
-          '#diagnostico .diagnostico-wrapper',
-          { opacity: 0, y: 18 },
+          '.ti-stacked-service-card',
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
             y: 0,
             duration: 0.5,
-            ease: 'power3.out',
+            stagger: 0.1,
+            ease: 'power2.out',
             scrollTrigger: {
-              trigger: '#diagnostico',
+              trigger: '#servicios',
               start: 'top 80%',
               once: true
             }
           }
         );
 
-        // 5. REDES E INFRAESTRUCTURA + DIAGRAMA DE RED
-        const redesTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#infraestructura',
-            start: 'top 80%',
-            once: true
+        // 4. ESCENARIOS FRECUENTES
+        gsap.fromTo(
+          '.escenario-cell',
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            stagger: 0.05,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '#escenarios',
+              start: 'top 80%',
+              once: true
+            }
           }
-        });
-        redesTl
-          .fromTo('#infraestructura .ti-col-info', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('#infraestructura .diagram-card', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.35')
-          .fromTo('#infraestructura .arch-step, #infraestructura .arch-arrow', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out' }, '-=0.2');
+        );
 
-        // 6. SOPORTE TI + RECORRIDO DE SOPORTE
-        const soporteTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#soporte',
-            start: 'top 80%',
-            once: true
+        // 9. MÉTODO DE TRABAJO
+        gsap.fromTo(
+          '.method-step-block',
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            stagger: 0.08,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '#metodo',
+              start: 'top 80%',
+              once: true
+            }
           }
-        });
-        soporteTl
-          .fromTo('#soporte .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('#soporte .ti-col-info', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
-          .fromTo('#soporte .process-step-item', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' }, '-=0.25');
+        );
 
-        // 7. VIDEOVIGILANCIA + FLUJO DE SEGURIDAD
-        const seguridadTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#seguridad',
-            start: 'top 80%',
-            once: true
+        // 10. FAQ
+        gsap.fromTo(
+          '.faq-item-card',
+          { opacity: 0, y: 10 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.35,
+            stagger: 0.05,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '#faq',
+              start: 'top 80%',
+              once: true
+            }
           }
-        });
-        seguridadTl
-          .fromTo('#seguridad .ti-col-info', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('#seguridad .security-scheme-card', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.35')
-          .fromTo('#seguridad .scheme-box, #seguridad .scheme-arrow', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out' }, '-=0.2');
-
-        // 8. CONTINUIDAD + DIAGRAMA DE REDUNDANCIA
-        const contTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#continuidad',
-            start: 'top 80%',
-            once: true
-          }
-        });
-        contTl
-          .fromTo('#continuidad .ti-col-info', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('#continuidad .redundancy-card', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.35')
-          .fromTo('#continuidad .node-main', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.2')
-          .fromTo('#continuidad .path-active, #continuidad .path-backup', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.08 }, '-=0.15')
-          .fromTo('#continuidad .node-reconnect', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.3 }, '-=0.1');
-
-        // 9. MAPA GENERAL DE CAPAS
-        const mapTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#soluciones',
-            start: 'top 80%',
-            once: true
-          }
-        });
-        mapTl
-          .fromTo('#soluciones .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('.core-operacion-center', { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.1)' }, '-=0.2')
-          .fromTo('.ring-inner', { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.15')
-          .fromTo('.ring-mid-1', { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.15')
-          .fromTo('.ring-mid-2', { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.15')
-          .fromTo('.ring-outer', { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.35 }, '-=0.15');
-
-        // 10. ESCENARIOS FRECUENTES
-        const escTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#escenarios',
-            start: 'top 80%',
-            once: true
-          }
-        });
-        escTl
-          .fromTo('#escenarios .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('.escenario-cell', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, '-=0.25')
-          .fromTo('.escenarios-cta-wrap', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.15');
-
-        // 11. MÉTODO DE TRABAJO
-        const methodTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#metodo',
-            start: 'top 80%',
-            once: true
-          }
-        });
-        methodTl
-          .fromTo('#metodo .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('.method-step-block', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' }, '-=0.25');
-
-        // 12. FAQ
-        const faqTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#faq',
-            start: 'top 80%',
-            once: true
-          }
-        });
-        faqTl
-          .fromTo('#faq .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('.faq-item-card', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.05, ease: 'power2.out' }, '-=0.25');
-
-        // 13. CONTACTO DIRECTO
-        const asesoriaTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '#asesoria',
-            start: 'top 80%',
-            once: true
-          }
-        });
-        asesoriaTl
-          .fromTo('#asesoria .section-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('.area-option-card', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' }, '-=0.25')
-          .fromTo('.asesoria-action-bar', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.15');
-
-        // 14. CTA FINAL
-        const ctaFinalTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '.ti-final-cta-section',
-            start: 'top 85%',
-            once: true
-          }
-        });
-        ctaFinalTl
-          .fromTo('.final-cta-title', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-          .fromTo('.final-cta-desc', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '-=0.3')
-          .fromTo('.final-cta-btn-wrap', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.25');
+        );
       });
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
@@ -315,70 +152,18 @@ export default function ServiciosTILanding() {
             '.highlight-item',
             '.topology-card-wrapper',
             '.ti-trust-card',
-            '.operativa-item',
-            '.operativa-arrow',
-            '.diagnostico-wrapper',
-            '.diagram-card',
-            '.arch-step',
-            '.arch-arrow',
-            '.process-step-item',
-            '.security-scheme-card',
-            '.scheme-box',
-            '.scheme-arrow',
-            '.redundancy-card',
-            '.node-main',
-            '.path-active',
-            '.path-backup',
-            '.node-reconnect',
-            '.core-operacion-center',
-            '.ring-inner',
-            '.ring-mid-1',
-            '.ring-mid-2',
-            '.ring-outer',
+            '.ti-stacked-service-card',
             '.escenario-cell',
-            '.escenarios-cta-wrap',
             '.method-step-block',
-            '.faq-item-card',
-            '.area-option-card',
-            '.asesoria-action-bar',
-            '.final-cta-title',
-            '.final-cta-desc',
-            '.final-cta-btn-wrap'
+            '.faq-item-card'
           ],
           { opacity: 1, y: 0 }
-        );
-        gsap.set(
-          [
-            '.topo-node-central',
-            '.topo-path',
-            '.topo-node-sub',
-            '.topo-node-red',
-            '.topo-node-equipos',
-            '.topo-node-soporte',
-            '.topo-node-seguridad',
-            '.topo-node-backup',
-            '.topo-path-backup',
-            '.topology-status-pill'
-          ],
-          { opacity: 1 }
         );
       });
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
-
-  // Diagnostic Step transition microinteraction
-  useEffect(() => {
-    if (stepCardRef.current) {
-      gsap.killTweensOf(stepCardRef.current);
-      gsap.fromTo(
-        stepCardRef.current,
-        { opacity: 0, x: 8 },
-        { opacity: 1, x: 0, duration: 0.2, ease: 'power3.out' }
-      );
-    }
-  }, [diagStep]);
 
   const closeMenu = () => setMobileMenuOpen(false);
 
@@ -391,143 +176,87 @@ export default function ServiciosTILanding() {
     }
   };
 
-  // WhatsApp link construction for quick direct contact selector
   const buildWhatsappUrl = (area: string) => {
-    const text = `Hola CR Tech, quiero solicitar una evaluación de Servicios TI.\n\nÁrea de interés: ${area}\n\nNecesito orientación para definir el alcance del proyecto.`;
+    const text = `Hola CR Tech, quiero solicitar información sobre Servicios TI.\n\nÁrea de interés: ${area}\n\nDeseo coordinar una evaluación técnica para mi empresa.`;
     return `https://wa.me/51991664146?text=${encodeURIComponent(text)}`;
   };
 
   const defaultWhatsappUrl = 'https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20quiero%20evaluar%20la%20infraestructura%20TI%20de%20mi%20empresa.';
 
-  // Diagnostic logic calculate recommendation
-  const calculateResult = (): DiagnosticResult => {
-    const { necesidad, entorno, estado } = diagAnswers;
-
-    // Rule 1: Evaluación Integral
-    if (
-      necesidad === 'Necesito evaluar toda la infraestructura.' ||
-      necesidad === 'Todavía no identifico la causa.' ||
-      entorno === 'Varias sedes.' ||
-      estado === 'Todavía estoy definiendo el alcance.'
-    ) {
-      return {
-        areaSugerida: 'Evaluación Integral de Infraestructura',
-        motivo: 'Tu situación involucra diferentes capas de la operación (o requiere priorización). Una evaluación integral permitirá distinguir qué parte corresponde a conectividad, equipos, seguridad o continuidad.',
-        preparar: [
-          'Cantidad aproximada de usuarios y estaciones.',
-          'Número de sedes o espacios involucrados.',
-          'Descripción general de los problemas o metas.',
-          'Equipos existentes (routers, servidores, cámaras).',
-          'Horarios u momentos en que ocurren interrupciones.'
-        ]
-      };
+  const heroServiceCards = [
+    {
+      id: 'conectividad',
+      num: '01',
+      badge: 'CONECTIVIDAD',
+      title: 'Redes Corporativas & Fibra',
+      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80',
+      highlights: ['Cableado Cat6A/7', 'Fibra Óptica', 'Wi-Fi 6'],
+      accentColor: '#38BDF8',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="w-5 h-5">
+          <rect x="2" y="2" width="6" height="6" rx="1" />
+          <rect x="16" y="2" width="6" height="6" rx="1" />
+          <rect x="9" y="16" width="6" height="6" rx="1" />
+          <path d="M5 8v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8" />
+          <path d="M12 13v3" />
+        </svg>
+      ),
+      waText: 'Hola CR Tech, quiero consultar por Conectividad, Cableado y Redes.'
+    },
+    {
+      id: 'soporte',
+      num: '02',
+      badge: 'OPERACIÓN',
+      title: 'Soporte TI & Mesa de Ayuda',
+      image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+      highlights: ['Asistencia 24/7', 'Preventivo', 'Remoto / Sitio'],
+      accentColor: '#818CF8',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="w-5 h-5">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+        </svg>
+      ),
+      waText: 'Hola CR Tech, quiero evaluar un plan de Soporte TI y Mantenimiento.'
+    },
+    {
+      id: 'seguridad',
+      num: '03',
+      badge: 'SEGURIDAD',
+      title: 'Videovigilancia IP 4K',
+      image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=1200&q=80',
+      highlights: ['Monitoreo HD', 'Control Perimetral', 'App Móvil'],
+      accentColor: '#34D399',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="w-5 h-5">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+          <circle cx="12" cy="13" r="4" />
+        </svg>
+      ),
+      waText: 'Hola CR Tech, quiero cotizar un sistema de Videovigilancia y Cámaras IP.'
+    },
+    {
+      id: 'continuidad',
+      num: '04',
+      badge: 'DISPONIBILIDAD',
+      title: 'Respaldos & Failover',
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80',
+      highlights: ['Backup Nube', 'Redundancia WAN', 'Recuperación 100%'],
+      accentColor: '#FBBF24',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="w-5 h-5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <polyline points="9 12 11 14 15 10" />
+        </svg>
+      ),
+      waText: 'Hola CR Tech, quiero consultar por Respaldos y Continuidad Operativa.'
     }
-
-    // Rule 2: Redes e Infraestructura
-    if (necesidad === 'La red o conexión es inestable.' || estado === 'Estoy planificando un proyecto.') {
-      return {
-        areaSugerida: 'Redes e Infraestructura',
-        motivo: 'Conviene comenzar con una evaluación de redes e infraestructura para revisar distribución física, cableado, enlaces, equipos de comunicación y puntos críticos de estabilidad.',
-        preparar: [
-          'Cantidad de dispositivos o usuarios conectados.',
-          'Distribución del espacio (oficinas, almacén, niveles).',
-          'Proveedor actual de internet y ancho de banda.',
-          'Planos o croquis del área (si están disponibles).'
-        ]
-      };
-    }
-
-    // Rule 3: Soporte TI
-    if (
-      necesidad === 'Los equipos presentan fallas recurrentes.' ||
-      estado === 'Necesito mantenimiento preventivo.' ||
-      estado === 'Hay una incidencia activa.'
-    ) {
-      return {
-        areaSugerida: 'Soporte TI y Mantenimiento',
-        motivo: 'Conviene comenzar con un diagnóstico de soporte TI para identificar la causa raíz de las fallas, definir prioridades de intervención y establecer acciones de mantenimiento.',
-        preparar: [
-          'Cantidad y tipo de equipos afectados (laptops, PCs, servidores).',
-          'Síntomas o fallas principales observadas.',
-          'Antigüedad aproximada de los equipos.',
-          'Averías o reemplazos previos realizados.'
-        ]
-      };
-    }
-
-    // Rule 4: Videovigilancia y Seguridad
-    if (necesidad === 'Necesito implementar o mejorar videovigilancia.') {
-      return {
-        areaSugerida: 'Videovigilancia y Seguridad',
-        motivo: 'Conviene comenzar con una evaluación de videovigilancia para revisar puntos de cobertura, ángulos de visión, cableado/red de transmisión, monitoreo y capacidad de almacenamiento.',
-        preparar: [
-          'Zonas prioritarias a monitorear (accesos, almacenes, exterior).',
-          'Cámaras existentes (si aplica) y grabador (NVR/DVR).',
-          'Requerimientos de acceso remoto o centro de control.',
-          'Días de almacenamiento deseados.'
-        ]
-      };
-    }
-
-    // Rule 5: Continuidad y Respaldos
-    if (necesidad === 'Me preocupan respaldos y continuidad.') {
-      return {
-        areaSugerida: 'Continuidad y Respaldos',
-        motivo: 'Conviene comenzar identificando configuraciones, copias de seguridad existentes y dependencias críticas para definir un alcance de continuidad operativa.',
-        preparar: [
-          'Sistemas o archivos indispensables para operar.',
-          'Métodos de respaldo actuales (si existen).',
-          'Puntos de falla conocidos en la conectividad.',
-          'Acceso a contraseñas y documentación de red.'
-        ]
-      };
-    }
-
-    // Default Fallback
-    return {
-      areaSugerida: 'Redes e Infraestructura',
-      motivo: 'Conviene comenzar con una revisión de la infraestructura base para asegurar la conectividad y disponibilidad de tus operaciones.',
-      preparar: [
-        'Cantidad aproximada de usuarios.',
-        'Número de sedes o espacios.',
-        'Descripción del problema o requerimiento.'
-      ]
-    };
-  };
-
-  const buildDiagnosticWhatsappUrl = () => {
-    const result = calculateResult();
-    const text = `Hola CR Tech, completé el diagnóstico orientativo de Servicios TI.
-
-Necesidad principal: ${diagAnswers.necesidad || 'No especificado'}
-Tipo de entorno: ${diagAnswers.entorno || 'No especificado'}
-Estado actual: ${diagAnswers.estado || 'No especificado'}
-Área sugerida para comenzar: ${result.areaSugerida}
-
-Quiero validar el alcance con un especialista.`;
-
-    return `https://wa.me/51991664146?text=${encodeURIComponent(text)}`;
-  };
-
-  const handleOptionSelect = (questionId: 'necesidad' | 'entorno' | 'estado', optionLabel: string) => {
-    setDiagAnswers(prev => ({ ...prev, [questionId]: optionLabel }));
-    if (diagStep < 3) {
-      setDiagStep(prev => prev + 1);
-    } else {
-      setDiagStep(4); // Move to result
-    }
-  };
-
-  const handleResetDiagnostic = () => {
-    setDiagStep(1);
-    setDiagAnswers({ necesidad: '', entorno: '', estado: '' });
-  };
+  ];
 
   const areaOptions = [
     {
       id: 'redes',
-      label: 'Redes e infraestructura',
-      description: 'Cableado estructurado, conectividad, fibra óptica, enlaces inalámbricos y routers/firewalls.',
+      label: 'Conectividad & Redes',
+      description: 'Cableado estructurado, redes corporativas, fibra óptica, enlaces inalámbricos y seguridad de red.',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="area-icon">
           <rect x="2" y="2" width="6" height="6" rx="1" />
@@ -540,8 +269,8 @@ Quiero validar el alcance con un especialista.`;
     },
     {
       id: 'soporte',
-      label: 'Soporte TI',
-      description: 'Mantenimiento preventivo, correctivo, diagnóstico técnico y asistencia para estaciones de trabajo.',
+      label: 'Soporte & Operación',
+      description: 'Mantenimiento preventivo, correctivo, diagnóstico técnico y soporte para estaciones de trabajo.',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="area-icon">
           <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
@@ -550,8 +279,8 @@ Quiero validar el alcance con un especialista.`;
     },
     {
       id: 'videovigilancia',
-      label: 'Videovigilancia',
-      description: 'Cámaras de seguridad, monitoreo centralizado, almacenamiento y control de acceso.',
+      label: 'Videovigilancia & Seguridad',
+      description: 'Cámaras IP HD, monitoreo centralizado, almacenamiento local/nube y control perimetral.',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="area-icon">
           <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
@@ -561,8 +290,8 @@ Quiero validar el alcance con un especialista.`;
     },
     {
       id: 'continuidad',
-      label: 'Continuidad y respaldos',
-      description: 'Copias de seguridad, redundancia de red, revisión de puntos críticos y documentación.',
+      label: 'Disponibilidad & Respaldos',
+      description: 'Copias de seguridad, redundancia de red WAN, recuperación inmediata y prevención de fallas.',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="area-icon">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -601,151 +330,148 @@ Quiero validar el alcance con un especialista.`;
 
   return (
     <div className="servicios-ti-wrapper" ref={containerRef}>
-      {/* 1. HEADER UNIFICADO VERCEL STYLE */}
+      {/* 1. HEADER UNIFICADO */}
       <Header currentRoute="servicios-ti" />
 
       <main id="servicios-ti-main">
-        {/* 2. HERO SECTION */}
-        <section className="ti-hero-section">
-          <div className="section-container ti-hero-grid">
-            <div className="ti-hero-content-col">
-              <div className="hero-eyebrow-badge">SERVICIOS TI · INFRAESTRUCTURA Y SOPORTE</div>
-              <h1 className="ti-hero-title">
-                Tecnología que permanece disponible cuando tu operación no puede detenerse.
-              </h1>
-              <p className="ti-hero-desc">
-                Diseñamos e implementamos redes, soporte tecnológico, videovigilancia y soluciones de continuidad para empresas e instituciones, con acompañamiento técnico local.
-              </p>
-
-              <div className="ti-hero-ctas">
-                <a 
-                  href="#diagnostico" 
-                  onClick={(e) => scrollToSection(e, 'diagnostico')} 
-                  className="btn btn-primary"
-                >
-                  Evaluar mi infraestructura
-                </a>
-                <a 
-                  href="#infraestructura" 
-                  onClick={(e) => scrollToSection(e, 'infraestructura')} 
-                  className="btn btn-secondary"
-                >
-                  Explorar soluciones
-                </a>
-              </div>
-
-              <div className="ti-hero-trust-highlights">
-                <div className="highlight-item">
-                  <span className="check-dot"></span>
-                  <span>Diagnóstico técnico</span>
+        {/* 2. PREMIUM WIDE HERO SECTION */}
+        <section className="ti-hero-section ti-hero-custom-bg">
+          <div className="ti-hero-wide-container">
+            <div className="ti-hero-grid">
+              <div className="ti-hero-content-col">
+                <div className="hero-eyebrow-badge">
+                  <span className="live-dot-cyan"></span> SERVICIOS TI · INFRAESTRUCTURA & SOPORTE CORPORATIVO
                 </div>
-                <div className="highlight-item">
-                  <span className="check-dot"></span>
-                  <span>Implementación documentada</span>
-                </div>
-                <div className="highlight-item">
-                  <span className="check-dot"></span>
-                  <span>Soporte y mantenimiento local</span>
-                </div>
-              </div>
-            </div>
+                <h1 className="ti-hero-title">
+                  Tecnología que permanece disponible cuando tu operación no puede detenerse.
+                </h1>
+                <p className="ti-hero-desc">
+                  Diseñamos e implementamos infraestructura de redes, soporte técnico, videovigilancia y continuidad operativa para empresas e instituciones en todo el Perú.
+                </p>
 
-            {/* Topología SVG Operativa */}
-            <div className="ti-hero-visual-col">
-              <div className="topology-card-wrapper">
-                <div className="topology-card-header">
-                  <span className="topology-card-title">TOPOLOGÍA OPERATIVA DE INFRAESTRUCTURA</span>
-                  <span className="topology-status-pill"><span className="status-dot-active"></span> SISTEMA ACTIVO</span>
-                </div>
-
-                <div className="topology-svg-container">
-                  <svg 
-                    className="topology-svg" 
-                    viewBox="0 0 600 380" 
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
+                <div className="ti-hero-ctas">
+                  <a 
+                    href="#servicios" 
+                    onClick={(e) => scrollToSection(e, 'servicios')} 
+                    className="btn btn-primary btn-lg hero-main-btn"
                   >
-                    {/* Grid background lines */}
-                    <pattern id="grid-pattern" width="30" height="30" patternUnits="userSpaceOnUse">
-                      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#E2E8F0" strokeWidth="0.8" strokeDasharray="2 2" />
-                    </pattern>
-                    <rect width="600" height="380" fill="url(#grid-pattern)" opacity="0.6" />
-
-                    {/* Connecting paths */}
-                    <path className="topo-path" d="M 110 90 Q 220 90 300 190" stroke="#0284C7" strokeWidth="2.5" fill="none" strokeDasharray="4 2" />
-                    <path className="topo-path" d="M 490 90 Q 380 90 300 190" stroke="#7C3AED" strokeWidth="2.5" fill="none" />
-                    <path className="topo-path" d="M 110 290 Q 220 290 300 190" stroke="#0284C7" strokeWidth="2.5" fill="none" />
-                    <path className="topo-path" d="M 490 290 Q 380 290 300 190" stroke="#10B981" strokeWidth="2.5" fill="none" />
-
-                    {/* Alert / Failover line */}
-                    <path className="topo-path-backup" d="M 300 190 L 300 330" stroke="#94A3B8" strokeWidth="2" strokeDasharray="4 4" />
-
-                    {/* Central Node: OPERACIÓN */}
-                    <g transform="translate(300, 190)">
-                      <g className="topo-node-central">
-                        <circle r="48" fill="#06142D" />
-                        <circle r="42" fill="#0B192C" stroke="#0284C7" strokeWidth="2" />
-                        <circle r="6" fill="#10B981" cy="-22" />
-                        <text x="0" y="2" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="800" letterSpacing="0.05em">OPERACIÓN</text>
-                        <text x="0" y="16" textAnchor="middle" fill="#94A3B8" fontSize="9" fontWeight="600">CENTRAL</text>
-                      </g>
-                    </g>
-
-                    {/* Node 1: RED & CONECTIVIDAD */}
-                    <g transform="translate(110, 90)">
-                      <g className="topo-node-sub topo-node-red">
-                        <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#0284C7" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(2,132,199,0.08))" />
-                        <circle cx="-38" cy="0" r="12" fill="#F0F9FF" />
-                        <path d="M -42 -4 L -34 4 M -42 4 L -34 -4" stroke="#0284C7" strokeWidth="2" />
-                        <text x="10" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">RED & ENLACES</text>
-                        <text x="10" y="10" textAnchor="middle" fill="#0284C7" fontSize="9" fontWeight="700">Conectividad</text>
-                      </g>
-                    </g>
-
-                    {/* Node 2: EQUIPOS & USUARIOS */}
-                    <g transform="translate(490, 90)">
-                      <g className="topo-node-sub topo-node-equipos">
-                        <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#7C3AED" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(124,58,237,0.08))" />
-                        <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">EQUIPOS TI</text>
-                        <text x="0" y="10" textAnchor="middle" fill="#7C3AED" fontSize="9" fontWeight="700">Estaciones</text>
-                      </g>
-                    </g>
-
-                    {/* Node 3: SOPORTE TÉCNICO */}
-                    <g transform="translate(110, 290)">
-                      <g className="topo-node-sub topo-node-soporte">
-                        <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#0284C7" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(2,132,199,0.08))" />
-                        <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">SOPORTE</text>
-                        <text x="0" y="10" textAnchor="middle" fill="#0284C7" fontSize="9" fontWeight="700">Mantenimiento</text>
-                      </g>
-                    </g>
-
-                    {/* Node 4: VIDEOVIGILANCIA */}
-                    <g transform="translate(490, 290)">
-                      <g className="topo-node-sub topo-node-seguridad">
-                        <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#FFFFFF" stroke="#10B981" strokeWidth="2" filter="drop-shadow(0 4px 12px rgba(16,185,129,0.08))" />
-                        <text x="0" y="-4" textAnchor="middle" fill="#06142D" fontSize="11" fontWeight="800">SEGURIDAD</text>
-                        <text x="0" y="10" textAnchor="middle" fill="#10B981" fontSize="9" fontWeight="700">Monitoreo</text>
-                      </g>
-                    </g>
-
-                    {/* Respaldo */}
-                    <g transform="translate(300, 335)">
-                      <g className="topo-node-backup">
-                        <rect x="-70" y="-14" width="140" height="28" rx="14" fill="#FEF2F2" stroke="#FECDD3" strokeWidth="1" />
-                        <circle cx="-52" cy="0" r="4" fill="#EF4444" />
-                        <text x="6" y="4" textAnchor="middle" fill="#991B1B" fontSize="9" fontWeight="700">RESPALDO & RESPUESTA</text>
-                      </g>
-                    </g>
-                  </svg>
+                    Explorar servicios TI
+                  </a>
+                  <a 
+                    href={defaultWhatsappUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-secondary btn-lg hero-wa-btn"
+                  >
+                    Solicitar evaluación técnica
+                  </a>
                 </div>
 
-                <div className="topology-card-footer">
-                  <div className="legend-item"><span className="legend-dot dot-blue"></span> Red & Datos</div>
-                  <div className="legend-item"><span className="legend-dot dot-violet"></span> Equipos</div>
-                  <div className="legend-item"><span className="legend-dot dot-green"></span> Seguridad</div>
-                  <div className="legend-item"><span className="legend-dot dot-red"></span> Redundancia</div>
+                <div className="ti-hero-trust-highlights">
+                  <div className="highlight-item">
+                    <span className="check-dot"></span>
+                    <span>Diagnóstico técnico de sitio</span>
+                  </div>
+                  <div className="highlight-item">
+                    <span className="check-dot"></span>
+                    <span>Implementación documentada</span>
+                  </div>
+                  <div className="highlight-item">
+                    <span className="check-dot"></span>
+                    <span>Acompañamiento y soporte local</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Interactive 4-Services Vertical Capsule Accordion (Image-First Visual Reference Match) */}
+              <div className="ti-hero-visual-col">
+                <div className="ti-hero-accordion-container">
+                  {heroServiceCards.map((card, idx) => {
+                    const isExpanded = activeHeroCard === idx;
+                    return (
+                      <div
+                        key={card.id}
+                        className={`ti-hero-accordion-card ${isExpanded ? 'is-expanded' : 'is-collapsed'}`}
+                        style={{
+                          borderColor: isExpanded ? card.accentColor : 'rgba(255, 255, 255, 0.2)',
+                          boxShadow: isExpanded ? `0 20px 50px ${card.accentColor}35` : 'none'
+                        }}
+                        onMouseEnter={() => setActiveHeroCard(idx)}
+                        onClick={() => setActiveHeroCard(idx)}
+                      >
+                        {/* Background Reference Image with Gradient Overlay */}
+                        <div className="hero-card-bg-img-wrap">
+                          <img 
+                            src={card.image} 
+                            alt={card.title} 
+                            className="hero-card-bg-img"
+                            referrerPolicy="no-referrer"
+                          />
+                          <div className={`hero-card-overlay ${isExpanded ? 'overlay-expanded' : 'overlay-collapsed'}`} />
+                        </div>
+
+                        {isExpanded ? (
+                          /* EXPANDED PANEL CONTENT - MINIMAL TEXT, HIGH VISUAL IMPACT */
+                          <div className="hero-expanded-content">
+                            <div className="hero-card-top-bar">
+                              <span 
+                                className="hero-badge-pill"
+                                style={{ backgroundColor: `${card.accentColor}30`, color: '#FFFFFF', borderColor: card.accentColor }}
+                              >
+                                {card.num} · {card.badge}
+                              </span>
+                              <span className="hero-status-pill">
+                                <span className="status-dot-active" style={{ backgroundColor: card.accentColor, boxShadow: `0 0 10px ${card.accentColor}` }}></span> ACTIVO
+                              </span>
+                            </div>
+
+                            <div className="hero-card-bottom-info">
+                              <h3 className="hero-card-title">{card.title}</h3>
+
+                              <div className="hero-card-highlights">
+                                {card.highlights.map((item, hIdx) => (
+                                  <span key={hIdx} className="hero-card-tag">
+                                    <span className="tag-dot" style={{ backgroundColor: card.accentColor }}></span>
+                                    {item}
+                                  </span>
+                                ))}
+                              </div>
+
+                              <div className="hero-card-cta-row">
+                                <a
+                                  href={`https://wa.me/51991664146?text=${encodeURIComponent(card.waText)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="hero-card-action-btn"
+                                  style={{ backgroundColor: card.accentColor, color: '#030A16' }}
+                                >
+                                  Consultar →
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          /* COLLAPSED CAPSULE BAR */
+                          <div className="hero-collapsed-content">
+                            <div className="collapsed-top">
+                              <span className="collapsed-num" style={{ color: card.accentColor }}>{card.num}</span>
+                              <div className="collapsed-icon" style={{ color: card.accentColor }}>
+                                {card.icon}
+                              </div>
+                            </div>
+
+                            <div className="collapsed-title-wrap">
+                              <span className="collapsed-title">{card.badge}</span>
+                            </div>
+
+                            <div className="collapsed-bottom">
+                              <span className="collapsed-dot" style={{ backgroundColor: card.accentColor, boxShadow: `0 0 8px ${card.accentColor}` }}></span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -760,7 +486,7 @@ Quiero validar el alcance con un especialista.`;
                 <div className="trust-card-number">01</div>
                 <div className="trust-card-body">
                   <h3 className="trust-card-title">Diagnóstico a medida</h3>
-                  <p className="trust-card-desc">Evaluación precisa según las necesidades reales de la operación.</p>
+                  <p className="trust-card-desc">Evaluación técnica precisa de sitio según las necesidades de tu operación.</p>
                 </div>
               </div>
 
@@ -768,7 +494,7 @@ Quiero validar el alcance con un especialista.`;
                 <div className="trust-card-number">02</div>
                 <div className="trust-card-body">
                   <h3 className="trust-card-title">Implementación documentada</h3>
-                  <p className="trust-card-desc">Configuración clara, ordenada y totalmente accesible para el cliente.</p>
+                  <p className="trust-card-desc">Configuración clara, mapas de red y bitácoras totalmente accesibles para el cliente.</p>
                 </div>
               </div>
 
@@ -776,14 +502,223 @@ Quiero validar el alcance con un especialista.`;
                 <div className="trust-card-number">03</div>
                 <div className="trust-card-body">
                   <h3 className="trust-card-title">Acompañamiento local</h3>
-                  <p className="trust-card-desc">Atención técnica y soporte presencial/remoto de cercanía en Perú.</p>
+                  <p className="trust-card-desc">Soporte técnico y atención presencial/remota de cercanía en Perú.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 4. PROBLEMA OPERATIVO - LÍNEA OPERATIVA CONECTADA */}
+        {/* 4. SECCIÓN ELEGANTE DE SERVICIOS EN GRID 2X2 PREMIUM (PILARES TI) */}
+        <section className="ti-stacked-services-section" id="servicios">
+          <div className="section-container">
+            <div className="section-header center">
+              <span className="section-eyebrow">NUESTROS SERVICIOS ESPECIALIZADOS</span>
+              <h2 className="section-title">Infraestructura y servicios integrados en grid 2x2.</h2>
+              <p className="section-desc max-w-3xl">
+                Soluciones integradas en 4 pilares fundamentales. Cada módulo se adapta al tamaño, volumen de datos e infraestructura física de tu empresa.
+              </p>
+            </div>
+
+            <div className="ti-services-grid-2x2">
+              {/* Card 1: Conectividad */}
+              <div className="ti-grid-service-card card-theme-cyan">
+                <div className="grid-card-header">
+                  <div className="grid-index-wrap">
+                    <span className="grid-num num-cyan">01</span>
+                    <span className="grid-badge badge-cyan">CONECTIVIDAD</span>
+                  </div>
+                  <div className="grid-icon-circle circle-cyan">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="grid-svg">
+                      <rect x="2" y="2" width="6" height="6" rx="1" />
+                      <rect x="16" y="2" width="6" height="6" rx="1" />
+                      <rect x="9" y="16" width="6" height="6" rx="1" />
+                      <path d="M5 8v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8" />
+                      <path d="M12 13v3" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div className="grid-card-body">
+                  <h3 className="grid-card-title">Redes Corporativas, Cableado & Fibra Óptica</h3>
+                  <p className="grid-card-desc">
+                    Diseño, instalación y certificación de infraestructura de red física e inalámbrica. Garantizamos tráfico fluido y alta velocidad entre sedes, oficinas y almacenes.
+                  </p>
+
+                  <div className="grid-specs-tags">
+                    <span className="grid-spec-pill"><span className="spec-dot dot-cyan"></span> Cableado Cat6A / Cat7</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-cyan"></span> Enlaces Fibra Dedicada</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-cyan"></span> Wi-Fi 6 Empresarial</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-cyan"></span> Routers, Switches & Firewalls</span>
+                  </div>
+                </div>
+
+                <div className="grid-card-footer">
+                  <a 
+                    href="#asesoria" 
+                    onClick={(e) => { setSelectedArea('Conectividad & Redes'); scrollToSection(e, 'asesoria'); }}
+                    className="grid-details-link"
+                  >
+                    Seleccionar área →
+                  </a>
+                  <a 
+                    href={buildWhatsappUrl('Conectividad & Redes')} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-primary btn-sm btn-cyan"
+                  >
+                    Consultar →
+                  </a>
+                </div>
+              </div>
+
+              {/* Card 2: Operación */}
+              <div className="ti-grid-service-card card-theme-violet">
+                <div className="grid-card-header">
+                  <div className="grid-index-wrap">
+                    <span className="grid-num num-violet">02</span>
+                    <span className="grid-badge badge-violet">OPERACIÓN</span>
+                  </div>
+                  <div className="grid-icon-circle circle-violet">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="grid-svg">
+                      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div className="grid-card-body">
+                  <h3 className="grid-card-title">Soporte TI Continuo & Mantenimiento</h3>
+                  <p className="grid-card-desc">
+                    Atención técnica remota y presencial para resolver incidencias de hardware y software en estaciones de trabajo y servidores antes de que paralicen tu negocio.
+                  </p>
+
+                  <div className="grid-specs-tags">
+                    <span className="grid-spec-pill"><span className="spec-dot dot-violet"></span> Mantenimiento Preventivo</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-violet"></span> Asistencia Correctiva SLA</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-violet"></span> Soporte Remoto / Presencial</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-violet"></span> Bitácora Técnica Equipos</span>
+                  </div>
+                </div>
+
+                <div className="grid-card-footer">
+                  <a 
+                    href="#asesoria" 
+                    onClick={(e) => { setSelectedArea('Soporte & Operación'); scrollToSection(e, 'asesoria'); }}
+                    className="grid-details-link"
+                  >
+                    Seleccionar área →
+                  </a>
+                  <a 
+                    href={buildWhatsappUrl('Soporte TI & Operación')} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-primary btn-sm btn-violet"
+                  >
+                    Consultar →
+                  </a>
+                </div>
+              </div>
+
+              {/* Card 3: Seguridad */}
+              <div className="ti-grid-service-card card-theme-emerald">
+                <div className="grid-card-header">
+                  <div className="grid-index-wrap">
+                    <span className="grid-num num-emerald">03</span>
+                    <span className="grid-badge badge-emerald">SEGURIDAD</span>
+                  </div>
+                  <div className="grid-icon-circle circle-emerald">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="grid-svg">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                      <circle cx="12" cy="13" r="4" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div className="grid-card-body">
+                  <h3 className="grid-card-title">Videovigilancia IP & Monitoreo Central</h3>
+                  <p className="grid-card-desc">
+                    Sistemas de seguridad electrónica integrados a tu red local. Monitoreo visual en tiempo real de accesos, almacenes, zonas críticas y plantas operativas.
+                  </p>
+
+                  <div className="grid-specs-tags">
+                    <span className="grid-spec-pill"><span className="spec-dot dot-emerald"></span> Cámaras IP 4K HD Nocturnas</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-emerald"></span> Centro Monitoreo / NVR</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-emerald"></span> Control por App Móvil</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-emerald"></span> Resguardo Perimetral</span>
+                  </div>
+                </div>
+
+                <div className="grid-card-footer">
+                  <a 
+                    href="#asesoria" 
+                    onClick={(e) => { setSelectedArea('Videovigilancia & Seguridad'); scrollToSection(e, 'asesoria'); }}
+                    className="grid-details-link"
+                  >
+                    Seleccionar área →
+                  </a>
+                  <a 
+                    href={buildWhatsappUrl('Videovigilancia & Monitoreo')} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-primary btn-sm btn-emerald"
+                  >
+                    Consultar →
+                  </a>
+                </div>
+              </div>
+
+              {/* Card 4: Disponibilidad */}
+              <div className="ti-grid-service-card card-theme-amber">
+                <div className="grid-card-header">
+                  <div className="grid-index-wrap">
+                    <span className="grid-num num-amber">04</span>
+                    <span className="grid-badge badge-amber">DISPONIBILIDAD</span>
+                  </div>
+                  <div className="grid-icon-circle circle-amber">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="grid-svg">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      <polyline points="9 12 11 14 15 10" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div className="grid-card-body">
+                  <h3 className="grid-card-title">Continuidad Operativa & Respaldos</h3>
+                  <p className="grid-card-desc">
+                    Estrategias de tolerancia a fallas, copias de seguridad automáticas y conmutación de red para asegurar que la información y las operaciones no sufran pérdidas.
+                  </p>
+
+                  <div className="grid-specs-tags">
+                    <span className="grid-spec-pill"><span className="spec-dot dot-amber"></span> Backup Local & Nube</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-amber"></span> Redundancia WAN Failover</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-amber"></span> Mapa & Documentación</span>
+                    <span className="grid-spec-pill"><span className="spec-dot dot-amber"></span> Recuperación ante Desastres</span>
+                  </div>
+                </div>
+
+                <div className="grid-card-footer">
+                  <a 
+                    href="#asesoria" 
+                    onClick={(e) => { setSelectedArea('Disponibilidad & Respaldos'); scrollToSection(e, 'asesoria'); }}
+                    className="grid-details-link"
+                  >
+                    Seleccionar área →
+                  </a>
+                  <a 
+                    href={buildWhatsappUrl('Disponibilidad & Respaldos')} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-primary btn-sm btn-amber"
+                  >
+                    Consultar →
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 5. PROBLEMA OPERATIVO */}
         <section className="ti-problem-section">
           <div className="section-container">
             <div className="section-header center">
@@ -794,7 +729,6 @@ Quiero validar el alcance con un especialista.`;
               </p>
             </div>
 
-            {/* Línea Operativa Conectada (Conectividad -> Equipos -> Seguridad -> Continuidad) */}
             <div className="connected-operativa-line">
               <div className="operativa-item">
                 <div className="operativa-node-header">
@@ -813,7 +747,7 @@ Quiero validar el alcance con un especialista.`;
               <div className="operativa-item">
                 <div className="operativa-node-header">
                   <span className="operativa-badge badge-violet">02</span>
-                  <h3 className="operativa-item-title">Equipos</h3>
+                  <h3 className="operativa-item-title">Operación</h3>
                 </div>
                 <p className="operativa-item-desc">Estaciones de trabajo y dispositivos configurados en estado óptimo.</p>
               </div>
@@ -841,7 +775,7 @@ Quiero validar el alcance con un especialista.`;
               <div className="operativa-item">
                 <div className="operativa-node-header">
                   <span className="operativa-badge badge-amber">04</span>
-                  <h3 className="operativa-item-title">Continuidad</h3>
+                  <h3 className="operativa-item-title">Disponibilidad</h3>
                 </div>
                 <p className="operativa-item-desc">Respaldos estructurados y pronta recuperación ante incidencias.</p>
               </div>
@@ -849,408 +783,7 @@ Quiero validar el alcance con un especialista.`;
           </div>
         </section>
 
-        {/* 5. DIAGNÓSTICO INTERACTIVO (NUEVA SECCIÓN FASE 7B) */}
-        <section className="ti-diagnostico-section" id="diagnostico">
-          <div className="section-container">
-            <div className="diagnostico-wrapper">
-              <div className="section-header center">
-                <span className="section-eyebrow">DIAGNÓSTICO ORIENTATIVO</span>
-                <h2 className="section-title">Identifica dónde puede comenzar la evaluación.</h2>
-                <p className="section-desc max-w-2xl">
-                  Responde tres preguntas sobre la situación actual de tu operación. La orientación final será validada por un especialista de CR Tech.
-                </p>
-              </div>
-
-              <div className="diagnostico-interactive-card" ref={stepCardRef}>
-                {/* Header bar showing step progress */}
-                <div className="diag-progress-bar">
-                  <div className="diag-step-indicator">
-                    {diagStep <= 3 ? (
-                      <span>PASO <strong>{diagStep}</strong> DE <strong>3</strong></span>
-                    ) : (
-                      <span className="text-success font-bold">ORIENTACIÓN SUGERIDA</span>
-                    )}
-                  </div>
-                  <div className="diag-track">
-                    <div 
-                      className="diag-fill" 
-                      style={{ 
-                        transform: `scaleX(${diagStep === 4 ? 1 : diagStep / 3})`,
-                        transformOrigin: 'left center'
-                      }}
-                    ></div>
-                  </div>
-                </div>
-
-                {/* STEPS 1 - 3 */}
-                {diagStep <= 3 && (
-                  <fieldset className="diag-fieldset">
-                    <legend className="diag-question-title">
-                      {DIAGNOSTIC_QUESTIONS[diagStep - 1].title}
-                    </legend>
-
-                    <div className="diag-options-grid">
-                      {DIAGNOSTIC_QUESTIONS[diagStep - 1].options.map((opt) => {
-                        const currentQId = DIAGNOSTIC_QUESTIONS[diagStep - 1].id;
-                        const isSelected = diagAnswers[currentQId] === opt.label;
-
-                        return (
-                          <button
-                            key={opt.id}
-                            type="button"
-                            className={`diag-option-btn ${isSelected ? 'selected' : ''}`}
-                            onClick={() => handleOptionSelect(currentQId, opt.label)}
-                          >
-                            <span className="diag-radio-circle"></span>
-                            <span className="diag-option-text">{opt.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    <div className="diag-nav-actions">
-                      {diagStep > 1 && (
-                        <button 
-                          type="button" 
-                          className="btn btn-secondary btn-sm"
-                          onClick={() => setDiagStep(prev => prev - 1)}
-                        >
-                          ← Paso anterior
-                        </button>
-                      )}
-                    </div>
-                  </fieldset>
-                )}
-
-                {/* STEP 4: RESULT SCREEN */}
-                {diagStep === 4 && (
-                  <div className="diag-result-container" aria-live="polite">
-                    <div className="result-header">
-                      <span className="result-badge-tag">ÁREA RECOMENDADA PARA COMENZAR</span>
-                      <h3 className="result-area-title">{calculateResult().areaSugerida}</h3>
-                      <p className="result-motivo">{calculateResult().motivo}</p>
-                    </div>
-
-                    <div className="result-prepare-box">
-                      <h4 className="prepare-box-title">Información útil para preparar la evaluación:</h4>
-                      <ul className="prepare-items-list">
-                        {calculateResult().preparar.map((item, idx) => (
-                          <li key={idx}><span className="prep-bullet">•</span> {item}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="result-actions-bar">
-                      <a 
-                        href={buildDiagnosticWhatsappUrl()} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="btn btn-primary btn-lg"
-                      >
-                        Solicitar evaluación por WhatsApp
-                      </a>
-
-                      <button 
-                        type="button" 
-                        className="btn btn-secondary"
-                        onClick={handleResetDiagnostic}
-                      >
-                        Cambiar respuestas
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 6. REDES E INFRAESTRUCTURA */}
-        <section className="ti-solution-section" id="infraestructura">
-          <div className="section-container">
-            <div className="ti-two-col-grid">
-              <div className="ti-col-info">
-                <span className="section-eyebrow">CONECTIVIDAD</span>
-                <h2 className="section-title">Una red diseñada para el entorno real de tu empresa.</h2>
-                <p className="section-desc">
-                  Diseñamos e implementamos infraestructura de red considerando distribución física, cantidad de usuarios, equipos conectados, estabilidad y posibilidades de crecimiento.
-                </p>
-
-                <ul className="ti-services-list">
-                  <li><span className="check-bullet">✓</span> Diseño de redes corporativas e institucionales.</li>
-                  <li><span className="check-bullet">✓</span> Cableado estructurado ordenado y certificado.</li>
-                  <li><span className="check-bullet">✓</span> Enlaces de fibra óptica para comunicación interna.</li>
-                  <li><span className="check-bullet">✓</span> Sistemas inalámbricos de alta densidad.</li>
-                  <li><span className="check-bullet">✓</span> Configuración de routers, switches y firewalls.</li>
-                  <li><span className="check-bullet">✓</span> Organización y documentación técnica de la infraestructura.</li>
-                </ul>
-
-                <a 
-                  href={buildWhatsappUrl('Redes e infraestructura')} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="btn btn-primary"
-                >
-                  Consultar proyecto de infraestructura
-                </a>
-              </div>
-
-              <div className="ti-col-diagram">
-                <div className="diagram-card">
-                  <div className="diagram-header">
-                    <span className="diagram-title">ARQUITECTURA DE RED DE DATOS</span>
-                  </div>
-                  <div className="arch-diagram-flow">
-                    <div className="arch-step">
-                      <div className="arch-step-badge">1</div>
-                      <div className="arch-step-label">Internet / Enlace Exterior</div>
-                    </div>
-                    <div className="arch-arrow">↓</div>
-                    <div className="arch-step highlighted-step">
-                      <div className="arch-step-badge">2</div>
-                      <div className="arch-step-label">Seguridad Perimetral & Firewall</div>
-                    </div>
-                    <div className="arch-arrow">↓</div>
-                    <div className="arch-step">
-                      <div className="arch-step-badge">3</div>
-                      <div className="arch-step-label">Red Principal / Switches Core</div>
-                    </div>
-                    <div className="arch-arrow">↓</div>
-                    <div className="arch-step">
-                      <div className="arch-step-badge">4</div>
-                      <div className="arch-step-label">Usuarios, Estaciones & Servidores</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 7. SOPORTE TI CONTINUO */}
-        <section className="ti-solution-section bg-alt" id="soporte">
-          <div className="section-container">
-            <div className="section-header">
-              <span className="section-eyebrow">OPERACIÓN</span>
-              <h2 className="section-title">Soporte técnico que atiende la causa, no solamente el síntoma.</h2>
-              <p className="section-desc max-w-3xl">
-                Realizamos diagnóstico, mantenimiento y asistencia para reducir interrupciones y mantener los equipos de trabajo en condiciones operativas.
-              </p>
-            </div>
-
-            <div className="ti-two-col-grid">
-              <div className="ti-col-info">
-                <h3 className="col-subheading">ÁMBITOS DE ATENCIÓN TÉCNICA</h3>
-                <ul className="ti-services-list">
-                  <li><span className="check-bullet">✓</span> Diagnóstico técnico de hardware y software.</li>
-                  <li><span className="check-bullet">✓</span> Mantenimiento preventivo programado.</li>
-                  <li><span className="check-bullet">✓</span> Mantenimiento correctivo ante emergencias.</li>
-                  <li><span className="check-bullet">✓</span> Asistencia técnica remota oportuna.</li>
-                  <li><span className="check-bullet">✓</span> Atención presencial según evaluación del caso.</li>
-                  <li><span className="check-bullet">✓</span> Orientación para actualización o reemplazo de componentes.</li>
-                </ul>
-
-                <a 
-                  href={buildWhatsappUrl('Soporte TI')} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="btn btn-primary"
-                >
-                  Solicitar evaluación de soporte
-                </a>
-              </div>
-
-              {/* Recorrido de Soporte 01 - 04 */}
-              <div className="ti-col-process">
-                <div className="process-timeline">
-                  <div className="process-step-item">
-                    <div className="step-num">01</div>
-                    <div className="step-content">
-                      <h4 className="step-title">Detección</h4>
-                      <p className="step-desc">Identificación de anomalías, fallas de rendimiento o interrupciones reportadas.</p>
-                    </div>
-                  </div>
-
-                  <div className="process-step-item">
-                    <div className="step-num">02</div>
-                    <div className="step-content">
-                      <h4 className="step-title">Diagnóstico</h4>
-                      <p className="step-desc">Evaluación técnica para determinar la causa raíz en hardware o configuración.</p>
-                    </div>
-                  </div>
-
-                  <div className="process-step-item">
-                    <div className="step-num">03</div>
-                    <div className="step-content">
-                      <h4 className="step-title">Intervención</h4>
-                      <p className="step-desc">Aplicación del mantenimiento correctivo o preventivo según protocolo técnico.</p>
-                    </div>
-                  </div>
-
-                  <div className="process-step-item">
-                    <div className="step-num">04</div>
-                    <div className="step-content">
-                      <h4 className="step-title">Seguimiento</h4>
-                      <p className="step-desc">Verificación de estabilidad operativa y registro en la bitácora de soporte.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 8. VIDEOVIGILANCIA Y SEGURIDAD */}
-        <section className="ti-solution-section" id="seguridad">
-          <div className="section-container">
-            <div className="ti-two-col-grid">
-              <div className="ti-col-info">
-                <span className="section-eyebrow">VISIBILIDAD Y CONTROL</span>
-                <h2 className="section-title">Seguridad tecnológica integrada a la infraestructura.</h2>
-                <p className="section-desc">
-                  Implementamos sistemas de videovigilancia y monitoreo considerando cobertura, acceso, almacenamiento y continuidad de la operación.
-                </p>
-
-                <ul className="ti-services-list">
-                  <li><span className="check-bullet">✓</span> Evaluación de puntos de cobertura y ángulos ciegos.</li>
-                  <li><span className="check-bullet">✓</span> Instalación de cámaras de seguridad IP y HD.</li>
-                  <li><span className="check-bullet">✓</span> Monitoreo centralizado en centro de control o recepción.</li>
-                  <li><span className="check-bullet">✓</span> Configuración de acceso remoto seguro para gestión.</li>
-                  <li><span className="check-bullet">✓</span> Almacenamiento local o en nube según el proyecto.</li>
-                  <li><span className="check-bullet">✓</span> Integración limpia con la red existente.</li>
-                </ul>
-
-                <a 
-                  href={buildWhatsappUrl('Videovigilancia')} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="btn btn-primary"
-                >
-                  Evaluar proyecto de videovigilancia
-                </a>
-              </div>
-
-              <div className="ti-col-diagram">
-                <div className="security-scheme-card">
-                  <h3 className="scheme-title">FLUJO DE SEGURIDAD ELECTRÓNICA</h3>
-                  <div className="scheme-grid">
-                    <div className="scheme-box">
-                      <span className="scheme-badge">1</span>
-                      <strong>Captura</strong>
-                      <span>Cámaras IP / Sensores</span>
-                    </div>
-                    <div className="scheme-arrow">→</div>
-                    <div className="scheme-box">
-                      <span className="scheme-badge">2</span>
-                      <strong>Transmisión</strong>
-                      <span>Red Dedicada / VLAN</span>
-                    </div>
-                    <div className="scheme-arrow">→</div>
-                    <div className="scheme-box">
-                      <span className="scheme-badge">3</span>
-                      <strong>Monitoreo</strong>
-                      <span>Central de Control</span>
-                    </div>
-                    <div className="scheme-arrow">→</div>
-                    <div className="scheme-box">
-                      <span className="scheme-badge">4</span>
-                      <strong>Almacenamiento</strong>
-                      <span>NVR / Resguardo</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 9. CONTINUIDAD Y RESPALDO */}
-        <section className="ti-solution-section bg-alt" id="continuidad">
-          <div className="section-container">
-            <div className="ti-two-col-grid">
-              <div className="ti-col-info">
-                <span className="section-eyebrow">DISPONIBILIDAD</span>
-                <h2 className="section-title">Preparar la infraestructura antes de que ocurra una interrupción.</h2>
-                <p className="section-desc">
-                  Revisamos configuraciones, conectividad, respaldos y puntos críticos para reducir dependencias y facilitar la recuperación de la operación.
-                </p>
-
-                <ul className="ti-services-list">
-                  <li><span className="check-bullet">✓</span> Revisión detallada de puntos críticos de falla.</li>
-                  <li><span className="check-bullet">✓</span> Configuración de respaldos automáticos programados.</li>
-                  <li><span className="check-bullet">✓</span> Copias de seguridad locales y remotas según alcance.</li>
-                  <li><span className="check-bullet">✓</span> Redundancia de conectividad para evitar cortes de red.</li>
-                  <li><span className="check-bullet">✓</span> Documentación de accesos, contraseñas y topología.</li>
-                  <li><span className="check-bullet">✓</span> Recomendaciones técnicas de actualización preventiva.</li>
-                </ul>
-
-                <a 
-                  href={buildWhatsappUrl('Continuidad y respaldos')} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="btn btn-primary"
-                >
-                  Consultar plan de continuidad
-                </a>
-              </div>
-
-              <div className="ti-col-diagram">
-                <div className="redundancy-card">
-                  <h3 className="redundancy-title">DIAGRAMA DE REDUNDANCIA Y RESPALDO</h3>
-                  <div className="redundancy-diagram-wrap">
-                    <div className="node-main">
-                      <span className="node-label">Ruta Principal de Datos</span>
-                    </div>
-                    <div className="bifurcation-container">
-                      <div className="path-active">
-                        <span className="path-tag tag-blue">Ruta A (Enlace Primario)</span>
-                      </div>
-                      <div className="path-backup">
-                        <span className="path-tag tag-green">Ruta B (Conexión de Respaldo)</span>
-                      </div>
-                    </div>
-                    <div className="node-reconnect">
-                      <span className="node-label">Operación Continua</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 10. MAPA DE SOLUCIONES (CAPAS CONCÉNTRICAS) */}
-        <section className="ti-solutions-map-section" id="soluciones">
-          <div className="section-container">
-            <div className="section-header center">
-              <span className="section-eyebrow">UNA ARQUITECTURA, DIFERENTES CAPAS</span>
-              <h2 className="section-title">Conectamos infraestructura, soporte y seguridad alrededor de la operación.</h2>
-              <p className="section-desc max-w-3xl">
-                Un modelo integrado donde cada área fortalece la disponibilidad global del sistema.
-              </p>
-            </div>
-
-            <div className="layered-map-container">
-              <div className="layer-ring ring-outer">
-                <span className="layer-tag tag-outer">CAPA 4: CONTINUIDAD Y RESPALDO</span>
-                <div className="layer-ring ring-mid-2">
-                  <span className="layer-tag tag-mid-2">CAPA 3: VIDEOVIGILANCIA Y CONTROL</span>
-                  <div className="layer-ring ring-mid-1">
-                    <span className="layer-tag tag-mid-1">CAPA 2: SOPORTE TI Y MANTENIMIENTO</span>
-                    <div className="layer-ring ring-inner">
-                      <span className="layer-tag tag-inner">CAPA 1: REDES E INFRAESTRUCTURA</span>
-                      <div className="core-operacion-center">
-                        <strong>OPERACIÓN DE LA EMPRESA</strong>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 11. ESCENARIOS FRECUENTES (NUEVA SECCIÓN FASE 7B) */}
+        {/* 6. ESCENARIOS FRECUENTES */}
         <section className="ti-escenarios-section" id="escenarios">
           <div className="section-container">
             <div className="section-header center">
@@ -1297,7 +830,7 @@ Quiero validar el alcance con un especialista.`;
           </div>
         </section>
 
-        {/* 12. MÉTODO DE TRABAJO */}
+        {/* 11. MÉTODO DE TRABAJO */}
         <section className="ti-method-section" id="metodo">
           <div className="section-container">
             <div className="section-header center">
@@ -1341,7 +874,7 @@ Quiero validar el alcance con un especialista.`;
           </div>
         </section>
 
-        {/* 13. FAQ (NUEVA SECCIÓN FASE 7B) */}
+        {/* 12. FAQ */}
         <section className="ti-faq-section" id="faq">
           <div className="section-container">
             <div className="section-header center">
@@ -1376,7 +909,7 @@ Quiero validar el alcance con un especialista.`;
           </div>
         </section>
 
-        {/* 14. SELECTOR COMPACTO DE CONTACTO DIRECTO */}
+        {/* 13. SELECTOR COMPACTO DE CONTACTO DIRECTO */}
         <section className="ti-asesoria-section" id="asesoria">
           <div className="section-container">
             <div className="asesoria-card-container">
@@ -1388,7 +921,6 @@ Quiero validar el alcance con un especialista.`;
                 </p>
               </div>
 
-              {/* 4 Selectable Area Options */}
               <div className="area-selector-grid">
                 {areaOptions.map((opt) => {
                   const isSelected = selectedArea === opt.label;
@@ -1428,7 +960,7 @@ Quiero validar el alcance con un especialista.`;
           </div>
         </section>
 
-        {/* 15. CTA FINAL */}
+        {/* 14. CTA FINAL */}
         <section className="ti-final-cta-section">
           <div className="section-container center-content">
             <h2 className="final-cta-title">Una operación conectada necesita una infraestructura que pueda sostenerla.</h2>
@@ -1449,7 +981,7 @@ Quiero validar el alcance con un especialista.`;
         </section>
       </main>
 
-      {/* 16. FOOTER REORGANIZADO EN 4 COLUMNAS */}
+      {/* 15. FOOTER */}
       <footer className="site-footer" id="main-footer">
         <div className="footer-container">
           <div className="footer-brand-column">
@@ -1476,10 +1008,10 @@ Quiero validar el alcance con un especialista.`;
           <div className="footer-nav-column">
             <h4 className="footer-title">Soluciones TI</h4>
             <ul className="footer-links-list">
-              <li><a href="#infraestructura" onClick={(e) => scrollToSection(e, 'infraestructura')}>Redes e Infraestructura</a></li>
-              <li><a href="#soporte" onClick={(e) => scrollToSection(e, 'soporte')}>Soporte TI Continuo</a></li>
-              <li><a href="#seguridad" onClick={(e) => scrollToSection(e, 'seguridad')}>Videovigilancia</a></li>
-              <li><a href="#continuidad" onClick={(e) => scrollToSection(e, 'continuidad')}>Continuidad & Respaldos</a></li>
+              <li><a href="#servicios" onClick={(e) => scrollToSection(e, 'servicios')}>Servicios Apilados</a></li>
+              <li><a href="#escenarios" onClick={(e) => scrollToSection(e, 'escenarios')}>Escenarios Frecuentes</a></li>
+              <li><a href="#metodo" onClick={(e) => scrollToSection(e, 'metodo')}>Método de Trabajo</a></li>
+              <li><a href="#asesoria" onClick={(e) => scrollToSection(e, 'asesoria')}>Contacto por Área</a></li>
             </ul>
           </div>
 
