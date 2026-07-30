@@ -407,51 +407,100 @@ export default function EcoFlowLanding() {
           </div>
         </section>
 
-        {/* 2. LOGO OFICIAL ECOFLOW & MARCA DESTACADA (Banner Azul Oscuro para Contraste Alto) */}
-        <section className="ecoflow-brand-showcase-section">
+        {/* 2. LOGO OFICIAL ECOFLOW & MARCA DESTACADA (Reference-Style Premium Cards 001, 002, 003) */}
+        <section className="ecoflow-brand-showcase-section" id="distribuidor">
           <div className="section-container">
-            <div className="brand-showcase-box">
-              <div className="brand-logo-side">
-                <span className="brand-official-badge">DISTRIBUIDOR AUTORIZADO PERÚ</span>
-                <div className="brand-logo-large">
-                  {/* Styled EcoFlow Official Logo typography */}
-                  <div className="ecoflow-official-logo-text">
-                    <span className="logo-letter-eco">ECO</span>
-                    <span className="logo-letter-flow">FLOW</span>
-                  </div>
-                  <p className="brand-tagline">Power A Free World · CR Technologies & Services</p>
+            {/* Header Top Row */}
+            <div className="brand-section-header">
+              <div className="brand-official-badge-pill">
+                <span className="badge-live-dot" />
+                <span>DISTRIBUIDOR AUTORIZADO PERÚ</span>
+              </div>
+
+              <div className="brand-logo-header-row">
+                <div className="ecoflow-official-logo-wrap" title="EcoFlow Official Brand Logo">
+                  <svg viewBox="0 0 230 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="ecoflow-official-svg-logo" aria-label="EcoFlow Logo">
+                    <g fill="currentColor">
+                      {/* 3 horizontal pill bars forming signature E symbol */}
+                      <rect x="0" y="6" width="28" height="6" rx="3" />
+                      <rect x="0" y="19" width="28" height="6" rx="3" />
+                      <rect x="0" y="32" width="28" height="6" rx="3" />
+                      {/* C */}
+                      <path d="M52 13.5 C43 13.5 37 19.5 37 28.5 C37 37.5 43 43.5 52 43.5 C59.5 43.5 64.5 39 65.5 32 L58.5 32 C57.5 35.5 55 37.5 52 37.5 C47 37.5 43.5 33.5 43.5 28.5 C43.5 23.5 47 19.5 52 19.5 C55 19.5 57.5 21.5 58.5 25 L65.5 25 C64.5 18 59.5 13.5 52 13.5 Z" />
+                      {/* O */}
+                      <path d="M83 13.5 C72.5 13.5 66.5 20.5 66.5 28.5 C66.5 36.5 72.5 43.5 83 43.5 C93.5 43.5 99.5 36.5 99.5 28.5 C99.5 20.5 93.5 13.5 83 13.5 Z M83 37.5 C76.5 37.5 73 33 73 28.5 C73 24 76.5 19.5 83 19.5 C89.5 19.5 93 24 93 28.5 C93 33 89.5 37.5 83 37.5 Z" />
+                      {/* F */}
+                      <path d="M104 14.5 V42.5 H110.5 V31.5 H121.5 V25.5 H110.5 V20.5 H123.5 V14.5 H104 Z" />
+                      {/* L */}
+                      <path d="M128 14.5 V42.5 H147.5 V36.5 H134.5 V14.5 H128 Z" />
+                      {/* O */}
+                      <path d="M164 13.5 C153.5 13.5 147.5 20.5 147.5 28.5 C147.5 36.5 153.5 43.5 164 43.5 C174.5 43.5 180.5 36.5 180.5 28.5 C180.5 20.5 174.5 13.5 164 13.5 Z M164 37.5 C157.5 37.5 154 33 154 28.5 C154 24 157.5 19.5 164 19.5 C170.5 19.5 174 24 174 28.5 C174 33 170.5 37.5 164 37.5 Z" />
+                      {/* W */}
+                      <path d="M184 14.5 L190.5 42.5 H197 L202.5 23 L208 42.5 H214.5 L221 14.5 H214.5 L211 31 L205.5 14.5 H199.5 L194 31 L190.5 14.5 H184 Z" />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              
+              <p className="brand-sub-tagline">Power A Free World · Respaldo y Garantía Oficial por CR Technologies & Services</p>
+            </div>
+
+            {/* 3 Premium Reference Cards Grid matching user attached design */}
+            <div className="ref-trust-cards-grid">
+              {/* Card 001 */}
+              <div className="ref-card-item card-amber-theme">
+                <div className="ref-card-top-index">001</div>
+                <div className="ref-card-image-stage">
+                  <img 
+                    src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422177/Ecoflow_delta_PRO_g9xhmt.png" 
+                    alt="EcoFlow Delta Pro Original" 
+                    className="ref-card-floating-img"
+                  />
+                </div>
+                <div className="ref-card-inner-white-box">
+                  <span className="ref-card-pill-badge badge-amber">AUTÉNTICO</span>
+                  <h3 className="ref-card-title">Equipos 100% Originales</h3>
+                  <p className="ref-card-text">
+                    Sello de autenticidad verificado, importación directa y garantía de fábrica EcoFlow en Perú.
+                  </p>
                 </div>
               </div>
 
-              <div className="brand-trust-grid">
-                <div className="brand-trust-card">
-                  <div className="brand-trust-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                  </div>
-                  <div>
-                    <h4 className="trust-card-title">Equipos 100% Originales</h4>
-                    <p className="trust-card-desc">Con sello oficial y garantía directa de fábrica en todo el Perú.</p>
-                  </div>
+              {/* Card 002 */}
+              <div className="ref-card-item card-violet-theme">
+                <div className="ref-card-top-index">002</div>
+                <div className="ref-card-image-stage">
+                  <img 
+                    src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422204/Ecoflow_paneles_solares_e4mpcp.png" 
+                    alt="Asesoría EcoFlow Panel Solar" 
+                    className="ref-card-floating-img"
+                  />
                 </div>
-
-                <div className="brand-trust-card">
-                  <div className="brand-trust-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                  </div>
-                  <div>
-                    <h4 className="trust-card-title">Asesoría Sencilla</h4>
-                    <p className="trust-card-desc">Dinos qué electrodoméstico quieres encender y te decimos cuál comprar.</p>
-                  </div>
+                <div className="ref-card-inner-white-box">
+                  <span className="ref-card-pill-badge badge-violet">ASESORÍA</span>
+                  <h3 className="ref-card-title">Dimensionamiento Exacto</h3>
+                  <p className="ref-card-text">
+                    Indícanos qué artefactos necesitas encender y calculamos la potencia y batería ideales.
+                  </p>
                 </div>
+              </div>
 
-                <div className="brand-trust-card">
-                  <div className="brand-trust-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  </div>
-                  <div>
-                    <h4 className="trust-card-title">Soporte Técnico CR Tech</h4>
-                    <p className="trust-card-desc">Atención local posventa, envíos rápidos y repuestos en Perú.</p>
-                  </div>
+              {/* Card 003 */}
+              <div className="ref-card-item card-sky-theme">
+                <div className="ref-card-top-index">003</div>
+                <div className="ref-card-image-stage">
+                  <img 
+                    src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422175/Ecoflow_river_oybgke.png" 
+                    alt="Soporte Técnico CR Tech" 
+                    className="ref-card-floating-img"
+                  />
+                </div>
+                <div className="ref-card-inner-white-box">
+                  <span className="ref-card-pill-badge badge-sky">SOPORTE CR TECH</span>
+                  <h3 className="ref-card-title">Respaldo Posventa Local</h3>
+                  <p className="ref-card-text">
+                    Atención técnica especializada, envíos inmediatos a nivel nacional y repuestos en Perú.
+                  </p>
                 </div>
               </div>
             </div>
