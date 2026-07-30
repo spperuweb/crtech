@@ -83,7 +83,38 @@ export default function DronesLanding() {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-  const whatsappUrl = assets.contact.swellProWhatsappUrl;
+  const whatsappUrl = "https://wa.me/51991664146?text=" + encodeURIComponent("Hola CR Tech, estoy evaluando un drone SwellPro para una operación en Perú y quisiera recibir asesoría.");
+
+  // Video Intersection Observer to pause when outside viewport
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) {
+              videoEl.play().catch(() => {});
+              setIsPlaying(true);
+            }
+          } else {
+            videoEl.pause();
+            setIsPlaying(false);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(videoEl);
+
+    return () => {
+      observer.disconnect();
+      if (videoEl) videoEl.pause();
+    };
+  }, []);
   const evidenceCases: EvidenceCase[] = assets.drones.evidenceCases || [];
 
   const mainEvidenceCase = evidenceCases[0];

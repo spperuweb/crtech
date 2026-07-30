@@ -103,9 +103,9 @@ export default function EcoFlowLanding() {
     }
   };
 
-  const whatsappHeroUrl = "https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20quiero%20asesor%C3%ADa%20para%20elegir%20una%20bater%C3%ADa%20EcoFlow.";
-  const whatsappExpertUrl = "https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20quiero%20hablar%20con%20un%20asesor%20sobre%20bater%C3%ADas%20EcoFlow.";
-  const whatsappFinalCtaUrl = "https://wa.me/51991664146?text=Hola%20CR%20Tech%2C%20necesito%20asesor%C3%ADa%20para%20comprar%20mi%20EcoFlow%20en%20Per%C3%BA.";
+  const whatsappHeroUrl = "https://wa.me/51991664146?text=" + encodeURIComponent("Hola CR Tech, quiero evaluar una solución EcoFlow según los equipos y el tiempo de autonomía que necesito.");
+  const whatsappExpertUrl = "https://wa.me/51991664146?text=" + encodeURIComponent("Hola CR Tech, quiero hablar con un asesor sobre baterías EcoFlow.");
+  const whatsappFinalCtaUrl = "https://wa.me/51991664146?text=" + encodeURIComponent("Hola CR Tech, necesito asesoría para comprar mi EcoFlow en Perú.");
 
   useEffect(() => {
     document.title = 'EcoFlow Perú | Baterías Portátiles y Paneles Solares | CR Tech';
@@ -365,41 +365,50 @@ export default function EcoFlowLanding() {
               </div>
             </div>
 
-            {/* Visual Column (Right Column: Dynamic 3D Tilted Vertical 9:16 Image Card - No Frame, No Text, No Extra Data) */}
-            <div className="drones-hero-visual">
-              {/* Signature curved line behind card */}
-              <svg 
-                className="drones-hero-signature-line" 
-                viewBox="0 0 500 300" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path 
-                  d="M -30 180 C 80 120, 160 220, 320 140 C 400 100, 460 120, 520 80" 
-                  stroke="#38BDF8" 
-                  strokeWidth="1" 
-                  strokeOpacity="0.45"
-                  strokeDasharray="4 3"
-                />
-              </svg>
+            {/* Visual Column: Dual Overlapping Cards Stage (Inspired by Visual Reference) */}
+            <div className="drones-hero-visual ecoflow-hero-visual-col">
+              <div className="ecoflow-hero-cards-stage">
+                {/* Back Tilted Card: Solar Generation */}
+                <div className="ecoflow-hero-card ecoflow-card-back">
+                  <div className="ecoflow-card-header">
+                    <span className="card-mini-badge">
+                      <span className="badge-dot cyan" />
+                      GENERACIÓN SOLAR
+                    </span>
+                  </div>
+                  <div className="ecoflow-card-media">
+                    <img 
+                      src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422204/Ecoflow_paneles_solares_e4mpcp.png" 
+                      alt="Paneles Solares EcoFlow" 
+                      className="ecoflow-card-img"
+                      loading="eager"
+                    />
+                  </div>
+                  <div className="ecoflow-card-footer">
+                    <span className="card-footer-text">Paneles Fotovoltaicos</span>
+                  </div>
+                </div>
 
-              {/* Dynamic 3D Vertical 9:16 Card - Pure Image, No Frame, No Text */}
-              <div className="ecoflow-tilt-card-wrapper">
-                <div 
-                  className="ecoflow-tilt-card-pure"
-                  onMouseMove={handleCardMouseMove}
-                  onMouseLeave={handleCardMouseLeave}
-                  style={{
-                    transform: `perspective(1000px) rotateX(${cardTilt.rotX}deg) rotateY(${cardTilt.rotY}deg) scale3d(1, 1, 1)`
-                  }}
-                >
-                  <img 
-                    src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1785200086/EcoFlow-Delta-2-Max-1_HEroCrTech_fran0j.png" 
-                    alt="Estación de energía EcoFlow" 
-                    className="ecoflow-pure-hero-img"
-                    loading="eager"
-                  />
+                {/* Front Card: Delta Pro Power Station */}
+                <div className="ecoflow-hero-card ecoflow-card-front">
+                  <div className="ecoflow-card-header">
+                    <span className="card-mini-badge">
+                      <span className="badge-dot green" />
+                      RESPALDO BATERÍA
+                    </span>
+                  </div>
+                  <div className="ecoflow-card-media">
+                    <img 
+                      src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782422177/Ecoflow_delta_PRO_g9xhmt.png" 
+                      alt="EcoFlow Delta Pro" 
+                      className="ecoflow-card-img"
+                      loading="eager"
+                    />
+                  </div>
+                  <div className="ecoflow-card-footer">
+                    <span className="card-footer-title">EcoFlow Delta Pro</span>
+                    <span className="card-footer-sub">3.6kWh - 7.2kWh Expansible</span>
+                  </div>
                 </div>
               </div>
             </div>

@@ -370,13 +370,14 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Side: 3-Card Fan Composition */}
+        {/* Right Side: Interactive Vertical Zone */}
         <div className="hero-editorial-right" id="hero-interactive-zone">
           
+          {/* DESKTOP VIEW: 3-Card Fan Composition (>= 768px) */}
           <div 
-            className="hero-fan-container" 
+            className="hero-fan-container desktop-fan" 
             role="tablist" 
-            aria-label="Verticales de CR Technologies"
+            aria-label="Verticales de CR Technologies (Escritorio)"
             onKeyDown={handleKeyDown}
           >
             {/* Card 1: Energía (Campo) */}
@@ -471,6 +472,50 @@ export default function Hero() {
                 </div>
               </div>
             </button>
+          </div>
+
+          {/* MOBILE VIEW: Single Active Card + Chips Selector (< 768px) */}
+          <div className="hero-mobile-visual">
+            {/* Tabs / Chips Selector */}
+            <div className="hero-mobile-tabs" role="tablist" aria-label="Verticales de CR Technologies (Móvil)">
+              {branchKeys.map(key => {
+                const isActive = selectedBranch === key;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => handleBranchSelect(key)}
+                    className={`mobile-vertical-tab ${key} ${isActive ? 'active' : ''}`}
+                  >
+                    <span className="tab-dot" style={{ backgroundColor: branches[key].color }}></span>
+                    <span>{key === 'it' ? 'Servicios TI' : key === 'drones' ? 'Drones' : 'Energía'}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Single Active Card Frame */}
+            <div className="hero-mobile-card-frame">
+              <img 
+                src={
+                  selectedBranch === 'drones' 
+                    ? 'https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779929015/swellpro-peru-dron_jhkqhb.jpg'
+                    : selectedBranch === 'energia'
+                    ? 'https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1784819108/Ecoflow_Panelsolar_wutdy1.jpg'
+                    : 'https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1784819329/pexels-tima-miroshnichenko-5717235_kggduv.jpg'
+                }
+                alt={branches[selectedBranch].name}
+                className="mobile-active-card-img"
+              />
+              <div className="mobile-card-gradient-overlay">
+                <span className="mobile-card-tag-badge" style={{ backgroundColor: branches[selectedBranch].color }}>
+                  {branches[selectedBranch].tag.toUpperCase()}
+                </span>
+                <h3 className="mobile-card-active-title">{branches[selectedBranch].name}</h3>
+              </div>
+            </div>
           </div>
 
           {/* Caption & Contextual CTA for active branch */}

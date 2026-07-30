@@ -76,7 +76,7 @@ export default function FinalCTA() {
         <div className="final-cta-content">
           <span className="final-cta-eyebrow">CONVERSEMOS SOBRE TU OPERACIÓN</span>
           <h2 className="final-cta-title">
-            Cuéntanos qué debe seguir funcionando.
+            ¿Qué necesita mantener activa tu operación?
           </h2>
           <p className="final-cta-text">
             Evaluaremos el entorno, el objetivo y las condiciones de trabajo para orientarte hacia una solución con criterio técnico y respaldo local.

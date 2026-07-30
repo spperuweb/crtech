@@ -17,7 +17,7 @@ export default function CEOSection() {
     const ctx = gsap.context(() => {
       if (prefersReducedMotion) {
         gsap.fromTo(
-          ['.ceo-photo-916', '.ceo-executive-badge-below', '.ceo-content-side'],
+          ['.ceo-photo-main', '.ceo-identity-block', '.ceo-content-side'],
           { opacity: 0 },
           {
             opacity: 1,
@@ -44,12 +44,12 @@ export default function CEOSection() {
       });
 
       tl.fromTo(
-        '.ceo-photo-916',
+        '.ceo-photo-main',
         { opacity: 0, scale: 0.97 },
         { opacity: 1, scale: 1, duration: 0.65, ease: 'power3.out' }
       )
         .fromTo(
-          '.ceo-executive-badge-below',
+          '.ceo-identity-block',
           { opacity: 0, y: 16 },
           { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
           '-=0.3'
@@ -82,53 +82,35 @@ export default function CEOSection() {
       <div className="ceo-container">
         <div className="ceo-grid">
           
-          {/* Executive Photo & Framed Badge Below */}
+          {/* Executive Photo Column (Desktop 420px-520px, Mobile centered) */}
           <div className="ceo-media-side">
-            <figure className="ceo-figure-premium">
-              
-              {/* Photo Frame */}
-              <div className="ceo-image-wrapper-framed-916">
-                <img 
-                  src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782397237/CarlosRivera_CRTech_FotoCEO_is07qk.png" 
-                  alt="Carlos Rivera, CEO y Gerente General de CR Technologies & Services" 
-                  className="ceo-photo-916"
-                  loading="lazy"
-                  decoding="async"
-                  width="450"
-                  height="800"
-                />
-              </div>
-
-              {/* Executive Badge Card (Positioned BELOW the photo) */}
-              <figcaption className="ceo-executive-badge-below">
-                <div className="badge-header-row">
-                  <span className="badge-role-tag">
-                    <span className="badge-live-dot"></span>
-                    CEO & FOUNDER
-                  </span>
-                  <span className="badge-exp-tag">+15 AÑOS DE EXPERIENCIA</span>
-                </div>
-
-                <div className="badge-main-info">
-                  <h3 className="ceo-name-headline">Carlos Rivera</h3>
-                  <p className="ceo-title-sub">Gerente General · CR Technologies & Services</p>
-                </div>
-
-                <p className="ceo-quote-text">
-                  "Garantizar continuidad operativa exige entender la realidad del terreno antes de recomendar cualquier tecnología."
-                </p>
-              </figcaption>
-
-            </figure>
+            <div className="ceo-photo-container">
+              <img 
+                src="https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782397237/CarlosRivera_CRTech_FotoCEO_is07qk.png" 
+                alt="Carlos Rivera, Gerente General de CR Technologies & Services" 
+                className="ceo-photo-main"
+                loading="lazy"
+                decoding="async"
+                width="460"
+                height="620"
+              />
+            </div>
           </div>
 
-          {/* Narrative Side */}
+          {/* Narrative & Authority Side */}
           <div className="ceo-content-side">
             <span className="ceo-tag">LIDERAZGO TÉCNICO Y ACOMPAÑAMIENTO LOCAL</span>
+            
+            <div className="ceo-identity-block">
+              <h3 className="ceo-fullname">Carlos Rivera</h3>
+              <p className="ceo-position-title">Gerente General — CR Technologies & Services</p>
+            </div>
+
             <h2 className="ceo-section-title">
               Antes de recomendar un equipo,<br />
               <span className="highlight-text">entendemos qué debe seguir funcionando.</span>
             </h2>
+            
             <p className="ceo-paragraph">
               Bajo la dirección técnica de Carlos Rivera, CRTech acompaña a empresas, instituciones y equipos operativos en todo el Perú. Evaluamos la geografía, el nivel de riesgo y la infraestructura real para desplegar soluciones de máxima confiabilidad.
             </p>

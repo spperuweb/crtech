@@ -26,6 +26,7 @@ export default function ServiciosTILanding() {
       id: 0,
       num: '01',
       category: 'CONECTIVIDAD',
+      shortTab: 'Redes y conectividad',
       tag: '01 · CONECTIVIDAD',
       title: 'Redes Corporativas & Fibra Óptica',
       bgImage: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80',
@@ -37,6 +38,7 @@ export default function ServiciosTILanding() {
       id: 1,
       num: '02',
       category: 'OPERACIÓN',
+      shortTab: 'Soporte TI',
       tag: '02 · OPERACIÓN',
       title: 'Soporte TI & Mesa de Ayuda',
       bgImage: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=800&q=80',
@@ -48,6 +50,7 @@ export default function ServiciosTILanding() {
       id: 2,
       num: '03',
       category: 'SEGURIDAD',
+      shortTab: 'Videovigilancia',
       tag: '03 · SEGURIDAD',
       title: 'Videovigilancia IP & Monitoreo',
       bgImage: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=800&q=80',
@@ -59,6 +62,7 @@ export default function ServiciosTILanding() {
       id: 3,
       num: '04',
       category: 'DISPONIBILIDAD',
+      shortTab: 'Continuidad y respaldo',
       tag: '04 · DISPONIBILIDAD',
       title: 'Continuidad & Respaldos',
       bgImage: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80',
@@ -382,9 +386,85 @@ export default function ServiciosTILanding() {
                 </div>
               </div>
 
-              {/* Right Column: Interactive Vertical Card Deck (Ref Image) */}
+              {/* Right Column: Interactive Deck (Desktop) / Tabs + Single Card (Mobile) */}
               <div className="ti-hero-visual-col">
-                <div className="hero-accordion-deck">
+                {/* Mobile Service Selector (<768px) */}
+                <div className="ti-mobile-hero-selector">
+                  <div className="ti-mobile-tabs-container" role="tablist" aria-label="Seleccionar vertical TI">
+                    {heroCards.map((card) => {
+                      const isSelected = activeHeroCard === card.id;
+                      return (
+                        <button
+                          key={card.id}
+                          type="button"
+                          role="tab"
+                          id={`ti-hero-tab-${card.id}`}
+                          aria-selected={isSelected}
+                          aria-controls={`ti-hero-panel-${card.id}`}
+                          className={`ti-mobile-tab-btn ${isSelected ? 'is-active' : ''}`}
+                          onClick={() => setActiveHeroCard(card.id)}
+                        >
+                          <span className="tab-dot" style={{ backgroundColor: card.dotColor }} />
+                          <span className="tab-text">{card.shortTab}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Single Active Card on Mobile */}
+                  {heroCards.map((card) => {
+                    if (activeHeroCard !== card.id) return null;
+
+                    return (
+                      <div 
+                        key={card.id} 
+                        id={`ti-hero-panel-${card.id}`}
+                        role="tabpanel"
+                        aria-labelledby={`ti-hero-tab-${card.id}`}
+                        className="ti-mobile-active-card"
+                      >
+                        <div 
+                          className="ti-mobile-card-bg"
+                          style={{ backgroundImage: `url(${card.bgImage})` }}
+                        />
+                        <div className="ti-mobile-card-overlay" />
+
+                        <div className="ti-mobile-card-content">
+                          <div className="ti-mobile-card-header">
+                            <span className="deck-tag-pill">{card.tag}</span>
+                            <span className="deck-status-pill">
+                              <span className="status-dot-active" style={{ backgroundColor: card.dotColor, boxShadow: `0 0 8px ${card.dotColor}` }}></span>
+                              ACTIVO
+                            </span>
+                          </div>
+
+                          <div className="ti-mobile-card-body">
+                            <h2 className="ti-mobile-card-title">{card.title}</h2>
+                            <div className="deck-chips-row">
+                              {card.chips.map((chip, idx) => (
+                                <span key={idx} className="deck-chip-item">
+                                  <span className="chip-bullet" style={{ backgroundColor: card.dotColor }}></span>
+                                  {chip}
+                                </span>
+                              ))}
+                            </div>
+                            <a 
+                              href={buildWhatsappUrl(card.areaName)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn btn-primary btn-md ti-mobile-card-cta"
+                            >
+                              Consultar por {card.shortTab} →
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Desktop Accordion Deck (>=768px) */}
+                <div className="hero-accordion-deck ti-desktop-accordion-deck">
                   {heroCards.map((card) => {
                     const isExpanded = activeHeroCard === card.id;
 
