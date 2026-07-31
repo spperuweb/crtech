@@ -1,5 +1,6 @@
 import React from 'react';
 import { assets } from '../data/assets';
+import { getRouteUrl } from '../utils/navigation';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -8,13 +9,15 @@ export default function Footer() {
     'Hola, quisiera recibir asesoría para identificar la solución tecnológica adecuada para mi operación.'
   )}`;
 
+  const homePath = getRouteUrl('/');
+
   return (
     <footer className="site-footer" id="main-footer">
       <div className="footer-container">
         
         {/* Company Identity Block */}
         <div className="footer-brand-column">
-          <a href="/crtech" aria-label="CR Technologies & Services inicio">
+          <a href={homePath} aria-label="CR Technologies & Services inicio">
             <img 
               src={assets.logos.darkBack} 
               alt="CR Technologies & Services" 
@@ -40,9 +43,9 @@ export default function Footer() {
         <div className="footer-nav-column">
           <h4 className="footer-title">Soluciones</h4>
           <ul className="footer-links-list">
-            <li><a href="/crtech/drones">Drones Profesionales</a></li>
-            <li><a href="/crtech/energia">Energía EcoFlow</a></li>
-            <li><a href="/crtech/serviciosti">Servicios TI</a></li>
+            <li><a href={getRouteUrl('/drones/')}>Drones Profesionales</a></li>
+            <li><a href={getRouteUrl('/energia/')}>Energía EcoFlow</a></li>
+            <li><a href={getRouteUrl('/serviciosti/')}>Servicios TI</a></li>
           </ul>
         </div>
 
@@ -50,10 +53,10 @@ export default function Footer() {
         <div className="footer-nav-column">
           <h4 className="footer-title">Compañía</h4>
           <ul className="footer-links-list">
-            <li><a href="/crtech#nosotros">Nosotros</a></li>
-            <li><a href="/crtech#metodo">Cómo trabajamos</a></li>
-            <li><a href="/crtech#evidencia">Operaciones reales</a></li>
-            <li><a href="/crtech#faq">Preguntas frecuentes</a></li>
+            <li><a href={`${homePath}#nosotros`}>Nosotros</a></li>
+            <li><a href={`${homePath}#metodo`}>Cómo trabajamos</a></li>
+            <li><a href={`${homePath}#evidencia`}>Operaciones reales</a></li>
+            <li><a href={`${homePath}#faq`}>Preguntas frecuentes</a></li>
             <li>
               <a 
                 href={assets.contact.swellProWebsite} 
@@ -107,3 +110,4 @@ export default function Footer() {
     </footer>
   );
 }
+

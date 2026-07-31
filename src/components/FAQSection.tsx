@@ -13,33 +13,33 @@ interface FAQItem {
 const FAQ_ITEMS: FAQItem[] = [
   {
     id: 'faq-1',
-    question: '¿Cómo sé qué dron, estación o servicio TI es el adecuado para mi operación?',
-    answer: 'Evaluamos el entorno, el objetivo y las condiciones de trabajo antes de sugerir un modelo o arquitectura. No vendemos por catálogo; sugerimos según el nivel de riesgo y la continuidad que exige tu proceso.'
+    question: '¿Qué hace CR Technologies & Services?',
+    answer: 'CR Technologies & Services integra tecnología operativa en Perú mediante la distribución oficial de drones impermeables SwellPro, soluciones de energía portátil y solar EcoFlow, y servicios de infraestructura TI corporativa. Acompañamos a empresas y profesionales desde el diagnóstico técnico hasta la implementación, capacitación y soporte local postventa.'
   },
   {
     id: 'faq-2',
+    question: '¿Qué soluciones ofrece CR Tech en Perú?',
+    answer: 'Ofrecemos tres líneas principales de tecnología operativa: drones profesionales SwellPro para entornos exigentes (acuáticos, pesca, inspección y rescate), estaciones portátiles y paneles solares EcoFlow para respaldo energético comercial e industrial, e infraestructura TI que incluye cableado estructurado, fibra óptica, redes Wi-Fi empresariales, videovigilancia y soporte técnico.'
+  },
+  {
+    id: 'faq-3',
+    question: '¿Cómo solicitar una evaluación técnica?',
+    answer: 'Puedes solicitar una evaluación técnica contactándonos directamente a través de nuestro botón oficial de WhatsApp o formulario de contacto. Un especialista técnico analizará los requerimientos específicos de tu empresa o proyecto para proponer la solución más eficiente, sin compromiso de compra.'
+  },
+  {
+    id: 'faq-4',
     question: '¿Qué tipo de garantía y soporte técnico local ofrecen en Perú?',
     answer: 'Ofrecemos respaldo directo con repuestos, diagnóstico local, mantenimiento preventivo y acompañamiento técnico. Al ser representantes e integradores en Perú, no dependes de trámites externos para resolver imprevistos.'
   },
   {
-    id: 'faq-3',
-    question: '¿Realizan capacitaciones para el uso de drones o equipos EcoFlow?',
-    answer: 'Sí. Cada entrega técnica incluye capacitación operativa para asegurar que tu personal comprenda el uso, las medidas de seguridad y el mantenimiento preventivo del sistema.'
-  },
-  {
-    id: 'faq-4',
+    id: 'faq-5',
     question: '¿Atienden requerimientos fuera de Lima o en zonas de difícil acceso?',
     answer: 'Sí. Nos desplazamos y diseñamos la arquitectura pensando en condiciones de campo, clima exigente, costa, sierra y ubicaciones remotas.'
   },
   {
-    id: 'faq-5',
+    id: 'faq-6',
     question: '¿Pueden evaluar infraestructura TI existente antes de proponer cambios?',
     answer: 'Sí. Realizamos diagnósticos sobre redes, cableado, servidores y videovigilancia existentes para identificar puntos de falla y proponer mejoras por fases sin interrumpir la operación.'
-  },
-  {
-    id: 'faq-6',
-    question: '¿Cómo iniciamos el contacto para un diagnóstico u orientación técnica?',
-    answer: 'Puedes escribirnos directamente por WhatsApp. Un especialista revisará tu consulta, comprenderá tu requerimiento y te orientará sobre la alternativa más viable.'
   }
 ];
 

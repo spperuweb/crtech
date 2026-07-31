@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { assets } from '../data/assets';
+import { getRouteUrl } from '../utils/navigation';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -300,7 +301,7 @@ export default function SolutionsOverview() {
 
               <div className="block-cta-row">
                 <a 
-                  href="/crtech/drones" 
+                  href={getRouteUrl('/drones/')} 
                   className="btn btn-secondary-accent cyan"
                 >
                   Explorar Drones Profesionales
@@ -389,7 +390,7 @@ export default function SolutionsOverview() {
 
               <div className="block-cta-row">
                 <a 
-                  href="/crtech/energia"
+                  href={getRouteUrl('/energia/')}
                   className="btn btn-secondary-accent amber"
                 >
                   Explorar Energía EcoFlow
@@ -455,7 +456,7 @@ export default function SolutionsOverview() {
 
               <div className="block-cta-row">
                 <a 
-                  href="/crtech/serviciosti"
+                  href={getRouteUrl('/serviciosti/')}
                   className="btn btn-secondary-accent violet"
                 >
                   Explorar Servicios TI

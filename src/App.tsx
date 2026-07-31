@@ -13,35 +13,25 @@ import DronesLanding from './components/DronesLanding';
 import EcoFlowLanding from './components/EcoFlowLanding';
 import ServiciosTILanding from './components/ServiciosTILanding';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
-
-type RouteType = 'home' | 'drones' | 'energia' | 'servicios-ti';
-
-function getRouteFromLocation(): RouteType {
-  const path = window.location.pathname.toLowerCase();
-  const hash = window.location.hash.toLowerCase();
-
-  if (path.includes('/drones') || hash.includes('drones')) {
-    return 'drones';
-  }
-  if (path.includes('/energia') || hash.includes('energia')) {
-    return 'energia';
-  }
-  if (path.includes('servicio') || hash.includes('servicio')) {
-    return 'servicios-ti';
-  }
-  return 'home';
-}
+import SEOHead from './components/SEOHead';
+import { getCurrentRouteKey, handleLegacyHashRedirect, RouteKey } from './utils/navigation';
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState<RouteType>(getRouteFromLocation);
+  const [currentRoute, setCurrentRoute] = useState<RouteKey>(() => {
+    handleLegacyHashRedirect();
+    return getCurrentRouteKey();
+  });
 
   useEffect(() => {
+    // Check legacy hash redirect on mount
+    handleLegacyHashRedirect();
+
     const handleLocationChange = () => {
-      const route = getRouteFromLocation();
+      const route = getCurrentRouteKey();
       setCurrentRoute(route);
 
-      // Handle anchor scrolling if hash is present
-      if (window.location.hash && window.location.hash.length > 1) {
+      // Handle anchor scrolling if hash is present (e.g. #faq or #contacto)
+      if (window.location.hash && !window.location.hash.startsWith('#/')) {
         const targetId = window.location.hash.substring(1);
         setTimeout(() => {
           const el = document.getElementById(targetId);
@@ -62,7 +52,7 @@ export default function App() {
     };
   }, []);
 
-  // Global click interceptor for internal routing links without page reload
+  // Global click interceptor for internal routing links without full page reload
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest('a');
@@ -70,18 +60,26 @@ export default function App() {
       const href = anchor.getAttribute('href');
       if (!href) return;
 
-      // Only intercept internal application routes
+      // Ignore external or mailto/tel links
       if (
-        href.startsWith('/crtech') ||
-        href.startsWith('/drones') ||
-        href.startsWith('/energia') ||
-        href.startsWith('/serviciosti') ||
-        href.startsWith('/servicios-ti')
+        href.startsWith('http://') ||
+        href.startsWith('https://') ||
+        href.startsWith('mailto:') ||
+        href.startsWith('tel:') ||
+        href.startsWith('javascript:')
       ) {
-        e.preventDefault();
-        window.history.pushState({}, '', href);
-        window.dispatchEvent(new PopStateEvent('popstate'));
+        return;
       }
+
+      // Handle section anchors on same page
+      if (href.startsWith('#') && !href.startsWith('#/')) {
+        return;
+      }
+
+      // Only intercept internal application routes
+      e.preventDefault();
+      window.history.pushState({}, '', href);
+      window.dispatchEvent(new PopStateEvent('popstate'));
     };
 
     document.addEventListener('click', handleGlobalClick);
@@ -90,6 +88,7 @@ export default function App() {
 
   return (
     <>
+      <SEOHead currentRoute={currentRoute} />
       {currentRoute === 'drones' && <DronesLanding />}
       {currentRoute === 'energia' && <EcoFlowLanding />}
       {currentRoute === 'servicios-ti' && <ServiciosTILanding />}
@@ -113,4 +112,5 @@ export default function App() {
     </>
   );
 }
+
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { assets } from '../data/assets';
 import SolucionesDropdown from './SolucionesDropdown';
+import { getRouteUrl } from '../utils/navigation';
 
 interface HeaderProps {
   currentRoute?: 'home' | 'drones' | 'energia' | 'servicios-ti';
@@ -35,31 +36,28 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
     'Hola, quisiera recibir asesoría para identificar la solución tecnológica adecuada para mi operación.'
   )}`;
 
-  // Sublanding badge rendering removed as requested
-  const renderSublandingBadge = () => null;
-
   // Standard main nav links across all routes
   const renderNavLinks = () => {
-    const prefix = currentRoute === 'home' ? '' : '/crtech';
+    const homePath = getRouteUrl('/');
     return (
       <>
-        <a href={`${prefix}#metodo`} className="nav-pill-link">Cómo trabajamos</a>
-        <a href={`${prefix}#evidencia`} className="nav-pill-link">Operaciones reales</a>
-        <a href={`${prefix}#nosotros`} className="nav-pill-link">Nosotros</a>
-        <a href={`${prefix}#faq`} className="nav-pill-link">FAQ</a>
+        <a href={`${homePath}#metodo`} className="nav-pill-link">Cómo trabajamos</a>
+        <a href={`${homePath}#evidencia`} className="nav-pill-link">Operaciones reales</a>
+        <a href={`${homePath}#nosotros`} className="nav-pill-link">Nosotros</a>
+        <a href={`${homePath}#faq`} className="nav-pill-link">FAQ</a>
       </>
     );
   };
 
   // Standard mobile nav links across all routes
   const renderMobileNavLinks = () => {
-    const prefix = currentRoute === 'home' ? '' : '/crtech';
+    const homePath = getRouteUrl('/');
     return (
       <div className="mobile-nav-links-list">
-        <a href={`${prefix}#metodo`} className="mobile-nav-link" onClick={closeMenu}>Cómo trabajamos</a>
-        <a href={`${prefix}#evidencia`} className="mobile-nav-link" onClick={closeMenu}>Operaciones reales</a>
-        <a href={`${prefix}#nosotros`} className="mobile-nav-link" onClick={closeMenu}>Nosotros</a>
-        <a href={`${prefix}#faq`} className="mobile-nav-link" onClick={closeMenu}>FAQ</a>
+        <a href={`${homePath}#metodo`} className="mobile-nav-link" onClick={closeMenu}>Cómo trabajamos</a>
+        <a href={`${homePath}#evidencia`} className="mobile-nav-link" onClick={closeMenu}>Operaciones reales</a>
+        <a href={`${homePath}#nosotros`} className="mobile-nav-link" onClick={closeMenu}>Nosotros</a>
+        <a href={`${homePath}#faq`} className="mobile-nav-link" onClick={closeMenu}>FAQ</a>
       </div>
     );
   };
@@ -68,9 +66,9 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
     <header className={`site-header vercel-header ${isScrolled ? 'scrolled' : ''}`} id="main-header">
       <div className="header-container">
         
-        {/* Brand Group (Logo + Sub-line badge) */}
+        {/* Brand Group (Logo) */}
         <div className="header-brand-group">
-          <a href="/crtech" className="header-logo" onClick={closeMenu} aria-label="CR Technologies & Services Inicio">
+          <a href={getRouteUrl('/')} className="header-logo" onClick={closeMenu} aria-label="CR Technologies & Services Inicio">
             <img 
               src={assets.logos.lightBack} 
               alt="CR Technologies & Services" 
@@ -79,7 +77,6 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
               height="42"
             />
           </a>
-          {renderSublandingBadge()}
         </div>
 
         {/* Vercel-Style Floating Pill Navigation */}
@@ -119,15 +116,15 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
         <nav className="mobile-nav" aria-label="Navegación móvil">
           <div className="mobile-solutions-group">
             <span className="mobile-solutions-title">Soluciones CRTech</span>
-            <a href="/crtech/drones" className={`mobile-solution-link ${currentRoute === 'drones' ? 'active' : ''}`} onClick={closeMenu}>
+            <a href={getRouteUrl('/drones/')} className={`mobile-solution-link ${currentRoute === 'drones' ? 'active' : ''}`} onClick={closeMenu}>
               <span className="mob-dot cyan"></span>
               <span>Drones Profesionales (SwellPro)</span>
             </a>
-            <a href="/crtech/energia" className={`mobile-solution-link ${currentRoute === 'energia' ? 'active' : ''}`} onClick={closeMenu}>
+            <a href={getRouteUrl('/energia/')} className={`mobile-solution-link ${currentRoute === 'energia' ? 'active' : ''}`} onClick={closeMenu}>
               <span className="mob-dot amber"></span>
               <span>Energía EcoFlow (LFP & Solar)</span>
             </a>
-            <a href="/crtech/serviciosti" className={`mobile-solution-link ${currentRoute === 'servicios-ti' ? 'active' : ''}`} onClick={closeMenu}>
+            <a href={getRouteUrl('/serviciosti/')} className={`mobile-solution-link ${currentRoute === 'servicios-ti' ? 'active' : ''}`} onClick={closeMenu}>
               <span className="mob-dot blue"></span>
               <span>Servicios TI & Redes</span>
             </a>
@@ -149,5 +146,6 @@ export default function Header({ currentRoute = 'home' }: HeaderProps) {
     </header>
   );
 }
+
 
 

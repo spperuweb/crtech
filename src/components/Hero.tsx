@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { getRouteUrl } from '../utils/navigation';
 
 type BranchKey = 'drones' | 'energia' | 'it';
 
@@ -39,7 +40,7 @@ export default function Hero() {
       tag: 'Aire',
       name: 'Drones Profesionales',
       phrase: 'Sistemas aéreos impermeables SwellPro para inspección, monitoreo y pesca en Perú.',
-      link: '/crtech/drones',
+      link: getRouteUrl('/drones/'),
       linkText: 'Explorar Drones',
       color: '#48BFEA',
       bgColor: 'rgba(72, 191, 234, 0.08)',
@@ -50,7 +51,7 @@ export default function Hero() {
       tag: 'Campo',
       name: 'Energía Portátil',
       phrase: 'Estaciones EcoFlow y paneles solares para trabajo continuo y respaldo en campo.',
-      link: '/crtech/energia',
+      link: getRouteUrl('/energia/'),
       linkText: 'Explorar Energía',
       color: '#F4A825',
       bgColor: 'rgba(244, 168, 37, 0.08)',
@@ -61,7 +62,7 @@ export default function Hero() {
       tag: 'Empresa',
       name: 'Servicios TI',
       phrase: 'Redes corporativas, videovigilancia y soporte técnico con acompañamiento local.',
-      link: '/crtech/serviciosti',
+      link: getRouteUrl('/serviciosti/'),
       linkText: 'Explorar Servicios TI',
       color: '#7067E8',
       bgColor: 'rgba(112, 103, 232, 0.08)',

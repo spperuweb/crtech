@@ -13,6 +13,7 @@ import {
   ChevronUp,
   ArrowRight
 } from 'lucide-react';
+import { getRouteUrl } from '../utils/navigation';
 
 interface SolucionesDropdownProps {
   currentRoute?: 'home' | 'drones' | 'energia' | 'servicios-ti';
@@ -105,7 +106,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
               </div>
               <div className="mega-col-items">
                 <a 
-                  href="/crtech/drones" 
+                  href={getRouteUrl('/drones/')} 
                   className={`mega-item-card ${currentRoute === 'drones' ? 'active-page' : ''}`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -122,7 +123,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="/crtech/drones" 
+                  href={getRouteUrl('/drones/')} 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -136,7 +137,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="/crtech/drones" 
+                  href={getRouteUrl('/drones/')} 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -159,7 +160,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
               </div>
               <div className="mega-col-items">
                 <a 
-                  href="/crtech/energia" 
+                  href={getRouteUrl('/energia/')} 
                   className={`mega-item-card ${currentRoute === 'energia' ? 'active-page' : ''}`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -176,7 +177,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="/crtech/energia" 
+                  href={getRouteUrl('/energia/')} 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -190,7 +191,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="/crtech/energia#selector-ecoflow" 
+                  href={`${getRouteUrl('/energia/')}#selector-ecoflow`} 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -213,7 +214,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
               </div>
               <div className="mega-col-items">
                 <a 
-                  href="/crtech/serviciosti" 
+                  href={getRouteUrl('/serviciosti/')} 
                   className={`mega-item-card ${currentRoute === 'servicios-ti' ? 'active-page' : ''}`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -230,7 +231,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="/crtech/serviciosti" 
+                  href={getRouteUrl('/serviciosti/')} 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -244,7 +245,7 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
                 </a>
 
                 <a 
-                  href="/crtech/serviciosti#diagnostico" 
+                  href={`${getRouteUrl('/serviciosti/')}#diagnostico`} 
                   className="mega-item-card"
                   onClick={() => setIsOpen(false)}
                 >
@@ -283,4 +284,5 @@ export default function SolucionesDropdown({ currentRoute }: SolucionesDropdownP
     </div>
   );
 }
+
 
