@@ -2,10 +2,10 @@ import fs from 'fs';
 import path from 'path';
 
 // Load environment variables if available
-const siteUrl = (process.env.VITE_SITE_URL || 'https://spperuweb.github.io/crtech').replace(/\/$/, '');
-const basePath = process.env.VITE_BASE_PATH || '/crtech/';
-const isIndexable = process.env.VITE_INDEXABLE === 'true';
-const environment = process.env.VITE_ENVIRONMENT || 'preview';
+const siteUrl = (process.env.VITE_SITE_URL || 'https://crtech.pe').replace(/\/$/, '');
+const basePath = process.env.VITE_BASE_PATH || '/';
+const isIndexable = process.env.VITE_INDEXABLE !== 'false';
+const environment = process.env.VITE_ENVIRONMENT || 'production';
 
 const prodUrl = 'https://crtech.pe';
 const logoUrl = 'https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782420769/CRTech_LogoHorizontal_FondoDark_zcezvt.png';
@@ -345,6 +345,12 @@ ${JSON.stringify({ '@graph': jsonLdGraph }, null, 2)}
 
   fs.writeFileSync(path.join(rootDist, '404.html'), fourOhFourHtml, 'utf-8');
   console.log(`[SEO Build] Rendered: ${path.join(rootDist, '404.html')}`);
+
+  // Generate CNAME for GitHub Pages custom domain
+  if (siteUrl.includes('crtech.pe')) {
+    fs.writeFileSync(path.join(rootDist, 'CNAME'), 'crtech.pe\n', 'utf-8');
+    console.log(`[SEO Build] Generated: ${path.join(rootDist, 'CNAME')}`);
+  }
 
   // Generate robots.txt
   let robotsTxtContent = '';
