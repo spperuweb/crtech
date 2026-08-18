@@ -15,7 +15,7 @@
     <script>
       (function() {
         var path = window.location.pathname;
-        var base = "/crtech";
+        var base = "";
         if (path.indexOf(base) === 0) {
           var rel = path.substring(base.length);
           if (rel === '/drones' || rel === '/drones/') { window.location.replace(base + '/drones/'); return; }
@@ -29,7 +29,7 @@
     <div class="container">
       <h1>404</h1>
       <p>La página que buscas no existe o ha sido movida.</p>
-      <a href="/crtech/">Volver al inicio</a>
+      <a href="/">Volver al inicio</a>
     </div>
   </body>
 </html>
