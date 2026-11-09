@@ -8,7 +8,7 @@ export const assets = {
     alternative: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782426594/CR_Tech_Sevices_Logo_powukx.png",
     favicon: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782419700/favicon_xuwimd.png",
     swellProPeru: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1779807248/SwellProPeru_logo-01-01_pub6gp.png",
-    camaraChancay: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1782397588/CamaradeComercioChancay_logo_t8pz0n.png",
+    camaraChancay: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1794186764/cr-tech-camara-de-comercio_dgnjsv.jpg",
   },
   drones: {
     inAction: "https://res.cloudinary.com/drvejtepq/image/upload/f_auto,q_auto/v1783573198/CRtech_Background_Hero_vv59xw.png",

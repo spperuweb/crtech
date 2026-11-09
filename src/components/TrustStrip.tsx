@@ -62,15 +62,15 @@ export default function TrustStrip() {
         <div className="trust-logos-grid">
           {/* Logo 1: SwellPro Perú */}
           <div className="trust-logo-item">
-            <div className="trust-logo-wrapper">
+            <div className="trust-logo-wrapper trust-logo-square-wrapper">
               <img 
                 src={assets.logos.swellProPeru} 
                 alt="Logo SwellPro Perú" 
-                className="trust-logo-img"
+                className="trust-logo-img trust-logo-square"
                 loading="lazy"
                 decoding="async"
-                width="160"
-                height="48"
+                width="64"
+                height="64"
               />
             </div>
             <div className="trust-logo-meta">
@@ -94,21 +94,21 @@ export default function TrustStrip() {
 
           <div className="trust-divider" aria-hidden="true"></div>
 
-          {/* Logo 3: Cámara de Comercio de Chancay */}
+          {/* Logo 3: Cámara de Comercio, Industrias y Turismo del Megapuerto de Chancay */}
           <div className="trust-logo-item">
-            <div className="trust-logo-wrapper">
+            <div className="trust-logo-wrapper trust-logo-square-wrapper">
               <img 
                 src={assets.logos.camaraChancay} 
-                alt="Logo Cámara de Comercio de Chancay" 
-                className="trust-logo-img"
+                alt="Logo Cámara de Comercio, Industrias y Turismo del Megapuerto de Chancay" 
+                className="trust-logo-img trust-logo-square trust-logo-camara"
                 loading="lazy"
                 decoding="async"
-                width="160"
-                height="48"
+                width="64"
+                height="64"
               />
             </div>
             <div className="trust-logo-meta">
-              <span className="trust-badge-label">Cámara de Comercio de Chancay</span>
+              <span className="trust-badge-label">Cámara de Comercio, Industrias y Turismo del Megapuerto de Chancay</span>
               <span className="trust-badge-status">Aliado institucional</span>
             </div>
           </div>
